@@ -92,7 +92,7 @@ class UnicodeEscapeDialog(c4d.gui.GeDialog):
     BTN_CONVERT = 1002
 
     def CreateLayout(self):
-        self.SetTitle("UTF-Escape Tool")
+        self.SetTitle("Unicode Escape Tool")
 
         flags = c4d.BFH_SCALEFIT | c4d.BFV_SCALEFIT
         style = c4d.DR_MULTILINE_MONOSPACED

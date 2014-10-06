@@ -5,8 +5,8 @@ Python plugin development.
 
 __Available Tools__
 
-- Convert Unicode characters to UTF escape sequences for use in
-Cinema 4D stringtables
+- Convert Unicode characters to appropriate escape sequences for use in
+Cinema 4D stringtable files
 - Package multiple Python files into `*.egg` files from a directory
 - Batch-compile `*.py` to `*.pyc` files
 
