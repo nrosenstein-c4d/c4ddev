@@ -20,6 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+import os
 import sys
 import c4d
 import weakref
@@ -83,6 +84,44 @@ def register_command(cmd):
     return success
 
 
+def register_messagedata(data):
+    ''' Similar to :func:`register_command`, this function registers
+    a :class:`c4d.plugins.MessageData` plugin to Cinema 4D. *data*
+    must be an instance or subclass of the MessageData class and
+    provide the following attributes:
+
+    ================ ==================================
+    Name             Default
+    ================ ==================================
+    ``PLUGIN_ID``    -
+    ``PLUGIN_NAME``  -
+    ``PLUGIN_INFO``  ``0``
+    ================ ==================================
+
+    The MessageData subclass that is being registered will be assigned
+    an attribute called ``registered_instance`` which contains a weak
+    reference to the instance that has been registered. If registration
+    fails, the attribute will be set to None.
+    '''
+
+    if isinstance(data, type):
+        data = data()
+
+    info = getattr(data, 'PLUGIN_INFO', 0)
+
+    success = False
+    try:
+        success = c4d.plugins.RegisterMessagePlugin(
+            data.PLUGIN_ID, data.PLUGIN_NAME, info, data)
+    finally:
+        if success:
+            type(data).registered_instance = weakref.ref(data)
+        else:
+            type(data).registered_instance = None
+
+    return success
+
+
 def reload_package(package):
     ''' Recursively reloads *package* which must be a Python module
     object. Note that reloading modules can always lead to issues if
@@ -95,3 +134,75 @@ def reload_package(package):
             modobj = sys.modules[module]
             if modobj is not None:
                 reload(sys.modules[module])
+
+
+def is_local_module(name, mod, path):
+    ''' Determines if the module *mod* with *name* is a module imported
+    from the specified *path* or any subpath. *mod* can be None in
+    which case the parent-module is checked (determined from *name*). '''
+
+    if mod is None:
+        parent = name.rpartition('.')[0]
+        if not parent:
+            raise ValueError('mod is None and name is root module')
+        if parent in sys.modules:
+            return is_local_module(parent, sys.modules[parent], path)
+        return False
+
+    filename = getattr(mod, '__file__', None)
+    if filename:
+        try:
+            s = os.path.relpath(filename, path)
+        except ValueError:
+            # Eg. on Windows with different drive letters.
+            return False
+        else:
+            return s == os.curdir or not s.startswith(os.pardir)
+    return False
+
+
+
+class AtomDict(object):
+    ''' Dictionary-like object that is just a list of key-value pairs.
+    This will allow to use unhashable objects as keys. '''
+
+    def __init__(self):
+        super(AtomDict, self).__init__()
+        self._items = []
+
+    def __repr__(self):
+        middle = ', '.join('%r: %r' % (k, v) for k, v in self._items)
+        return 'AtomDict({%s})' % middle
+
+    def __iter__(self):
+        for key, __ in self._items:
+            yield key
+
+    def __getitem__(self, key):
+        for k, v in self._items:
+            if k == key:
+                return v
+        raise KeyError(key)
+
+    def __setitem__(self, key, value):
+        for item in self._items:
+            if item[0] == key:
+                item[1] = value
+                return
+        self._items.append([key, value])
+
+    def get(self, key, default=None):
+        try:
+            return self[key]
+        except KeyError:
+            return default
+
+    def clear(self):
+        self._items[:] = []
+
+    def setdefault(self, key, value):
+        try:
+            return self[key]
+        except KeyError:
+            self._items.append([key, value])
+            return value

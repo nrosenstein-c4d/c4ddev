@@ -20,10 +20,20 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-from . import uescape_tool, eggdist, pycompile
+registration_funcs = []
+
+
+def registrar(func):
+    ''' Decorrator function for registration methods that will be
+    invoked on :meth:`register_all`. '''
+
+    registration_funcs.append(func)
+    return func
 
 
 def register_all():
-    uescape_tool.register()
-    eggdist.register()
-    pycompile.register()
+    for func in registration_funcs:
+        func()
+
+
+from . import uescape_tool, eggdist, pycompile, docimport

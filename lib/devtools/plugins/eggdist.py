@@ -20,6 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+from . import registrar
 from .. import utils
 
 import os
@@ -224,5 +225,6 @@ class CreateEggCommand(c4d.plugins.CommandData):
         return True
 
 
+@registrar
 def register():
     return utils.register_command(CreateEggCommand)

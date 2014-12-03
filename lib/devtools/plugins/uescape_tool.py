@@ -20,6 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+from . import registrar
 from .. import utils
 
 import c4d
@@ -115,5 +116,6 @@ class UEscapeToolCommand(c4d.plugins.CommandData):
         return self.dialog.Restore(self.PLUGIN_ID, secret)
 
 
+@registrar
 def register():
     return utils.register_command(UEscapeToolCommand)
