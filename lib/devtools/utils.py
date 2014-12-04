@@ -161,7 +161,6 @@ def is_local_module(name, mod, path):
     return False
 
 
-
 class AtomDict(object):
     ''' Dictionary-like object that is just a list of key-value pairs.
     This will allow to use unhashable objects as keys. '''
@@ -206,3 +205,22 @@ class AtomDict(object):
         except KeyError:
             self._items.append([key, value])
             return value
+
+
+    iterkeys = __iter__
+
+    def itervalues(self):
+        for __, v in self._items:
+            yield v
+
+    def iteritems(self):
+        return iter(self._items)
+
+    def keys(self):
+        return list(self)
+
+    def values(self):
+        return list(self.itervalues())
+
+    def items(self):
+        return list(self._items)

@@ -111,7 +111,7 @@ class ScriptingContext(object):
     def __init__(self, doc):
         super(ScriptingContext, self).__init__()
         self.doc = doc
-        self.modules = modules
+        self.modules = {}
 
     @contextlib.contextmanager
     def __call__(self, libpath='python', autoeggs=False):
