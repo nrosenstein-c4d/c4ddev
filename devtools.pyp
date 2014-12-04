@@ -29,7 +29,8 @@ import c4d
 # the modules in the lib/ folder. Usually, plugins should not
 # want this and make sure that the modules are inaccessible and
 # that sys.path is re-set after the import.
-sys.path.append(os.path.join(os.path.dirname(__file__), 'lib'))
+libpath = os.path.join(os.path.dirname(__file__), 'lib')
+sys.path.append(libpath)
 import devtools.plugins
 
 
@@ -39,6 +40,10 @@ def main():
 
 def PluginMessage(msg_type, data):
     if msg_type == c4d.C4DPL_RELOADPYTHONPLUGINS:
+        try:
+            sys.path.remove(libpath)
+        except ValueError:
+            pass
         devtools.utils.reload_package(devtools)
     return True
 
