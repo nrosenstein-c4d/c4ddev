@@ -30,8 +30,9 @@ Python Generator or Python Tag, you can now simply do
 
 ..code-block:: python
 
-    from devtools.plugins import docimport
-    with docimport.importer(doc):
+    import devtools
+    context = devtools.plugins.docimport.context(doc)
+    with context():
         import package_a
         from package_b import foo
 '''
