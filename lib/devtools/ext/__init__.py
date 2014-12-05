@@ -36,4 +36,4 @@ def register_all():
         func()
 
 
-from . import uescape_tool, eggdist, pycompile, docimport
+from . import uescape_tool, eggdist, pycompile

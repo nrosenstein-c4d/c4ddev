@@ -23,3 +23,4 @@
 __author__ = 'Niklas Rosenstein <rosensteinniklas(at)gmail.com>'
 __version__ = '1.1'
 
+from . import scripting

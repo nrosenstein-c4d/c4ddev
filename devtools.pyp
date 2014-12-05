@@ -31,11 +31,11 @@ import c4d
 # that sys.path is re-set after the import.
 libpath = os.path.join(os.path.dirname(__file__), 'lib')
 sys.path.append(libpath)
-import devtools.plugins
+import devtools.ext
 
 
 def main():
-    devtools.plugins.register_all()
+    devtools.ext.register_all()
 
 
 def PluginMessage(msg_type, data):

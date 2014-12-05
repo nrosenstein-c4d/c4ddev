@@ -20,25 +20,16 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 '''
-This file implements a Cinema 4D plugin and a Python interface for
-loading Python packages and modules from a Cinema 4D scene local
-directory.
-
-Instead of installing each and every Python package to the Cinema 4D
-preferences folder, you can keep it tied to your scene files. From a
-Python Generator or Python Tag, you can now simply do
-
-..code-block:: python
+.. code-block:: python
 
     import devtools
-    context = devtools.plugins.docimport.context(doc)
-    with context():
-        import package_a
-        from package_b import foo
+    context = devtools.scripting.context(doc)
+
+    with context.import_():
+        import some_package
 '''
 
-from . import registrar
-from .. import utils
+from . import ext, utils
 
 import os
 import sys
@@ -115,7 +106,7 @@ class ScriptingContext(object):
         self.modules = {}
 
     @contextlib.contextmanager
-    def __call__(self, libpath='python', autoeggs=False):
+    def import_(self, libpath='python', autoeggs=False):
         ''' This is a context-manager for importing modules from a
         Python Generator or Tag for the current document. The imported
         modules will be stripped from :data:`sys.modules` to prevent
@@ -171,6 +162,6 @@ def context(doc):
         return ScriptingContext(doc)
 
 
-@registrar
+@ext.registrar
 def register():
     return utils.register_messagedata(DocImportMessageData)
