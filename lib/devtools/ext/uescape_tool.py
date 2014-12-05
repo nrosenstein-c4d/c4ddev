@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-from . import registrar
+from . import on_register_all
 from .. import utils
 
 import c4d
@@ -43,7 +43,7 @@ def unicode_refreplace(ustring):
     return fp.getvalue()
 
 
-class UEscapeToolDialog(c4d.gui.GeDialog):
+class UnicodeEscapeToolDialog(c4d.gui.GeDialog):
 
     EDT_SOURCE = 1000
     EDT_OUTPUT = 1001
@@ -51,7 +51,7 @@ class UEscapeToolDialog(c4d.gui.GeDialog):
     BTN_CONVERT_COPY = 1003
 
     def __init__(self):
-        super(UEscapeToolDialog, self).__init__()
+        super(UnicodeEscapeToolDialog, self).__init__()
         self.AddGadget(c4d.DIALOG_NOMENUBAR, 0)
 
     def color(self, id):
@@ -61,7 +61,7 @@ class UEscapeToolDialog(c4d.gui.GeDialog):
     # c4d.gui.GeDialog
 
     def CreateLayout(self):
-        self.SetTitle("Unicode Escape Tool")
+        self.SetTitle("C4D Devtools - Unicode Escape Tool")
         self.GroupBorderSpace(4, 4, 4, 4)
 
         fullfit = c4d.BFH_SCALEFIT | c4d.BFV_SCALEFIT
@@ -82,7 +82,9 @@ class UEscapeToolDialog(c4d.gui.GeDialog):
         self.AddButton(self.BTN_CONVERT, 0, name="Convert")
         self.GroupEnd()
 
-        self.SetDefaultColor(self.EDT_OUTPUT, c4d.COLOR_BGEDIT, self.color(c4d.COLOR_BGFOCUS))
+        # Change the background color of the output field.
+        self.SetDefaultColor(
+            self.EDT_OUTPUT, c4d.COLOR_BGEDIT, self.color(c4d.COLOR_BGFOCUS))
 
         return True
 
@@ -96,7 +98,7 @@ class UEscapeToolDialog(c4d.gui.GeDialog):
         return True
 
 
-class UEscapeToolCommand(c4d.plugins.CommandData):
+class UnicodeEscapeToolCommand(c4d.plugins.CommandData):
 
     PLUGIN_ID = 1033712
     PLUGIN_NAME = "Unicode Escape Tool"
@@ -105,7 +107,7 @@ class UEscapeToolCommand(c4d.plugins.CommandData):
     @property
     def dialog(self):
         if not getattr(self, '_dialog', None):
-            self._dialog = UEscapeToolDialog()
+            self._dialog = UnicodeEscapeToolDialog()
         return self._dialog
 
     def Execute(self, doc):
@@ -116,6 +118,6 @@ class UEscapeToolCommand(c4d.plugins.CommandData):
         return self.dialog.Restore(self.PLUGIN_ID, secret)
 
 
-@registrar
+@on_register_all
 def register():
-    return utils.register_command(UEscapeToolCommand)
+    return utils.register_command(UnicodeEscapeToolCommand)

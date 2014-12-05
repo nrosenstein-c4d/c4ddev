@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-from . import registrar
+from . import on_register_all
 from .. import utils
 
 import c4d
@@ -45,6 +45,6 @@ class CompileDirectoryCommand(c4d.plugins.CommandData):
         return True
 
 
-@registrar
+@on_register_all
 def register():
     return utils.register_command(CompileDirectoryCommand)

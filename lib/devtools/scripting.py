@@ -162,6 +162,6 @@ def context(doc):
         return ScriptingContext(doc)
 
 
-@ext.registrar
+@ext.on_register_all
 def register():
     return utils.register_messagedata(DocImportMessageData)

@@ -20,20 +20,22 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-registration_funcs = []
-
-
-def registrar(func):
+def on_register_all(func):
     ''' Decorrator function for registration methods that will be
-    invoked on :meth:`register_all`. '''
+    invoked on :func:`register_all`. '''
 
-    registration_funcs.append(func)
+    on_register_all.funcs.append(func)
     return func
+
+on_register_all.funcs = []
 
 
 def register_all():
-    for func in registration_funcs:
+    ''' Invokes all registration functions that have been marked with
+    the :func:`on_register_all` decorator. '''
+
+    for func in on_register_all.funcs:
         func()
 
 
-from . import uescape_tool, eggdist, pycompile
+from . import uescape_tool, eggmaker, pycompile

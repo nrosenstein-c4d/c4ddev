@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-from . import registrar
+from . import on_register_all
 from .. import utils
 
 import os
@@ -157,7 +157,7 @@ class CreateEggDialog(c4d.gui.GeDialog):
 
     def CreateLayout(self):
         flags = c4d.BFH_LEFT
-        self.SetTitle("Create *.egg")
+        self.SetTitle("C4D Devtools - Egg Maker")
         self.GroupBorderSpace(6, 6, 6, 6)
 
         self.GroupBegin(0, c4d.BFH_SCALEFIT, cols=2, rows=0)
@@ -200,7 +200,7 @@ class CreateEggDialog(c4d.gui.GeDialog):
 class CreateEggCommand(c4d.plugins.CommandData):
 
     PLUGIN_ID = PLUGIN_ID
-    PLUGIN_NAME = "Create *.egg"
+    PLUGIN_NAME = "Egg Maker"
     PLUGIN_HELP = "Creates a *.egg file from the selected directory."
     PLUGIN_INFO = c4d.PLUGINFLAG_COMMAND_HOTKEY | \
                   c4d.PLUGINFLAG_COMMAND_OPTION_DIALOG
@@ -225,6 +225,6 @@ class CreateEggCommand(c4d.plugins.CommandData):
         return True
 
 
-@registrar
+@on_register_all
 def register():
     return utils.register_command(CreateEggCommand)
