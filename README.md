@@ -3,7 +3,7 @@
 *Devtools* is a collection of Cinema 4D plugins, tools and module that
 make Cinema 4D plugin development easier.
 
-## UTF Escpae Sequeuncer
+## Unicode Escape Tool
 
 String resources require special characters to be escaped with unicode
 escape sequences in the format of `\UXXXX`. The "Unicode Escape Tool"
