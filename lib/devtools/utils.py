@@ -123,10 +123,10 @@ def register_messagedata(data):
 
 
 def reload_package(package):
-    ''' Recursively reloads *package* which must be a Python module
-    object. Note that reloading modules can always lead to issues if
-    things are still reference, because, for instance, class identities
-    will change. '''
+    ''' Reloads *package* which must be a Python module object. Note
+    that reloading modules can always lead to issues if things are
+    still reference, because, for instance, class identities will
+    change. '''
 
     name = package.__name__
     for module in sorted(sys.modules.keys(), key=lambda x: -len(x)):
@@ -134,6 +134,15 @@ def reload_package(package):
             modobj = sys.modules[module]
             if modobj is not None:
                 reload(sys.modules[module])
+
+def remove_package(package):
+    ''' Removes *package* from :data:`sys.modules` and all its sub
+    packages and modules. '''
+
+    name = package.__name__
+    for module in sys.modules.keys():
+        if module == name or module.startswith(name + '.'):
+            del sys.modules[module]
 
 
 def is_local_module(name, mod, path):

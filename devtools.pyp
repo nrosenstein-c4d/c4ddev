@@ -40,11 +40,11 @@ def main():
 
 def PluginMessage(msg_type, data):
     if msg_type == c4d.C4DPL_RELOADPYTHONPLUGINS:
+        devtools.utils.remove_package(devtools)
         try:
             sys.path.remove(libpath)
         except ValueError:
             pass
-        devtools.utils.reload_package(devtools)
     return True
 
 
