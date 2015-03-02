@@ -37,7 +37,7 @@ def unicode_refreplace(ustring):
     fp = cStringIO.StringIO()
     for char in ustring:
         if char not in '\n\t\r' and ord(char) < 32 or ord(char) > 127:
-            char = ('\u%04x' % ord(char)).upper()
+            char = '\\u' + ('%04x' % ord(char)).upper()
         fp.write(char)
 
     return fp.getvalue()
