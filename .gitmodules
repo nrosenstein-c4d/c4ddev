@@ -1,0 +1,3 @@
+[submodule "lib/py-shroud"]
+	path = lib/py-shroud
+	url = git@github.com:NiklasRosenstein/py-shroud.git

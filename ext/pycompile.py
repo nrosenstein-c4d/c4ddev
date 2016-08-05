@@ -1,6 +1,4 @@
-# -*- coding: utf8 -*-
-#
-# Copyright (C) 2014  Niklas Rosenstein
+# Copyright (C) 2014-2016  Niklas Rosenstein
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -20,33 +18,27 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-import os
-import sys
 import c4d
+import compileall
+utils = require('c4ddev/utils')
 
 
-# It is the intention of this plugin to give others access to
-# the modules in the lib/ folder. Usually, plugins should not
-# want this and make sure that the modules are inaccessible and
-# that sys.path is re-set after the import.
-libpath = os.path.join(os.path.dirname(__file__), 'lib')
-sys.path.append(libpath)
-import devtools.ext
+class CompileDirectoryCommand(c4d.plugins.CommandData):
+
+    PLUGIN_ID = 1033714
+    PLUGIN_NAME = "Compile Directory"
+    PLUGIN_HELP = "Compiles all Python source files in the selected " \
+                  "directory to *.pyc files."
+
+    def Execute(self, doc):
+        flags = c4d.FILESELECT_DIRECTORY
+        title = 'Select a Directory to compile'
+        dirname = c4d.storage.LoadDialog(title=title, flags=flags)
+        if not dirname:
+            return True
+
+        compileall.compile_dir(dirname, force=1)
+        return True
 
 
-def main():
-    devtools.ext.register_all()
-
-
-def PluginMessage(msg_type, data):
-    if msg_type == c4d.C4DPL_RELOADPYTHONPLUGINS:
-        devtools.utils.remove_package(devtools)
-        try:
-            sys.path.remove(libpath)
-        except ValueError:
-            pass
-    return True
-
-
-if __name__ == "__main__":
-    main()
+utils.register_command(CompileDirectoryCommand)
