@@ -12,13 +12,30 @@ import the `require()` function and rock on.
 
 ```python
 import c4d
-from shroud import path
+from shroud import require
 my_utils = require('./my_utils', doc.GetDocumentPath())
 
 def main():
   cube = c4d.BaseObject(c4d.Ocube)
   return my_utils.current_state_to_object(cube)
 ```
+
+If you want to use standard Python modules, you can use [localimport][]
+to load these modules without interfering with the global importer state.
+
+```python
+from shroud import require
+with require('localimport')(doc.GetDocumentPath()):
+  import requests
+
+def main():
+  op.GetObject()[]
+```
+
+> Note: Using the above technique will cause the `requests` module to be
+> reloaded everytime you make changes to your script. If you want to
+> avoid this, you can use `localimport` from a module that you load with
+> `require()`.
 
 #### Unicode Escape Tool
 
@@ -68,3 +85,4 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 [shroud]: https://github.com/NiklasRosenstein/py-shroud
+[localimport]: https://github.com/NiklasRosenstein/py-localimport

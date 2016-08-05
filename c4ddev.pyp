@@ -35,6 +35,7 @@ add_path('lib/py-shroud')
 
 import shroud
 add_path('lib', module=shroud)
+add_path('lib/py-localimport', module=shroud)
 
 def load_extensions():
   extensions = []

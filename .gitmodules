@@ -1,3 +1,6 @@
 [submodule "lib/py-shroud"]
 	path = lib/py-shroud
-	url = git@github.com:NiklasRosenstein/py-shroud.git
+	url = https://github.com/NiklasRosenstein/py-shroud.git
+[submodule "lib/py-localimport"]
+	path = lib/py-localimport
+	url = https://github.com/NiklasRosenstein/py-localimport
