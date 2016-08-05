@@ -32,6 +32,7 @@ def add_path(path, module=sys):
 
 # The third party modules in this plugin should be available globally.
 add_path('lib/py-shroud')
+add_path('lib/requests')
 
 import shroud
 add_path('lib', module=shroud)
