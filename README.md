@@ -11,11 +11,13 @@ scripts and Python expressions. In order to use the `c4ddev` library, simply
 import the `require()` function and rock on.
 
 ```python
+import c4d
 from shroud import path
-my_module = require('./my_module', doc.GetDocumentPath())
+my_utils = require('./my_utils', doc.GetDocumentPath())
 
 def main():
-  my_module.do_all_the_work()
+  cube = c4d.BaseObject(c4d.Ocube)
+  return my_utils.current_state_to_object(cube)
 ```
 
 #### Unicode Escape Tool
