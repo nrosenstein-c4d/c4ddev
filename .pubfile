@@ -1,0 +1,3 @@
+update_version:
+  "c4ddev.pyp": "__version__ = '$VERSION'"
+
