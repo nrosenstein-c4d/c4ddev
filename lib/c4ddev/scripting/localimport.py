@@ -25,9 +25,9 @@ of Cinema 4D.
 .. code:: python
 
   import c4d
-  import shroud
+  import require
 
-  localimport = shroud.require('c4ddev/scripting/localimport')
+  localimport = require('c4ddev/scripting/localimport')
   with localimport(doc):
     import twitter
 

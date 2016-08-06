@@ -8,9 +8,9 @@ c4ddev contains these Python modules as they are essential to productive
 development inside of Cinema 4D.
 
 - [requests](https://github.com/kennethreitz/requests) - HTTP for Humans
-- [shroud](https://github.com/NiklasRosenstein/py-shroud) - `require()` style imports
+- [require](https://github.com/NiklasRosenstein/py-require) - `require()` for Python
 
-Modules that can be loaded with `shroud.require()`
+Modules that can be loaded with `require()`
 
 - c4ddev - This plugin's utility library
 - [localimport](https://github.com/NiklasRosenstein/py-localimport) - Isolated import of Python modules
@@ -36,16 +36,16 @@ Modules to be added in future versions
 ## Scripting in Cinema 4D
 
 c4ddev comes with a bunch of useful modules that you can use directly from
-your Python Expression Tags, XPresso Nodes or Generators. The `shroud` module
+your Python Expression Tags, XPresso Nodes or Generators. The `require` module
 allows you to outsource your into a Python module in your Cinema 4D
 project directory and load it from there.
 
 ```python
 import c4d
-import shroud
+import require
 
 # Load my_utils.py which is the same directory as the .c4d file.
-my_utils = shroud.require('./my_utils', doc.GetDocumentPath())
+my_utils = require('./my_utils', doc.GetDocumentPath())
 
 def main():
   # You can use it like a normal Python module.
@@ -63,9 +63,9 @@ months later in a different Cinema 4D version.
 
 ```python
 import c4d
-import shroud
+import require
 
-localimport = shroud.require('c4ddev/scripting/localimport')
+localimport = require('c4ddev/scripting/localimport')
 with localimport(doc):
   import twitter
 

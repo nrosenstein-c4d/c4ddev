@@ -34,19 +34,19 @@ def add_path(path, module=sys):
     _added_paths.append((module, path))
 
 # The third party modules in this plugin should be available globally.
-add_path('lib/py-shroud')
+add_path('lib/py-require')
 add_path('lib/requests')
 
-import shroud
-add_path('lib', module=shroud)
-add_path('lib/py-localimport', module=shroud)
+import require
+add_path('lib', module=require)
+add_path('lib/py-localimport', module=require)
 
 def load_extensions():
   extensions = []
   ext_dir = os.path.join(os.path.dirname(__file__), 'ext')
   for file in os.listdir(ext_dir):
     if file.endswith('.py'):
-      extensions.append(shroud.require(os.path.join(ext_dir, file)))
+      extensions.append(require(os.path.join(ext_dir, file)))
   return extensions
 
 extensions = load_extensions()
