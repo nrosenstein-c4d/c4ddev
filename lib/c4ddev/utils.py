@@ -23,6 +23,16 @@ import sys
 import c4d
 import weakref
 
+plugin_dir = None  # initialized from c4ddev.pyp
+
+
+def load_resource_bitmap(*parts):
+  filename = os.path.join(plugin_dir, *parts)
+  bmp = c4d.bitmaps.BaseBitmap()
+  if bmp.InitWith(filename)[0] != c4d.IMAGERESULT_OK:
+    bmp = None
+  return bmp
+
 
 def register_command(cmd):
     ''' Utility function to register a Cinema 4D CommandData plugin.

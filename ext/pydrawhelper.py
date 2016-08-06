@@ -137,8 +137,7 @@ class DrawPassHelper(ObjectData):
 
     @classmethod
     def Register(cls):
-        icon    = BaseBitmap()
-        icon.InitWith( join( split(__file__)[0], "src", "DrawHelperIcon.tif") )
+        icon    = utils.load_resource_bitmap('res', 'icons', 'PyDrawHelper.tif')
 
         data    = {
             "id":           cls.PLUGIN_ID,   # Registered !

@@ -41,7 +41,8 @@ import require
 add_path('lib', module=require)
 add_path('lib/py-localimport', module=require)
 
-# Initialize the c4ddev/__res__ module.
+# Initialize the c4ddev contents.
+require('c4ddev/utils', get_exports=False).plugin_dir = os.path.dirname(__file__)
 require('c4ddev/__res__', get_exports=False).exports = __res__
 
 def load_extensions():
