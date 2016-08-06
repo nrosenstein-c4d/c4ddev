@@ -1,0 +1,8 @@
+// C4D-DialogResource
+
+DIALOGSTRINGS DRAWHELPER_EDITOR
+{
+  IDS_BUTTON  "Commit";
+  IDS_DIALOG  "DrawHelper Editor";
+  IDS_STATIC  "Root";
+}

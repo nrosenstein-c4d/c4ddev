@@ -1,0 +1,6 @@
+STRINGTABLE Odrawhelper {
+    Odrawhelper         "Draw Helper";
+    ID_OBJECTPROPERTIES "Object";
+    DRAWHELPER_SOURCE   "Code";
+    DRAWHELPER_OPENEDITOR"Open Editor";
+}
