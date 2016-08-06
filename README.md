@@ -8,6 +8,7 @@ useful resources on Python and even C++ development in Cinema 4D.
 
 - [Scripting with c4ddev](https://github.com/nr-plugins/c4ddev/wiki/c4ddev_scripting)
 - [c4ddev Modules](https://github.com/nr-plugins/c4ddev/wiki/c4ddev_modules)
+- [c4ddev Extension Plugins](https://github.com/nr-plugins/c4ddev/wiki/c4ddev_ext)
 - [3rd Party Modules in Python Plugins](https://github.com/nr-plugins/c4ddev/wiki/python_third_party_modules)
 
 ## Installation
