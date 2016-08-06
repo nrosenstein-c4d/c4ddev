@@ -1,77 +1,22 @@
 # c4ddev
 
-Cinema 4D plugin that makes Python development much easier.
+Cinema 4D plugin that makes Python scripting and plugin development
+in general much easier. Be sure to check out the [Wiki][] for a lot of
+useful resources on Python and even C++ development in Cinema 4D.
 
-#### Available Modules
+## Featured Wiki Topics
 
-c4ddev contains these Python modules as they are essential to productive
-development inside of Cinema 4D.
+- [Scripting with c4ddev](https://github.com/nr-plugins/c4ddev/wiki/c4ddev_scripting)
+- [c4ddev Modules](https://github.com/nr-plugins/c4ddev/wiki/c4ddev_modules)
+- [3rd Party Modules in Python Plugins](https://github.com/nr-plugins/c4ddev/wiki/python_third_party_modules)
 
-- [requests](https://github.com/kennethreitz/requests) - HTTP for Humans
-- [require](https://github.com/NiklasRosenstein/py-require) - `require()` for Python
+## Installation
 
-Modules that can be loaded with `require()`
+Head to the [Releases][] page and download the latest ZIP archive. Unpack the
+contents of this archive into your Cinema 4D plugins directory.
 
-- c4ddev - This plugin's utility library
-- [localimport](https://github.com/NiklasRosenstein/py-localimport) - Isolated import of Python modules
-
-Modules to be added in future versions
-
-- [numpy](http://www.numpy.org/)
-- [scipy](https://www.scipy.org/)
-
-> Supporting these module is not trivial as they need to be built
-> separately for Windows and Mac OS (C-extensions). Including these
-> builds in the Git source repository is not ideal either.
->
-> You can find prebuilt versions of numpy and scipy here:
->  https://public.niklasrosenstein.com/PythonBinaries/
-
-#### Plugins
-
-- Unicode Escape Tool
-- Python Batch Compiler
-- Egg Maker
-
-## Scripting in Cinema 4D
-
-c4ddev comes with a bunch of useful modules that you can use directly from
-your Python Expression Tags, XPresso Nodes or Generators. The `require` module
-allows you to outsource your into a Python module in your Cinema 4D
-project directory and load it from there.
-
-```python
-import c4d
-import require
-
-# Load my_utils.py which is the same directory as the .c4d file.
-my_utils = require('./my_utils', doc.GetDocumentPath())
-
-def main():
-  # You can use it like a normal Python module.
-  return my_utils.create_freaking_geometry()
-```
-
-If you want to use third party modules in Python Expressions, it makes sense
-to store these modules with your Cinema 4D scene and not needing them to
-be installed on every Cinema 4D installation that you are going to open the
-scene with! This ensures that scenes work right away even if you open them
-months later in a different Cinema 4D version.
-
-> Note: A little bummer though: Keep in mind that c4ddev itself needs to be
-> installed in the Cinema 4D version you are opening the project with!
-
-```python
-import c4d
-import require
-
-localimport = require('c4ddev/scripting/localimport')
-with localimport(doc):
-  import twitter
-
-def main():
-  # ...
-```
+[Releases]: https://github.com/nr-plugins/c4ddev/releases
+[Wiki]: https://github.com/nr-plugins/c4ddev/wiki
 
 ## License
 
