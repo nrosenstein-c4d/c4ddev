@@ -70,16 +70,18 @@ class DrawPassHelper(ObjectData):
     PLUGIN_ID           = 1027193
 
     try:
-        fl              = open( join( split(__file__)[0], "src", "Initial Source.py" ), "r")
+        fl              = open( join( utils.plugin_dir, "res", "PyDrawHelper_InitialSource.py" ), "r")
 
         INIT_SOURCECODE = ""
         for i in fl:
             INIT_SOURCECODE    += i
 
-        fl.close()
 
     except IOError:
         INIT_SOURCECODE = "import c4d\n\ndef main():\n    pass\nmain()"
+
+    finally:
+        fl.close()
 
 
     def __init__(self):
