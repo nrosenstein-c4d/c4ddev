@@ -36,7 +36,7 @@ class PyShader(c4d.plugins.ShaderData):
   edited during runtime in the shader parameters. '''
 
   PluginID = 1036204
-  PluginName = 'PyShader'
+  PluginName = 'c4ddev PyShader'
   PluginFlags = 0
   PluginDesc = 'nr_pyshader'
 
@@ -47,8 +47,8 @@ class PyShader(c4d.plugins.ShaderData):
 
   def Init(self, sh):
     sh[c4d.NR_PYSHADER_CODE] = (
-      '# PyShader v{version} by Niklas Rosenstein\n'
-      '# https://github.com/nr-plugins/pyshader\n'
+      '# c4ddev PyShader v{version} by Niklas Rosenstein\n'
+      '# https://github.com/nr-plugins/c4ddev\n'
       '#\n'
       '# Note: Use print() as a function instead of as a statement\n'
       '\n'
