@@ -25,25 +25,37 @@ import sys
 
 libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'lib')
 sys.path.append(os.path.join(libdir, 'py-require'))
-print(libdir)
 import require
 require.path.append(libdir)
 require.path.append(os.path.join(libdir, 'py-localimport'))
 
+resource = require('c4ddev/resource')
+
 def main():
   parser = argparse.ArgumentParser('c4ddev')
   subparsers = parser.add_subparsers(dest='command')
+
   symbols_parser = subparsers.add_parser('symbols')
   symbols_parser.add_argument('-f', '--format', default='class')
   symbols_parser.add_argument('-o', '--outfile')
   symbols_parser.add_argument('-d', '--res-dir', default=[], action='append')
+
+  rpkg_parser = subparsers.add_parser('rpkg')
+  rpkg_parser.add_argument('files', metavar='RPKG', nargs='...')
+  rpkg_parser.add_argument('-r', '--res', metavar='DIRECTORY', default='res')
+  rpkg_parser.add_argument('--no-header', action='store_true')
+
   args = parser.parse_args()
 
   if args.command == 'symbols':
-    resource = require('c4ddev/resource')
     if not args.res_dir:
       args.res_dir = ['res']
     resource.export_symbols(args.format, args.res_dir, outfile=args.outfile)
+    return 0
+  elif args.command == 'rpkg':
+    if not args.files:
+      rpkg_parser.error("no input files")
+    resource.build_rpkg(args.files, args.res, args.no_header)
     return 0
 
   parser.error('invalid command: {0!r}'.format(args.command))

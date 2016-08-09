@@ -24,8 +24,12 @@ Utilities for Cinema 4D resource symbols.
 import glob
 import os
 import re
+import string
 import sys
 import textwrap
+import nr.utils.strex as strex
+
+__version__ = require('./__init__.py').__version__
 
 TEMPLATE_CLASS = textwrap.dedent('''
   exec ("""class res(object):
@@ -309,3 +313,213 @@ def render_template(__template_string, **context):
     return '\n'.join(result)
 
   return re.sub(expr, replace, __template_string, flags=re.M)
+
+
+def makedirs(path, parent = False):
+  if parent:
+    path = os.path.dirname(path)
+  try:
+    os.makedirs(path)
+  except OSError as exc:
+    if exc.errno != errno.EEXIST:
+      raise
+      
+
+def escape_unicode(string):
+  def generator():
+    for c in string:
+      if ord(c) in range(32, 128):
+        yield c
+      else:
+        yield '\\u%04x' % ord(c)
+  return ''.join(generator())
+
+
+class ResourcePackage(object):
+  '''
+  Represents the data of an ``.rpkg`` file that can be converted to
+  the Cinema 4D resource format.
+
+  .. attribute:: name
+
+    The name of the description resource. This is deduced from the
+    filename. The package is automatically treated as a C4D symbols
+    file if its name is ``c4d_symbols``.
+
+  .. attribute:: symbols
+
+    A dictionary mapping symbol names to their integer IDs.
+
+  .. attribute:: localizations
+
+    A dictionary that maps language codes to a dictionary of localized
+    strings for the :attr:`symbols`. Keys to this dictionary are the
+    symbol names (not IDs!).
+  '''
+
+  Token_Newline = 'newline'
+  Token_Def = 'def'
+  Token_Number = 'number'
+  Token_Symbol = 'symbol'
+  Token_Indent = 'indent'
+  Token_Whitespace = 'ws'
+  Token_EOF = strex.eof
+
+  Rules = [
+    strex.Keyword(Token_Newline, '\n'),
+    strex.Keyword(Token_Def, ':'),
+    strex.Charset(Token_Number, string.digits),
+    strex.Charset(Token_Symbol, string.ascii_letters + '_' + string.digits),
+    strex.Charset(Token_Indent, string.whitespace, at_column=0),
+    strex.Charset(Token_Whitespace, string.whitespace, skip=True)
+  ]
+
+  # Seems like these are the only supported language codes for Cinema 4D.
+  LangCodes = frozenset(['us', 'de', 'jp', 'cz', 'es', 'fr', 'it', 'pl'])
+
+  class ParseError(Exception):
+    pass
+
+  def __init__(self, name):
+    self.name = name
+    self.symbols = {}
+    self.localizations = {}
+
+  def __repr__(self):
+    return '<ResourcePackage name={!r}>'.format(self.name)
+
+  @classmethod
+  def parse(cls, content, filename):
+    lexer = strex.Lexer(strex.Scanner(content), cls.Rules)
+    error = cls._error(lexer, filename)
+
+    basename = os.path.basename(filename).rpartition('.')[0]
+    if not basename:
+      raise ValueError('no resource name')
+    pkg = cls(basename)
+
+    if lexer.next(cls.Token_Symbol).value != 'ResourcePackage':
+      error('expected "ResourcePackage"')
+
+    cls._skip_newline(lexer)
+
+    # Parse the resource symbols.
+    while lexer.accept(cls.Token_Symbol):
+      name = lexer.token.value
+      if name in pkg.symbols:
+        error('duplicate symbol "{0}"'.format(name))
+
+      lexer.next(cls.Token_Def)
+      value = lexer.next(cls.Token_Number).value
+      lexer.next(cls.Token_Newline, cls.Token_EOF)
+      pkg.symbols[name] = int(value)
+
+      for lang_code, string in cls._parse_localization(lexer, error).items():
+        try:
+          table = pkg.localizations[lang_code]
+        except KeyError:
+          pkg.localizations[lang_code] = table = {}
+        table[name] = string
+
+      cls._skip_newline(lexer)
+
+    lexer.next(strex.eof)
+    return pkg
+
+  @classmethod
+  def _skip_newline(cls, lexer):
+    while lexer.accept(cls.Token_Newline):
+      pass
+
+  @classmethod
+  def _parse_localization(cls, lexer, error):
+    result = {}
+    cls._skip_newline(lexer)
+    while lexer.accept(cls.Token_Indent):
+      lang = lexer.next(cls.Token_Symbol).value
+      if lang not in cls.LangCodes:
+        error('unsupported language code "{0}"'.format(lang))
+      if lang in result:
+        error('localization for "{0}" already defined'.format(lang))
+      lexer.next(cls.Token_Def)
+      content = strex.readline(lexer.scanner).strip()
+      # xxx: There might be better ways to expand \n and \t.
+      content = re.sub('(?<!\\\\)\\\\n', '\n', content)
+      content = re.sub('(?<!\\\\)\\\\t', '\t', content)
+      result[lang] = content
+      cls._skip_newline(lexer)
+    return result
+
+  @classmethod
+  def _error(cls, lexer, filename):
+    def error(message):
+      # xxx: include contextual information with line number and filename
+      raise cls.ParseError(message)
+    return error
+
+
+def build_rpkg(files, res_dir, no_header):
+  '''
+  Convert one or many resource packages to Cinema 4D resource files.
+  A resource package file is usually suffixed with .rpkg . The filename
+  without the suffix is used the resource name. Resource package files
+  must be UTF-8 encoded. An example file:
+
+  ::
+
+    ResourcePackage
+    PRIM_CUBE_LENGTH: 1001
+      us: Size
+      de: Größe
+    PRIM_CUBE_SEGMENTS: 1002
+      us: Segments
+      de: Segmente
+
+  :param files: A list of ``.rpkg`` files.
+  :param res_dir: The target resource directory.
+  :param no_header: Don't output a header into the files.
+  '''
+
+  if not os.path.isdir(res_dir):
+    raise OSError('directory "{}" does not exist'.format(res_dir))
+  for fname in files:
+    with open(fname, 'r', encoding='utf8') as fp:
+      content = fp.read()
+    rpkg = ResourcePackage.parse(content, fname)
+    if rpkg.name == 'c4d_symbols':
+      header = os.path.join(res_dir, 'c4d_symbols.h')
+      strings_dir = ''
+    else:
+      header = os.path.join(res_dir, 'description', rpkg.name + '.h')
+      strings_dir = 'description'
+
+    makedirs(header, parent = True)
+    print('Writing {} ...'.format(os.path.relpath(header, res_dir)))
+    with open(header, 'w') as fp:
+      if not no_header:
+        fp.write('// Automatically generated with c4ddev v{}\n'.format(__version__))
+      guard = '__{}_H_'.format(rpkg.name)
+      fp.write('#ifndef {}\n'.format(guard))
+      fp.write('#define {}\n'.format(guard))
+      fp.write('enum\n')
+      fp.write('{\n')
+      for name, value in sorted(rpkg.symbols.items(), key = lambda x: x[1]):
+        fp.write('  {} = {},\n'.format(name, value))
+      fp.write('};\n')
+      fp.write('#endif // {}\n'.format(guard))
+
+    sort_key = lambda x: x[0]
+    for lang_code, table in sorted(rpkg.localizations.items(), key = sort_key):
+      strfile = os.path.join(res_dir, 'strings_' + lang_code, strings_dir, rpkg.name + '.str')
+      makedirs(strfile, parent = True)
+      print('Writing {} ...'.format(os.path.relpath(strfile, res_dir)))
+      with open(strfile, 'w') as fp:
+        fp.write('STRINGTABLE ')
+        if rpkg.name != 'c4d_symbols':
+          fp.write(rpkg.name)
+        fp.write('\n{\n')
+        sort_key = lambda x: rpkg.symbols[x[0]]
+        for symbol, string in sorted(table.items(), key = sort_key):
+          # xxx: escape unicode characters
+          fp.write('  {} "{}";\n'.format(symbol, escape_unicode(string)))
+        fp.write('}\n')
