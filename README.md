@@ -4,21 +4,34 @@ Cinema 4D plugin that makes Python scripting and plugin development
 in general much easier. Be sure to check out the [Wiki][] for a lot of
 useful resources on Python and even C++ development in Cinema 4D.
 
-## Featured Wiki Topics
+## Features
 
-- [Scripting with c4ddev](https://github.com/nr-plugins/c4ddev/wiki/c4ddev_scripting)
-- [c4ddev Commandline](https://github.com/nr-plugins/c4ddev/wiki/c4ddev_commandline)
-- [c4ddev Modules](https://github.com/nr-plugins/c4ddev/wiki/c4ddev_modules)
-- [c4ddev Extension Plugins](https://github.com/nr-plugins/c4ddev/wiki/c4ddev_ext)
-- [3rd Party Modules in Python Plugins](https://github.com/nr-plugins/c4ddev/wiki/python_third_party_modules)
+- Ready-to-use [Python modules][] like [requests][]
+- [Export plugin resource symbols][] to Python code as class or module or JSON
+- Manage plugin resources and translations more efficiently with
+  [Resource Packages][]
+- Extensive [Wiki][] with tips & tricks for C++ & Python development
+  - [Scripting with c4ddev](https://github.com/nr-plugins/c4ddev/wiki/c4ddev_scripting)
+  - [c4ddev Extension Plugins](https://github.com/nr-plugins/c4ddev/wiki/c4ddev_ext)
+  - [How to use 3rd Part modules](https://github.com/nr-plugins/c4ddev/wiki/python_third_party_modules)
+  - and much more..
+
+[requests]: https://github.com/kennethreitz/requests
+[Python modules]: https://github.com/nr-plugins/c4ddev/wiki/c4ddev_modules
+[Export plugin resource symbols]: https://github.com/nr-plugins/c4ddev/wiki/c4ddev_resource_symbols
+[Resource Packages]: https://github.com/nr-plugins/c4ddev/wiki/c4ddev_resource_packages
+[Wiki]: https://github.com/nr-plugins/c4ddev/wiki
 
 ## Installation
 
 Head to the [Releases][] page and download the latest ZIP archive. Unpack the
-contents of this archive into your Cinema 4D plugins directory.
+contents of this archive into your Cinema 4D plugins directory. If you want to
+make use of the c4ddev Commandline, you will have to install a few additional
+required components. You can do that easily with `pip`:
+
+    pip install -r bin/requirements.txt
 
 [Releases]: https://github.com/nr-plugins/c4ddev/releases
-[Wiki]: https://github.com/nr-plugins/c4ddev/wiki
 
 ## License
 
