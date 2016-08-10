@@ -29,11 +29,11 @@ import sys
 import textwrap
 import nr.utils.strex as strex
 
-__version__ = require('./__init__.py').__version__
+__version__ = require('.').__version__
 
 TEMPLATE_CLASS = textwrap.dedent('''
   exec ("""class res(object):
-   # Automatically generated with c4ddev.
+   # Automatically generated with c4ddev v{0}.
    project_path = os.path.dirname(__file__)
    def string(self, name, *subst):
     result = __res__.LoadString(getattr(self, name))
@@ -52,10 +52,10 @@ TEMPLATE_CLASS = textwrap.dedent('''
     if b.InitWith(self.path(*parts))[0] != c4d.IMAGERESULT_OK: return None
     return b
    {{symbols}}
-   res=res()""")''')
+   res=res()""")'''.format(__version__))
 
 TEMPLATE_FILE = textwrap.dedent('''
-  # Automatically generated with c4ddev.
+  # Automatically generated with c4ddev v{0}.
 
   import os
   import sys
@@ -109,7 +109,7 @@ TEMPLATE_FILE = textwrap.dedent('''
 
   file = path  # backwards compatibility
 
-  {{symbols}}''')
+  {{symbols}}'''.format(__version__))
 
 
 def parse_symbols(filename_or_fp):
@@ -323,7 +323,7 @@ def makedirs(path, parent = False):
   except OSError as exc:
     if exc.errno != errno.EEXIST:
       raise
-      
+
 
 def escape_unicode(string):
   def generator():
