@@ -3,9 +3,19 @@ docs_dir: source
 markdown_extensions:
   - admonition
   - codehilite
+  - smarty
 theme: material
 pages:
   - Home: index.md
   - Changelog: changelog.md
   - Command-line Tools: cli.md
+  - Resource Packages: rpkg.md
+  - Contents: contents.md
+  - API Documentation: api/index.md
   - Localimport: localimport.md
+  - C++ Information:
+    - Resources: cpp/resources.md
+    - Snippets: cpp/snippets.md
+  - Python Information:
+    - Async GUI: python/asyncgui.md
+    - Scripts & Snippets: python/scripts.md

@@ -42,7 +42,7 @@ importer_cache = {}
 def localimport(doc):
   """
   This function creates an object of the real ``localimport`` module for
-  the specified :class:`c4d.BaseDocoument` object and returns it. We use
+  the specified :class:`c4d.BaseDocument` object and returns it. We use
   this technique to avoid re-importing modules evertime you recompile a
   Python Expression in Cinema 4D.
   """

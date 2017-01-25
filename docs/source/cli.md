@@ -13,7 +13,7 @@ Options:
 Commands:
   pypkg    Reads a JSON configuration file, by default...
   rpkg
-    symbols
+  symbols
 ```
 
 ## Commands
@@ -47,6 +47,8 @@ This is a real-world example configuration file.
 ```
 
 ### rpkg
+
+For more information, see [Resource Packages](rpkg).
 
 
 ### symbols

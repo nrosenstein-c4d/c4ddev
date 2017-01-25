@@ -1,37 +1,25 @@
 # c4ddev
 
-Cinema 4D plugin that makes Python scripting and plugin development
-in general much easier. Be sure to check out the [Wiki][] for a lot of
-useful resources on Python and even C++ development in Cinema 4D.
+The **c4ddev** project is a set of Cinema 4D plugins, command-line tools and
+utilities for scripting inside of Cinema 4D that aims to make the prototyping,
+development and distribution of Cinema 4D plugins easier.
 
-## Features
+<a href="https://niklasrosenstein.github.io/c4ddev/">
+  <img src="https://cdn2.iconfinder.com/data/icons/bitsies/128/EditDocument-32.png"
+       style="vertical-align:middle"></img>
+  View Documentation
+</a>
 
-- Ready-to-use [Python modules][] like [requests][]
-- [Export plugin resource symbols][] to Python code as class or module or JSON
-- Manage plugin resources and translations more efficiently with
-  [Resource Packages][]
-- Extensive [Wiki][] with tips & tricks for C++ & Python development
-  - [Scripting with c4ddev](https://github.com/nr-plugins/c4ddev/wiki/c4ddev_scripting)
-  - [c4ddev Extension Plugins](https://github.com/nr-plugins/c4ddev/wiki/c4ddev_ext)
-  - [How to use 3rd Part modules](https://github.com/nr-plugins/c4ddev/wiki/python_third_party_modules)
-  - and much more..
-
-[requests]: https://github.com/kennethreitz/requests
-[Python modules]: https://github.com/nr-plugins/c4ddev/wiki/c4ddev_modules
-[Export plugin resource symbols]: https://github.com/nr-plugins/c4ddev/wiki/c4ddev_resource_symbols
-[Resource Packages]: https://github.com/nr-plugins/c4ddev/wiki/c4ddev_resource_packages
-[Wiki]: https://github.com/nr-plugins/c4ddev/wiki
-
-## Installation
+## Installation (Cinema 4D)
 
 Head to the [Releases][] page and download the latest ZIP archive. Unpack the
-contents of this archive into your Cinema 4D plugins directory. If you want to
-make use of the c4ddev Commandline, you will have to install a few additional
-required components. You can do that easily with `pip`:
+contents of this archive into your Cinema 4D plugins directory.
 
-    pip install -r bin/requirements.txt
+  [Releases]: https://github.com/nr-plugins/c4ddev/releases
 
-[Releases]: https://github.com/nr-plugins/c4ddev/releases
+## Installation (Commandline Tools)
+
+    pip install c4ddev
 
 ## License
 
