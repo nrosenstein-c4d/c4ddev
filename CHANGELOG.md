@@ -4,6 +4,8 @@
 
 - rewrite PyDrawHelper code (cb5aa58)
 - fix reloading of c4ddev plugins by reloading the `require` module (7f61b5b)
+- add option to install `c4ddev` command-line interface
+- add `c4ddev pypkg` command
 
 #### v1.2
 
