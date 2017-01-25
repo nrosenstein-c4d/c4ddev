@@ -104,7 +104,7 @@ that directory, and otherwise load it from the Python Egg generated with
 if _debug:
   _importer = localimport(['devel'])
 else:
-  _importer = localimport('res/modules' + sys.version[:3])
+  _importer = localimport('res/modules{0}/cloudui.egg'.format(sys.version[:3]))
 
 with _importer:
     _importer.disable(['res', 'c4dtools', 'cloudui', 'res', 'nr'])

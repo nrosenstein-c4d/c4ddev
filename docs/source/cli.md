@@ -37,9 +37,10 @@ This is a real-world example configuration file.
 
 ```json
 {
-  "output": "res/modules/cloudui-{target}.egg",
+  "output": "res/modules{target}/cloudui.egg",
   "include": [
     "devel/res.py",
+    "../vendor/python/c4dtools/c4dtools",
     "../vendor/python/nr/nr",
     "../vendor/python/cloudui/cloudui"
   ]
