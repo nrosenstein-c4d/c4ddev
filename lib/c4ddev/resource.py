@@ -27,7 +27,8 @@ import re
 import string
 import sys
 import textwrap
-import nr.utils.strex as strex
+
+from nr.parse import strex
 
 __version__ = require('.').__version__
 

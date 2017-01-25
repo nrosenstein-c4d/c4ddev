@@ -23,9 +23,17 @@ import argparse
 import os
 import sys
 
-libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'lib')
-sys.path.append(os.path.join(libdir, 'py-require'))
-import require
+libdir = os.path.join(sys.prefix, 'c4ddev/lib')
+if not os.path.isdir(libdir):
+  libdir = os.path.normpath(__file__ + '../../../lib')
+
+try:
+  import require
+except ImportError as exc:
+  sys.path.append(os.path.join(libdir, 'py-require'))
+  import require
+
+require = require.Require()
 require.path.append(libdir)
 require.path.append(os.path.join(libdir, 'py-localimport'))
 
