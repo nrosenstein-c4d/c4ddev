@@ -92,10 +92,10 @@ setup(
   url = 'https://github.com/NiklasRosenstein/c4ddev',
   install_requires = [str(x.req) for x in parse_requirements('requirements.txt')],
   package_dir = {'': 'cli'},
-  packages = ['c4ddev'],
+  py_modules = ['c4ddev_main'],
   entry_points = dict(
     console_scripts = [
-      'c4ddev = c4ddev.__main__:cli'
+      'c4ddev = c4ddev_main:cli'
     ]
   ),
   data_files = as_data_files('c4ddev', files)

@@ -28,7 +28,7 @@ import sys
 # Bootup the c4ddev/ require package.
 libdir = os.path.join(sys.prefix, 'c4ddev/lib')
 if not os.path.isdir(libdir):
-  libdir = os.path.normpath(__file__ + '../../../../lib')
+  libdir = os.path.normpath(__file__ + '../../../lib')
 require.path.append(libdir)
 require.path.append(os.path.join(libdir, 'py-localimport'))
 
