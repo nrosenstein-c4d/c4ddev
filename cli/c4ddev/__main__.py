@@ -19,54 +19,92 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-import argparse
+import click
+import json
 import os
+import require
 import sys
 
+# Bootup the c4ddev/ require package.
 libdir = os.path.join(sys.prefix, 'c4ddev/lib')
 if not os.path.isdir(libdir):
-  libdir = os.path.normpath(__file__ + '../../../lib')
-
-try:
-  import require
-except ImportError as exc:
-  sys.path.append(os.path.join(libdir, 'py-require'))
-  import require
-
-require = require.Require()
+  libdir = os.path.normpath(__file__ + '../../../../lib')
 require.path.append(libdir)
 require.path.append(os.path.join(libdir, 'py-localimport'))
 
 resource = require('c4ddev/resource')
+_pypkg = require('c4ddev/pypkg')
 
-def main():
-  parser = argparse.ArgumentParser('c4ddev')
-  subparsers = parser.add_subparsers(dest='command')
+@click.group()
+def cli():
+  pass
 
-  symbols_parser = subparsers.add_parser('symbols')
-  symbols_parser.add_argument('-f', '--format', default='class')
-  symbols_parser.add_argument('-o', '--outfile')
-  symbols_parser.add_argument('-d', '--res-dir', default=[], action='append')
 
-  rpkg_parser = subparsers.add_parser('rpkg')
-  rpkg_parser.add_argument('files', metavar='RPKG', nargs='...')
-  rpkg_parser.add_argument('-r', '--res', metavar='DIRECTORY', default='res')
-  rpkg_parser.add_argument('--no-header', action='store_true')
+@cli.command()
+@click.option('-f', '--format', default='class')
+@click.option('-o', '--outfile')
+@click.option('-d', '--res-dir', multiple=True)
+def symbols(format, outfile, res_dir):
+  if res_dir:
+    res_dir = ['res']
+  resource.export_symbols(format, res_dir, outfile=outfile)
 
-  args = parser.parse_args()
 
-  if args.command == 'symbols':
-    if not args.res_dir:
-      args.res_dir = ['res']
-    resource.export_symbols(args.format, args.res_dir, outfile=args.outfile)
-    return 0
-  elif args.command == 'rpkg':
-    if not args.files:
-      rpkg_parser.error("no input files")
-    resource.build_rpkg(args.files, args.res, args.no_header)
-    return 0
+@cli.command()
+@click.argument('files', metavar='RPKG', nargs=-1)
+@click.option('-r', '--res', metavar='DIRETORY', default='res')
+@click.option('--no-header', default=False)
+def rpkg(files, res, no_header):
+  if not files:
+    click.echo("error: no input files", err=True)
+    return 1
+  resource.build_rpkg(files, res, no_header)
 
-  parser.error('invalid command: {0!r}'.format(args.command))
 
-if __name__ == "__main__":
-  sys.exit(main())
+@cli.command()
+@click.argument('config', default='.pypkg')
+def pypkg(config):
+  """
+  Reads a JSON configuration file, by default named `.pypkg`, and uses
+  that information to build a Python Egg from the distributions specified in
+  the file.
+
+  # Example Configuration
+
+  \b
+    {
+      // required fields
+      "output": "res/pymodules-{target}.egg",
+      "include": [
+        "devel/res.py",
+        "devel/requests/requests",
+        "etc.."
+      ]
+      // default fields
+      "zipped": true,
+      "targets": {
+        "2.6": "python2.6",
+        "2.7": "python2.7"
+      },
+    }
+  """
+
+  with open(config) as fp:
+    config = json.load(fp)
+  config.setdefault('zipped', True)
+  config.setdefault('targets', {'2.6': 'python2.6', '2.7': 'python2.7'})
+
+  egg = _pypkg.Egg(config['include'], None, config['zipped'])
+
+  for target, binary in config['targets'].items():
+    outfile = config['output'].format(target=target)
+
+    # TODO: Support setuptools packages
+    #for package in setuptools_packages:
+    #  if not os.path.isabs(package):
+    #    package = os.path.join(source_dir, package)
+    #  bdist_egg(pybin, package, outdir)
+    #  # XXX: Find output filename of egg.
+
+    egg.build(binary, target, outfile)
+    _pypkg.purge(egg.files)

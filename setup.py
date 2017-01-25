@@ -95,7 +95,7 @@ setup(
   packages = ['c4ddev'],
   entry_points = dict(
     console_scripts = [
-      'c4ddev = c4ddev.__main__:main'
+      'c4ddev = c4ddev.__main__:cli'
     ]
   ),
   data_files = as_data_files('c4ddev', files)
