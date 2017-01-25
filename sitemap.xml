@@ -27,10 +27,66 @@
 
     
     <url>
+     <loc>/rpkg/</loc>
+     <lastmod>2017-01-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>/contents/</loc>
+     <lastmod>2017-01-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>/api/</loc>
+     <lastmod>2017-01-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
      <loc>/localimport/</loc>
      <lastmod>2017-01-25</lastmod>
      <changefreq>daily</changefreq>
     </url>
+    
+
+    
+        
+    <url>
+     <loc>/cpp/resources/</loc>
+     <lastmod>2017-01-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/cpp/snippets/</loc>
+     <lastmod>2017-01-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+    
+        
+    <url>
+     <loc>/python/asyncgui/</loc>
+     <lastmod>2017-01-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/python/scripts/</loc>
+     <lastmod>2017-01-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
     
 
 </urlset>
