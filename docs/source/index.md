@@ -1,3 +1,12 @@
+# Welcome to the c4ddev Documentation!
+
+The **c4ddev** project is a set of Cinema 4D plugins, command-line tools and
+utilities for scripting inside of Cinema 4D that aims to make the prototyping,
+development and distribution of Cinema 4D plugins easier.
+
+## License
+
+```
 The MIT License (MIT)
 
 Copyright (c) 2014  Niklas Rosenstein
@@ -19,3 +28,4 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+```

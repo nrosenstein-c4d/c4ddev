@@ -1,0 +1,11 @@
+site_name: c4ddev Documentation
+docs_dir: source
+markdown_extensions:
+  - admonition
+  - codehilite
+theme: material
+pages:
+  - Home: index.md
+  - Changelog: changelog.md
+  - Command-line Tools: cli.md
+  - Localimport: localimport.md

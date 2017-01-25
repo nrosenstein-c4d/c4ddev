@@ -1,6 +1,6 @@
 # c4ddev Changelog
 
-#### v1.3 (current stream)
+#### v1.3 (under development)
 
 - rewrite PyDrawHelper code (cb5aa58)
 - fix reloading of c4ddev plugins by reloading the `require` module (7f61b5b)

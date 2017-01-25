@@ -223,6 +223,7 @@ def export_symbols(format, res_dir=None, outfile=None):
   desc_symbols = {}
 
   def merge_symbols(filename, dest):
+    print(filename)
     symbols, masked = parse_symbols(filename)
     for symbol, value in masked:
       print("Warning ({0}): {1} ({2}) masked".format(
