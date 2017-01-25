@@ -45,7 +45,7 @@ def cli():
 @click.option('-o', '--outfile')
 @click.option('-d', '--res-dir', multiple=True)
 def symbols(format, outfile, res_dir):
-  if res_dir:
+  if not res_dir:
     res_dir = ['res']
   resource.export_symbols(format, res_dir, outfile=outfile)
 

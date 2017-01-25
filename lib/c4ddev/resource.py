@@ -296,7 +296,7 @@ def render_template(__template_string, **context):
   in the *context*. The indentation of the variables is kept.
   '''
 
-  expr = r'^(.*)\{\{(\w+)\}\}'
+  expr = r'^(.*)\{(\w+)\}'
   def replace(match):
     pre = match.group(1)
     name = match.group(2)
