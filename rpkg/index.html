@@ -11,7 +11,7 @@
       
         <link rel="shortcut icon" href="../assets/images/favicon.ico">
       
-      <meta name="generator" content="mkdocs+mkdocs-material#1.0.3">
+      <meta name="generator" content="mkdocs+mkdocs-material#1.0.2">
     
     
       
@@ -32,7 +32,7 @@
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application-f3ab63f78a.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application-1b8b9fdf68.css">
       
       
     
@@ -360,24 +360,26 @@
 and translations by merging all information into a single file. Resource
 packages have the <code>.rpkg</code> suffix and are converted to real Cinema 4D resource
 files by using the <a href="../cli#rpkg"><code>c4ddev rpkg</code></a> command.</p>
-<pre class="codehilite"><code>ResourcePackage
+<div class="codehilite"><pre><span></span>ResourcePackage
 PRIM_CUBE_LENGTH: 1001
   us: Size
   de: Größe
 PRIM_CUBE_SEGMENTS: 1002
   us: Segments
-  de: Segmente</code></pre>
+  de: Segmente
+</pre></div>
 
 
 <p>A file called <code>c4d_symbols.rpkg</code> will be handled special and generate the respective
 <code>c4d_symbols.h</code> and <code>c4d_strings.str</code> files.</p>
-<pre class="codehilite"><code>$ c4ddev.py rpkg res/c4d_symbols.rpkg res/Ocube.rpkg
+<div class="codehilite"><pre><span></span>$ c4ddev.py rpkg res/c4d_symbols.rpkg res/Ocube.rpkg
 Writing c4d_symbols.h ...
 Writing strings_de/c4d_strings.str ...
 Writing strings_us/c4d_strings.str ...
 Writing description/Ocube.h ...
 Writing strings_de/description/Ocube.str ...
-Writing strings_us/description/Ocube.str ...</code></pre>
+Writing strings_us/description/Ocube.str ...
+</pre></div>
 
 
 <h3 id="rpkg-format-information"><code>.rpkg</code> Format Information</h3>
@@ -452,7 +454,7 @@ Writing strings_us/description/Ocube.str ...</code></pre>
       
     </div>
     
-      <script src="../assets/javascripts/application-2afe21e0b2.js"></script>
+      <script src="../assets/javascripts/application-16f434a21a.js"></script>
       <script>var config={url:{base:".."}},app=new Application(config);app.initialize()</script>
       
     
