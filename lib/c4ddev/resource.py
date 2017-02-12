@@ -415,9 +415,10 @@ class ResourcePackage(object):
         error('duplicate symbol "{0}"'.format(name))
 
       lexer.next(cls.Token_Def)
-      value = lexer.next(cls.Token_Number).value
-      lexer.next(cls.Token_Newline, cls.Token_EOF)
-      pkg.symbols[name] = int(value)
+      lexer.next(cls.Token_Number, cls.Token_Newline, cls.Token_EOF)
+      if lexer.token.type == cls.Token_Number:
+        pkg.symbols[name] = int(lexer.token.value)
+        lexer.next(cls.Token_Newline, cls.Token_EOF)
 
       for lang_code, string in cls._parse_localization(lexer, error).items():
         try:
@@ -523,7 +524,7 @@ def build_rpkg(files, res_dir, no_header):
         if rpkg.name != 'c4d_symbols':
           fp.write(rpkg.name)
         fp.write('\n{\n')
-        sort_key = lambda x: rpkg.symbols[x[0]]
+        sort_key = lambda x: rpkg.symbols.get(x[0], 0)
         for symbol, string in sorted(table.items(), key = sort_key):
           # xxx: escape unicode characters
           fp.write('  {} "{}";\n'.format(symbol, escape_unicode(string)))

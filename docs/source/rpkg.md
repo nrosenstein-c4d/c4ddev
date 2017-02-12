@@ -13,6 +13,10 @@ files by using the [`c4ddev rpkg`](cli#rpkg) command.
     PRIM_CUBE_SEGMENTS: 1002
       us: Segments
       de: Segmente
+    # A symbol without ID is placed only into the Stringtable
+    SOME_SEPARATOR_NAME:
+      us: A Separator
+      de: Ein Separator
     # More symbols to follow ...
 
 A file called `c4d_symbols.rpkg` will be handled special and generate the respective
