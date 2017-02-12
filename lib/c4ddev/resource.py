@@ -21,6 +21,7 @@
 Utilities for Cinema 4D resource symbols.
 """
 
+import errno
 import glob
 import os
 import re
@@ -365,6 +366,7 @@ class ResourcePackage(object):
   Token_Symbol = 'symbol'
   Token_Indent = 'indent'
   Token_Whitespace = 'ws'
+  Token_Comment = 'comment'
   Token_EOF = strex.eof
 
   Rules = [
@@ -373,7 +375,8 @@ class ResourcePackage(object):
     strex.Charset(Token_Number, string.digits),
     strex.Charset(Token_Symbol, string.ascii_letters + '_' + string.digits),
     strex.Charset(Token_Indent, string.whitespace, at_column=0),
-    strex.Charset(Token_Whitespace, string.whitespace, skip=True)
+    strex.Charset(Token_Whitespace, string.whitespace, skip=True),
+    strex.Regex(Token_Comment, '#.*$', re.M, skip=True)
   ]
 
   # Seems like these are the only supported language codes for Cinema 4D.
@@ -444,7 +447,7 @@ class ResourcePackage(object):
       if lang in result:
         error('localization for "{0}" already defined'.format(lang))
       lexer.next(cls.Token_Def)
-      content = strex.readline(lexer.scanner).strip()
+      content = lexer.scanner.readline().strip()
       # xxx: There might be better ways to expand \n and \t.
       content = re.sub('(?<!\\\\)\\\\n', '\n', content)
       content = re.sub('(?<!\\\\)\\\\t', '\t', content)
@@ -456,7 +459,7 @@ class ResourcePackage(object):
   def _error(cls, lexer, filename):
     def error(message):
       # xxx: include contextual information with line number and filename
-      raise cls.ParseError(message)
+      raise cls.ParseError('%s (at %s)' % (message, lexer.token))
     return error
 
 

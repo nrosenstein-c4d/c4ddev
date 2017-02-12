@@ -6,12 +6,14 @@ packages have the `.rpkg` suffix and are converted to real Cinema 4D resource
 files by using the [`c4ddev rpkg`](cli#rpkg) command.
 
     ResourcePackage
+    # Basic Attributes
     PRIM_CUBE_LENGTH: 1001
       us: Size
       de: Größe
     PRIM_CUBE_SEGMENTS: 1002
       us: Segments
       de: Segmente
+    # More symbols to follow ...
 
 A file called `c4d_symbols.rpkg` will be handled special and generate the respective
 `c4d_symbols.h` and `c4d_strings.str` files.
@@ -26,11 +28,9 @@ A file called `c4d_symbols.rpkg` will be handled special and generate the respec
 
 ### `.rpkg` Format Information
 
-* the `ResourcePackage` line is mandatory and must be the first line in the file
-* comments are currently not supported
-* assigning a fixed ID number to a symbol is mandatory
-* special characters in the localization are allowed (use `\n` for a newline and `\t` for a tab)
-* if the file is named `c4d_symbols.rpkg`, it will automatically be created in the res folder
+* The `ResourcePackage` line is mandatory and must be the first line in the file
+* Comments begin with a number sign (`#`) and continue until the end of the line
+* Assigning a fixed ID number to a symbol is mandatory
+* Special characters in the localization are allowed (use `\n` for a newline and `\t` for a tab)
+* If the file is named `c4d_symbols.rpkg`, it will automatically be created in the res folder
   directly instead of the descriptions folder
-
-
