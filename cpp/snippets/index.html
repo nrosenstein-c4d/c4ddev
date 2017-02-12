@@ -11,7 +11,7 @@
       
         <link rel="shortcut icon" href="../../assets/images/favicon.ico">
       
-      <meta name="generator" content="mkdocs+mkdocs-material#1.0.2">
+      <meta name="generator" content="mkdocs+mkdocs-material#1.0.3">
     
     
       
@@ -32,7 +32,7 @@
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application-1b8b9fdf68.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application-f3ab63f78a.css">
       
       
     
@@ -365,23 +365,21 @@
 through the <code>C4DOS</code> to add special gadgets to the dialog, and it appears
 that the state &ldquo;no menubar&rdquo; is also represented internally as a dialog
 gadgets.</p>
-<div class="codehilite"><pre><span></span><span class="kr">inline</span> <span class="n">Bool</span> <span class="nf">AddGadget</span><span class="p">(</span><span class="n">GeDialog</span><span class="o">*</span> <span class="n">dlg</span><span class="p">,</span> <span class="n">Int32</span> <span class="n">gadget_type</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">String</span> <span class="k">const</span> <span class="n">name</span><span class="p">;</span>
-  <span class="n">BaseContainer</span> <span class="k">const</span> <span class="n">bc</span><span class="p">;</span>
-  <span class="k">return</span> <span class="n">C4DOS</span><span class="p">.</span><span class="n">Cd</span><span class="o">-&gt;</span><span class="n">AddGadget</span><span class="p">(</span><span class="n">dlg</span><span class="o">-&gt;</span><span class="n">Get</span><span class="p">(),</span> <span class="n">gadget_type</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">bc</span><span class="p">,</span> <span class="k">nullptr</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
+<pre class="codehilite"><code class="language-cpp">inline Bool AddGadget(GeDialog* dlg, Int32 gadget_type) {
+  String const name;
+  BaseContainer const bc;
+  return C4DOS.Cd-&gt;AddGadget(dlg-&gt;Get(), gadget_type, 0, &amp;name, 0, 0, 0, 0, &amp;bc, nullptr);
+}</code></pre>
 
 
 <p>The gadget to remove the dialog menubar is <code>DIALOG_NOMENUBAR</code>. Be aware
 when adding this gadget: Adding it inside <code>CreateLayout()</code> won&rsquo;t work
 and calling it afterwards will crash C4D. You can call the function
 in the dialog&rsquo;s constructor though!</p>
-<div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">MyDialog</span> <span class="o">:</span> <span class="k">public</span> <span class="n">GeDialog</span><span class="p">()</span> <span class="p">{</span>
-<span class="k">public</span><span class="o">:</span>
-  <span class="n">MyDialog</span><span class="p">()</span> <span class="o">:</span> <span class="n">GeDialog</span><span class="p">()</span> <span class="p">{</span> <span class="n">AddGadget</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">DIALOG_NOMENUBAR</span><span class="p">);</span> <span class="p">}</span>
-<span class="p">};</span>
-</pre></div>
+<pre class="codehilite"><code class="language-cpp">class MyDialog : public GeDialog() {
+public:
+  MyDialog() : GeDialog() { AddGadget(this, DIALOG_NOMENUBAR); }
+};</code></pre>
               
             </article>
           </div>
@@ -445,7 +443,7 @@ in the dialog&rsquo;s constructor though!</p>
       
     </div>
     
-      <script src="../../assets/javascripts/application-16f434a21a.js"></script>
+      <script src="../../assets/javascripts/application-2afe21e0b2.js"></script>
       <script>var config={url:{base:"../.."}},app=new Application(config);app.initialize()</script>
       
     

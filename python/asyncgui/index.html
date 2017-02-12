@@ -11,7 +11,7 @@
       
         <link rel="shortcut icon" href="../../assets/images/favicon.ico">
       
-      <meta name="generator" content="mkdocs+mkdocs-material#1.0.2">
+      <meta name="generator" content="mkdocs+mkdocs-material#1.0.3">
     
     
       
@@ -32,7 +32,7 @@
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application-1b8b9fdf68.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application-f3ab63f78a.css">
       
       
     
@@ -344,38 +344,37 @@ background procedures inside of (but not limited to) Cinema 4D. It provides a
 <p class="admonition-title">Note</p>
 <p>Be sure to read the information on <a href="../../localimport">Third Party Modules</a> first.</p>
 </div>
-<div class="codehilite"><pre><span></span><span class="k">with</span> <span class="n">localimport</span><span class="p">(</span><span class="s1">&#39;res/modules&#39;</span><span class="p">):</span>
-  <span class="kn">from</span> <span class="nn">nr</span> <span class="kn">import</span> <span class="n">concurrency</span>
+<pre class="codehilite"><code class="language-python">with localimport('res/modules'):
+  from nr import concurrency
 
-<span class="n">events</span> <span class="o">=</span> <span class="n">concurrency</span><span class="o">.</span><span class="n">EventQueue</span><span class="p">()</span>
-<span class="c1"># Allow dispose of old events of the same type, so we don&#39;t get to process</span>
-<span class="c1"># multiple events of the same type with different data, but only the most recent.</span>
-<span class="n">events</span><span class="o">.</span><span class="n">new_event_type</span><span class="p">(</span><span class="s1">&#39;progress-update&#39;</span><span class="p">,</span> <span class="n">mergable</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="n">events</span><span class="o">.</span><span class="n">new_event_type</span><span class="p">(</span><span class="s1">&#39;status-update&#39;</span><span class="p">,</span> <span class="n">mergable</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+events = concurrency.EventQueue()
+# Allow dispose of old events of the same type, so we don't get to process
+# multiple events of the same type with different data, but only the most recent.
+events.new_event_type('progress-update', mergable=True)
+events.new_event_type('status-update', mergable=True)
 
-<span class="k">class</span> <span class="nc">MyDialog</span><span class="p">(</span><span class="n">c4d</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">GeDialog</span><span class="p">):</span>
+class MyDialog(c4d.gui.GeDialog):
 
-  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="nb">super</span><span class="p">(</span><span class="n">MyDialog</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+  def __init__(self):
+    super(MyDialog, self).__init__()
 
-  <span class="k">def</span> <span class="nf">on_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-    <span class="c1"># Called from the main thread!</span>
-    <span class="k">if</span> <span class="n">event</span> <span class="o">==</span> <span class="s1">&#39;progress-update&#39;</span><span class="p">:</span>
-      <span class="k">pass</span>
-    <span class="k">elif</span> <span class="n">event</span> <span class="o">==</span> <span class="s1">&#39;status-update&#39;</span><span class="p">:</span>
-      <span class="k">pass</span>
+  def on_event(self, event, data):
+    # Called from the main thread!
+    if event == 'progress-update':
+      pass
+    elif event == 'status-update':
+      pass
 
-  <span class="k">def</span> <span class="nf">CoreMessage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg_type</span><span class="p">,</span> <span class="n">bc</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">msg_type</span> <span class="o">==</span> <span class="n">c4d</span><span class="o">.</span><span class="n">EVMSG_CHANGE</span><span class="p">:</span>
-      <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">events</span><span class="o">.</span><span class="n">pop_events</span><span class="p">():</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">on_event</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">MyDialog</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">CoreMessage</span><span class="p">(</span><span class="n">msg_type</span><span class="p">,</span> <span class="n">bc</span><span class="p">)</span>
+  def CoreMessage(self, msg_type, bc):
+    if msg_type == c4d.EVMSG_CHANGE:
+      for event in events.pop_events():
+        self.on_event(event.type, event.data)
+    return super(MyDialog, self).CoreMessage(msg_type, bc)
 
 
-<span class="k">def</span> <span class="nf">some_function_from_a_thread</span><span class="p">():</span>
-  <span class="c1"># ...</span>
-  <span class="n">events</span><span class="o">.</span><span class="n">add_event</span><span class="p">(</span><span class="s1">&#39;progress-update&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;progress&#39;</span><span class="p">:</span> <span class="mf">50.0</span><span class="p">})</span>
-</pre></div>
+def some_function_from_a_thread():
+  # ...
+  events.add_event('progress-update', {'progress': 50.0})</code></pre>
               
             </article>
           </div>
@@ -439,7 +438,7 @@ background procedures inside of (but not limited to) Cinema 4D. It provides a
       
     </div>
     
-      <script src="../../assets/javascripts/application-16f434a21a.js"></script>
+      <script src="../../assets/javascripts/application-2afe21e0b2.js"></script>
       <script>var config={url:{base:"../.."}},app=new Application(config);app.initialize()</script>
       
     
