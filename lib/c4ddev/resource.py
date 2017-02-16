@@ -511,9 +511,11 @@ def build_rpkg(files, res_dir, no_header):
     if rpkg.name == 'c4d_symbols':
       header = os.path.join(res_dir, 'c4d_symbols.h')
       strings_dir = ''
+      strings_name = 'c4d_strings'
     else:
       header = os.path.join(res_dir, 'description', rpkg.name + '.h')
       strings_dir = 'description'
+      strings_name = rpkg.name
 
     makedirs(header, parent = True)
     print('Writing {} ...'.format(os.path.relpath(header, res_dir)))
@@ -531,7 +533,7 @@ def build_rpkg(files, res_dir, no_header):
       fp.write('#endif // {}\n'.format(guard))
 
     for lang_code, table in rpkg.localizations.items():
-      strfile = os.path.join(res_dir, 'strings_' + lang_code, strings_dir, rpkg.name + '.str')
+      strfile = os.path.join(res_dir, 'strings_' + lang_code, strings_dir, strings_name + '.str')
       makedirs(strfile, parent = True)
       print('Writing {} ...'.format(os.path.relpath(strfile, res_dir)))
       with open(strfile, 'w') as fp:
