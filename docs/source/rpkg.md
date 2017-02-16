@@ -13,7 +13,9 @@ files by using the [`c4ddev rpkg`](cli#rpkg) command.
     PRIM_CUBE_SEGMENTS: 1002
       us: Segments
       de: Segmente
-    # A symbol without ID is placed only into the Stringtable
+    # A symbol without ID is placed only into the Stringtable, except for
+    # the c4d_symbols, where the ID is automatically incremented starting
+    # from 10000.
     SOME_SEPARATOR_NAME:
       us: A Separator
       de: Ein Separator

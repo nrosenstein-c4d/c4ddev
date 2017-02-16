@@ -21,6 +21,7 @@
 Utilities for Cinema 4D resource symbols.
 """
 
+import collections
 import errno
 import glob
 import os
@@ -358,6 +359,11 @@ class ResourcePackage(object):
     A dictionary that maps language codes to a dictionary of localized
     strings for the :attr:`symbols`. Keys to this dictionary are the
     symbol names (not IDs!).
+
+  .. attribute:: autoid_counter
+
+    A number that is the next free ID for automatic incrementing. This
+    is only used in `c4d_symbols.rpkg` files.
   '''
 
   Token_Newline = 'newline'
@@ -387,8 +393,9 @@ class ResourcePackage(object):
 
   def __init__(self, name):
     self.name = name
-    self.symbols = {}
-    self.localizations = {}
+    self.symbols = collections.OrderedDict()
+    self.localizations = collections.OrderedDict()
+    self.autoid_counter = 10000
 
   def __repr__(self):
     return '<ResourcePackage name={!r}>'.format(self.name)
@@ -401,6 +408,7 @@ class ResourcePackage(object):
     basename = os.path.basename(filename).rpartition('.')[0]
     if not basename:
       raise ValueError('no resource name')
+    is_c4d_symbols = (basename == 'c4d_symbols')
     pkg = cls(basename)
 
     if lexer.next(cls.Token_Symbol).value != 'ResourcePackage':
@@ -416,15 +424,23 @@ class ResourcePackage(object):
 
       lexer.next(cls.Token_Def)
       lexer.next(cls.Token_Number, cls.Token_Newline, cls.Token_EOF)
+
+      value = None
       if lexer.token.type == cls.Token_Number:
-        pkg.symbols[name] = int(lexer.token.value)
+        value = int(lexer.token.value)
         lexer.next(cls.Token_Newline, cls.Token_EOF)
+      elif is_c4d_symbols:
+        value = pkg.autoid_counter
+        pkg.autoid_counter += 1
+
+      if value is not None:
+        pkg.symbols[name] = value
 
       for lang_code, string in cls._parse_localization(lexer, error).items():
         try:
           table = pkg.localizations[lang_code]
         except KeyError:
-          pkg.localizations[lang_code] = table = {}
+          pkg.localizations[lang_code] = table = collections.OrderedDict()
         table[name] = string
 
       cls._skip_newline(lexer)
@@ -509,13 +525,12 @@ def build_rpkg(files, res_dir, no_header):
       fp.write('#define {}\n'.format(guard))
       fp.write('enum\n')
       fp.write('{\n')
-      for name, value in sorted(rpkg.symbols.items(), key = lambda x: x[1]):
+      for name, value in rpkg.symbols.items():
         fp.write('  {} = {},\n'.format(name, value))
       fp.write('};\n')
       fp.write('#endif // {}\n'.format(guard))
 
-    sort_key = lambda x: x[0]
-    for lang_code, table in sorted(rpkg.localizations.items(), key = sort_key):
+    for lang_code, table in rpkg.localizations.items():
       strfile = os.path.join(res_dir, 'strings_' + lang_code, strings_dir, rpkg.name + '.str')
       makedirs(strfile, parent = True)
       print('Writing {} ...'.format(os.path.relpath(strfile, res_dir)))
@@ -524,8 +539,7 @@ def build_rpkg(files, res_dir, no_header):
         if rpkg.name != 'c4d_symbols':
           fp.write(rpkg.name)
         fp.write('\n{\n')
-        sort_key = lambda x: rpkg.symbols.get(x[0], 0)
-        for symbol, string in sorted(table.items(), key = sort_key):
+        for symbol, string in table.items():
           # xxx: escape unicode characters
           fp.write('  {} "{}";\n'.format(symbol, escape_unicode(string)))
         fp.write('}\n')
