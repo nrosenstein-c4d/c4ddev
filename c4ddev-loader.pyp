@@ -347,7 +347,8 @@ directory = os.path.dirname(__file__)
 context = nodepy.Context()
 context.register_binding('nodepy', nodepy)
 context.register_binding('localimport', nodepy.localimport)
-filename = context.resolve('lib/main', directory, is_main=True)
-module = context.load_module(filename, is_main=True, exec_=False)
-module.namespace.__res__ = __res__
-module.exec_()
+with context:
+  filename = context.resolve('entrypoint.py', directory, is_main=True)
+  module = context.load_module(filename, is_main=True, exec_=False)
+  module.namespace.__res__ = __res__
+  module.exec_()
