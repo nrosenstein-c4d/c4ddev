@@ -23,8 +23,8 @@ import c4d
 import os
 import traceback
 
-__res__ = require('c4ddev/__res__')
-utils = require('c4ddev/utils')
+__res__ = require('../__res__')
+utils = require('../utils')
 
 class DrawPassHelperEditor(c4d.gui.GeDialog):
     DRAWHELPER_EDITOR   = 10001

@@ -12,3 +12,5 @@ to generate the loader plugin.
     $ pip install node.py
     $ ppym install @niklas/c4ddev --global
     $ c4ddev build-loader
+
+In fact, C4DDev uses this mechanism itself for its plugins and features.

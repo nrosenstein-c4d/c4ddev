@@ -1,11 +1,16 @@
 # c4ddev Changelog
 
+  [Node.py]: https://github.com/nodepy/nodepy
+
 #### v1.3 (under development)
 
 - rewrite PyDrawHelper code (cb5aa58)
 - fix reloading of c4ddev plugins by reloading the `require` module (7f61b5b)
 - add option to install `c4ddev` command-line interface
 - add `c4ddev pypkg` command
+- add `c4ddev build-loader` command
+- update C4DDev to be based completely on [Node.py]
+- removed additional dependencies and convenience libraries like `requests` for now
 
 #### v1.2
 

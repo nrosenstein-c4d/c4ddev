@@ -19,7 +19,7 @@
 # THE SOFTWARE.
 
 from __future__ import print_function
-__res__ = require('c4ddev/__res__')
+__res__ = require('../__res__')
 
 import os, sys
 import c4d

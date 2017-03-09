@@ -20,7 +20,7 @@
 
 import c4d
 import compileall
-utils = require('c4ddev/utils')
+utils = require('../utils')
 
 
 class CompileDirectoryCommand(c4d.plugins.CommandData):

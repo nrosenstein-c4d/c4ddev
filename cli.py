@@ -32,8 +32,8 @@ import textwrap
 with open(os.path.join(__directory__, 'package.json')) as fp:
   version = json.load(fp)['version']
 
-resource = require('./lib/c4ddev/resource')
-_pypkg = require('./lib/c4ddev/pypkg')
+resource = require('./lib/resource')
+_pypkg = require('./lib/pypkg')
 
 @click.group()
 def main():
@@ -110,10 +110,10 @@ def pypkg(config):
     _pypkg.purge(egg.files)
 
 @main.command("build-loader")
-@click.option('-e', '--entry-point', default='entrypoint.py')
+@click.option('-e', '--entry-point', default='entrypoint.py', metavar='ENTRYPOINT')
 @click.option('-c', '--compress', is_flag=True)
 @click.option('-m', '--minify', is_flag=True)
-@click.option('-o', '--output')
+@click.option('-o', '--output', metavar='FILENAME')
 def build_loader(entry_point, compress, minify, output):
   """
   Generate a Cinema 4D Python plugin that uses Node.py to load an entrypoint.
@@ -131,8 +131,12 @@ def build_loader(entry_point, compress, minify, output):
   import os
   directory = os.path.dirname(__file__)
   context = nodepy.Context()
+  context.register_binding('nodepy', nodepy)
+  context.register_binding('localimport', nodepy.localimport)
   filename = context.resolve({entry_point!r}, directory, is_main=True)
-  module = context.load_module(filename, is_main=True)
+  module = context.load_module(filename, is_main=True, exec_=False)
+  module.namespace.__res__ = __res__
+  module.exec_()
   ''').lstrip()
 
   result = template.format(

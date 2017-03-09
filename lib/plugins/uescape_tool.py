@@ -20,7 +20,7 @@
 
 import c4d
 import cStringIO
-utils = require('c4ddev/utils')
+utils = require('../utils')
 
 
 def unicode_refreplace(ustring):

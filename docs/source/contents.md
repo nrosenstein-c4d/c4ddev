@@ -1,23 +1,5 @@
 # Contents
 
-## Third-party Modules
-
-When **c4ddev** is installed to Cinema 4D, it provides some useful modules
-out-of-the-box. These are intended to be used for scripting only! Plugins
-should never rely on these modules to be available and instead distribute
-them with the plugin using [`c4ddev pypkg`](cli#pypkg) and
-[`localimport`](localimport).
-
-- [`requests`](https://github.com/kennethreitz/requests)
-- [`py-require`](https://github.com/NiklasRosenstein/py-require)
-
-## Require Modules
-
-These modules must be loaded using the `require` module.
-
-- [`c4ddev`](api)
-- [`localimport`](https://github.com/NiklasRosenstein/py-localimport)
-
 ## Cinema 4D Plugins
 
 c4ddev comes with a bunch of useful plugins for Cinema 4D. These are loaded

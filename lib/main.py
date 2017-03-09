@@ -1,4 +1,4 @@
-# Copyright (C) 2016  Niklas Rosenstein
+# Copyright (c) 2017 Niklas Rosenstein
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -18,44 +18,33 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 """
-This file is an adaption for the ``localimport`` module which is optimized
-to be used in Python Expressions (Tags, Generators, XPresso Nodes) inside
-of Cinema 4D.
-
-.. code:: python
-
-  import c4d
-  import require
-
-  localimport = require('c4ddev/scripting/localimport')
-  with localimport(doc):
-    import twitter
-
-  def main():
-    # ...
+Entry-point for when the C4DDev plugin is loaded by Cinema 4D.
 """
 
 import os
-_localimport = require('localimport')
-importer_cache = {}
+import c4d
 
-def localimport(doc):
-  """
-  This function creates an object of the real ``localimport`` module for
-  the specified :class:`c4d.BaseDocument` object and returns it. We use
-  this technique to avoid re-importing modules evertime you recompile a
-  Python Expression in Cinema 4D.
-  """
+require('./__res__', exports=False).namespace.exports = __res__
 
-  path = doc.GetDocumentPath()
-  if not path or not os.path.isdir(path):
-    raise ValueError('document directory is invalid: {0!r}'.format(doc))
+def load_extensions():
+  extensions = []
+  ext_dir = os.path.join(__directory__, 'plugins')
+  for file in os.listdir(ext_dir):
+    if file.endswith('.py'):
+      extensions.append(require(os.path.join(ext_dir, file)))
+  return extensions
 
-  importer = importer_cache.get(path)
-  if not importer:
-    importer = _localimport(['.'], path)
-    importer_cache[path] = importer
+extensions = load_extensions()
 
-  return importer
+def PluginMessage(msg_type, data):
+  if msg_type == c4d.C4DPL_RELOADPYTHONPLUGINS:
+    reload(require)
+    for mod, path in _added_paths:
+      try: mod.path.remove(path)
+      except ValueError: pass
 
-exports = localimport
+  for extension in extensions:
+    if hasattr(extension, 'PluginMessage'):
+      extension.PluginMessage(msg_type, data)
+
+  return True

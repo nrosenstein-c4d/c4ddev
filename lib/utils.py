@@ -23,7 +23,7 @@ import sys
 import c4d
 import weakref
 
-plugin_dir = None  # initialized from c4ddev.pyp
+plugin_dir = os.path.normpath(os.path.join(__directory__, '..'))
 
 
 def load_resource_bitmap(*parts):
