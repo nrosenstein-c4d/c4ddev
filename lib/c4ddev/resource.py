@@ -32,7 +32,9 @@ import textwrap
 
 from nr.parse import strex
 
-__version__ = require('.').__version__
+import json
+with open(os.path.join(__directory__, '../../package.json')) as fp:
+  __version__ = json.load(fp)['version']
 
 TEMPLATE_CLASS = textwrap.dedent('''
   exec ("""class res(object):

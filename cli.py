@@ -19,28 +19,26 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+if require.main != module:
+  raise RuntimeError('should not be require()d')
+
 import click
 import json
 import os
-import require
 import sys
 
-# Bootup the c4ddev/ require package.
-libdir = os.path.join(sys.prefix, 'c4ddev/lib')
-if not os.path.isdir(libdir):
-  libdir = os.path.normpath(__file__ + '../../../lib')
-require.path.append(libdir)
-require.path.append(os.path.join(libdir, 'py-localimport'))
+with open(os.path.join(__directory__, 'package.json')) as fp:
+  version = json.load(fp)['version']
 
-resource = require('c4ddev/resource')
-_pypkg = require('c4ddev/pypkg')
+resource = require('./lib/c4ddev/resource')
+_pypkg = require('./lib/c4ddev/pypkg')
 
 @click.group()
-def cli():
+def main():
   pass
 
 
-@cli.command()
+@main.command()
 @click.option('-f', '--format', default='class')
 @click.option('-o', '--outfile')
 @click.option('-d', '--res-dir', multiple=True)
@@ -50,7 +48,7 @@ def symbols(format, outfile, res_dir):
   resource.export_symbols(format, res_dir, outfile=outfile)
 
 
-@cli.command()
+@main.command()
 @click.argument('files', metavar='RPKG', nargs=-1)
 @click.option('-r', '--res', metavar='DIRETORY', default='res')
 @click.option('--no-header', default=False)
@@ -61,7 +59,7 @@ def rpkg(files, res, no_header):
   resource.build_rpkg(files, res, no_header)
 
 
-@cli.command()
+@main.command()
 @click.argument('config', default='.pypkg')
 def pypkg(config):
   """
@@ -108,3 +106,41 @@ def pypkg(config):
 
     egg.build(binary, target, outfile)
     _pypkg.purge(egg.files)
+
+@main.command("build-loader")
+@click.option('-e', '--entry-point', is_flag=True)
+@click.option('-c', '--compress', is_flag=True)
+@click.option('-m', '--minify', is_flag=True)
+@click.option('-o', '--output')
+def build_loader(entry_point, compress, minify, output):
+  """
+  Generate a Cinema 4D Python plugin that uses Node.py to load an entrypoint.
+  """
+
+  build_standalone = require('nodepy-standalone-builder').build
+
+  template = '''# Cinema 4D Python Plugin Loader
+  # Generated with c4ddev/scripts/build-loader.py v{version}
+  {nodepy_standalone_blob}
+
+  import os
+  directory = os.path.dirname(__file__)
+  context = nodepy.Context()
+  filename = context.resolve({entry_point!r}, directory, is_main=True)
+  module = context.load_module(filename, is_main=True)
+  '''
+
+  result = template.format(
+    version=version,
+    nodepy_standalone_blob = build_standalone(
+        compress=compress, minify=minify, fullblob=True),
+    entry_point=entry_point)
+
+  if output:
+    with open(output, 'w') as fp:
+      fp.write(result)
+  else:
+    print(result)
+
+
+main()
