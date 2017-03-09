@@ -4,6 +4,7 @@ __pycache__/
 *.pyc@*
 .env/
 docs/site/
+nodepy_modules/
 
 # C extensions
 *.so
