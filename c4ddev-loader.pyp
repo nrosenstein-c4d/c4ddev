@@ -1,7 +1,7 @@
 # Cinema 4D Python Plugin Loader
 # Generated with c4ddev/scripts/build-loader.py v0.1.3
 
-# Node.py v0.0.13
+# Node.py v0.0.14
 
 import base64 as b, types as t, zlib as z; m=t.ModuleType('nodepy'); blob=b'\
 eJyku9eO9MySLXbfT9GYczF7o37toiuSpdEIovfeEw2M6L0pevLpxf63GZ2jSwEf0MVkZmREZsSKtb7\
@@ -21,7 +21,7 @@ lDmn2t/H8RYfoux2iNJvufJy+9fMutf63htbfIv5Hof45u57/t3k52+xv307fVs2db3cepdGUfv3Pi/\
 747yX3Bv/3lH3Wasr+8tf/+zuJkvI2+k/jNyTdM6vpT8Doo+7P5P5aynX+zdlh/++ZvwDwp9X5d9afU\
 +80/9Pt9EazuwC7tV2qsf0dTKK/J3W0fP1ryVJ12d8D//pz+n/9V74u65T91399V91vGdzlNg/tjQ3/\
 9ffnX7jYqvlPIBqnql/uBf2fwPT19V//Fa13wNO9+D+///3/A8Df/8f0r8/9ny//r6KLqvZvydD9n/9\
-+r95u8LgN/X058DfgbyD8O/wPQPr78F0S//719U/fpmKMpjn753Nyn+1/f27b7E/H5v8eumH+WNoq/u\
++r95u8LgN/X058DfgbyDyO/wPQPr78F0S//719U/fpmKMpjn753Nyn+1/f27b7E/H5v8eumH+WNoq/u\
 dItWTTMgztv6Z0t7kbLf75OPzrxZj+a9F8/mt0maIki6Ok+dfAOWbz178cjKM5Q5G7I3zHf/z93e/n+\
 xCv24nfj9d/fHf/ufxN+fM+7XvCX/7996Lav6//97/+x3fcDvF/xv/+85WJZ+u1ywUB0Zkv2dbJQmZR\
 AxCs4HoVynS2bTR0soe2kcOLj9lqXGpnaYYqrJ1TKavXxSeMvjG5rIiBvH6+NityG2KtRzRflrDFkxf\
@@ -337,7 +337,7 @@ cv/2/qXbCYRdd9GZdwMVYddeKSiXS9RwR+H7UzQgpCz0Nxz9cvMKtIPaou96wRq0qPpQeF5mbNiNjgs\
 gc6bKXplA7+mpLyPQbazUwblS91AjMOLRw4SwonpUzbSuaDxrOPaKtz1Db0MpiYK0dnexsm5OstsnMM\
 6u6F526xa76bp367vXZhyaxh681mCZWi/cmtBcBcsFYn9ysCZUG12dExXMPGU2T1j3Z0FxMD7OWKDLI\
 vuvModb4LaDX044rqSPCNSZegoEbnjoJSJdiDOK0Cy6lSm6qJ+qEi7aolCey9xW08Vw8Wd4O7Wo3I/B\
-RlebS/wG6ED0s'
+RlebS/wFGDD0t'
 exec(z.decompress(b.b64decode(blob)), vars(m)); nodepy=m
 del blob, b, t, z, m;
 
@@ -345,6 +345,8 @@ del blob, b, t, z, m;
 import os
 directory = os.path.dirname(__file__)
 context = nodepy.Context()
+context.register_binding('nodepy', nodepy)
+context.register_binding('localimport', nodepy.localimport)
 filename = context.resolve('lib/main', directory, is_main=True)
 module = context.load_module(filename, is_main=True, exec_=False)
 module.namespace.__res__ = __res__
