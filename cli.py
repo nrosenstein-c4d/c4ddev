@@ -133,10 +133,11 @@ def build_loader(entry_point, compress, minify, output):
   context = nodepy.Context()
   context.register_binding('nodepy', nodepy)
   context.register_binding('localimport', nodepy.localimport)
-  filename = context.resolve({entry_point!r}, directory, is_main=True)
-  module = context.load_module(filename, is_main=True, exec_=False)
-  module.namespace.__res__ = __res__
-  module.exec_()
+  with context:
+    filename = context.resolve({entry_point!r}, directory, is_main=True)
+    module = context.load_module(filename, is_main=True, exec_=False)
+    module.namespace.__res__ = __res__
+    module.exec_()
   ''').lstrip()
 
   result = template.format(
