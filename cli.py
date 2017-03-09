@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!node.py
 # Copyright (C) 2016  Niklas Rosenstein
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,8 +24,10 @@ if require.main != module:
 
 import click
 import json
+import nodepy
 import os
 import sys
+import textwrap
 
 with open(os.path.join(__directory__, 'package.json')) as fp:
   version = json.load(fp)['version']
@@ -108,7 +110,7 @@ def pypkg(config):
     _pypkg.purge(egg.files)
 
 @main.command("build-loader")
-@click.option('-e', '--entry-point', is_flag=True)
+@click.option('-e', '--entry-point', default='entrypoint.py')
 @click.option('-c', '--compress', is_flag=True)
 @click.option('-m', '--minify', is_flag=True)
 @click.option('-o', '--output')
@@ -119,8 +121,11 @@ def build_loader(entry_point, compress, minify, output):
 
   build_standalone = require('nodepy-standalone-builder').build
 
-  template = '''# Cinema 4D Python Plugin Loader
+  template = textwrap.dedent('''
+  # Cinema 4D Python Plugin Loader
   # Generated with c4ddev/scripts/build-loader.py v{version}
+
+  # Node.py v{nodepy_version}
   {nodepy_standalone_blob}
 
   import os
@@ -128,10 +133,11 @@ def build_loader(entry_point, compress, minify, output):
   context = nodepy.Context()
   filename = context.resolve({entry_point!r}, directory, is_main=True)
   module = context.load_module(filename, is_main=True)
-  '''
+  ''').lstrip()
 
   result = template.format(
     version=version,
+    nodepy_version=nodepy.__version__,
     nodepy_standalone_blob = build_standalone(
         compress=compress, minify=minify, fullblob=True),
     entry_point=entry_point)
