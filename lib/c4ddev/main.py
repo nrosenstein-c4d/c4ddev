@@ -52,3 +52,15 @@ def PluginMessage(msg_type, data):
   return True
 
 sys.modules['c4ddev'] = module.namespace
+
+from pprint import pprint
+pprint(require.context.importer.path)
+pprint(sys.path)
+
+# Pre-load all components of the c4ddev library, since some require third
+# party Python modules which can not be loaded at a later point when Node.py's
+# localimpot context is no longer present.
+require('./pypkg')
+require('./resource')
+require('./utils')
+require('./scripting/localimport')

@@ -130,7 +130,7 @@ def build_loader(entry_point, compress, minify, output):
 
   import os
   directory = os.path.dirname(__file__)
-  context = nodepy.Context()
+  context = nodepy.Context(directory)
   context.register_binding('nodepy', nodepy)
   context.register_binding('localimport', nodepy.localimport)
   with context:
@@ -145,7 +145,7 @@ def build_loader(entry_point, compress, minify, output):
     nodepy_version=nodepy.__version__,
     nodepy_standalone_blob = build_standalone(
         compress=compress, minify=minify, fullblob=True),
-    entry_point=entry_point)
+    entry_point=str(entry_point))
 
   if output:
     with open(output, 'w') as fp:
