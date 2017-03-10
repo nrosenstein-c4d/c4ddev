@@ -25,6 +25,7 @@ import os
 import c4d
 
 require('./__res__', exports=False).namespace.exports = __res__
+require.context.path.append(os.path.dirname(__directory__))
 
 def load_extensions():
   extensions = []
