@@ -1,9 +1,6 @@
 # Contents
 
-## Cinema 4D Plugins
-
-c4ddev comes with a bunch of useful plugins for Cinema 4D. These are loaded
-from `.py` files in the plugin's `ext/` directory.
+C4DDev comes with a bunch of useful plugins.
 
 ### Unicode Escape Tool
 

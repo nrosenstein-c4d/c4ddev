@@ -2,11 +2,11 @@
 
 The **c4ddev** API provides some utilities that are especially useful for
 scripting and prototyping in Cinema 4D. All contents of the `c4ddev` library
-must be loaded with the `require` module (which is delivered with **c4ddev**,
-see the [Contents](contents) page for more information).
+must be loaded with the `c4ddev.require()` function (which is the `require()`
+function from the `c4ddev/main` module, exported by Node.py).
 
 ```python
-import require
+from c4ddev import require
 localimport = require('c4ddev/scripting/localimport')
 # This is a version of localimport that is tuned to work from inside any
 # scripting context in Cinema 4D (Tag, Object, XPresso Node).
