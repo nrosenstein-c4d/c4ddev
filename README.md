@@ -19,7 +19,7 @@ contents of this archive into your Cinema 4D plugins directory.
 
 ## Installation (Commandline Tools)
 
-    pip install c4ddev
+    $ ppym install @niklas/c4ddev
 
 ## License
 
