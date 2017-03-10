@@ -5,7 +5,7 @@ and translations by merging all information into a single file. Resource
 packages have the `.rpkg` suffix and are converted to real Cinema 4D resource
 files by using the [`c4ddev rpkg`](cli#rpkg) command.
 
-    ResourcePackage
+    ResourcePackage(Ocube)  # Mandatory, (XXX) part is optional
     # Basic Attributes
     PRIM_CUBE_LENGTH: 1001
       us: Size

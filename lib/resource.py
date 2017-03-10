@@ -375,11 +375,15 @@ class ResourcePackage(object):
   Token_Indent = 'indent'
   Token_Whitespace = 'ws'
   Token_Comment = 'comment'
+  Token_Popen = 'popen'
+  Token_Pclose = 'pclose'
   Token_EOF = strex.eof
 
   Rules = [
     strex.Keyword(Token_Newline, '\n'),
     strex.Keyword(Token_Def, ':'),
+    strex.Keyword(Token_Popen, '('),
+    strex.Keyword(Token_Pclose, ')'),
     strex.Charset(Token_Number, string.digits),
     strex.Charset(Token_Symbol, string.ascii_letters + '_' + string.digits),
     strex.Charset(Token_Indent, string.whitespace, at_column=0),
@@ -410,11 +414,15 @@ class ResourcePackage(object):
     basename = os.path.basename(filename).rpartition('.')[0]
     if not basename:
       raise ValueError('no resource name')
-    is_c4d_symbols = (basename == 'c4d_symbols')
-    pkg = cls(basename)
 
     if lexer.next(cls.Token_Symbol).value != 'ResourcePackage':
       error('expected "ResourcePackage"')
+    if lexer.accept(cls.Token_Popen):
+      basename = lexer.next(cls.Token_Symbol).value
+      lexer.next(cls.Token_Pclose)
+
+    is_c4d_symbols = (basename == 'c4d_symbols')
+    pkg = cls(basename)
 
     cls._skip_newline(lexer)
 
