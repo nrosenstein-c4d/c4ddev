@@ -15,5 +15,14 @@
   "python-dependencies": {
     "click": ">=6.7",
     "nr": ">=1.4.3"
+  },
+  "dist": {
+    "exclude_files": [
+      ".pubfile",
+      "c4ddev-loader.pyp",
+      "docs/*",
+      "plugins/*",
+      "res/*"
+    ]
   }
 }
