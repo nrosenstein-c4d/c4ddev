@@ -21,6 +21,8 @@
 Utilities for Cinema 4D resource symbols.
 """
 
+from __future__ import print_function
+
 import collections
 import errno
 import glob

@@ -23,6 +23,7 @@ Entry-point for when the C4DDev plugin is loaded by Cinema 4D.
 
 import os
 import c4d
+import sys
 
 require('./__res__', exports=False).namespace.exports = __res__
 require.context.path.append(os.path.dirname(__directory__))
@@ -49,3 +50,5 @@ def PluginMessage(msg_type, data):
       extension.PluginMessage(msg_type, data)
 
   return True
+
+sys.modules['c4ddev'] = module.namespace
