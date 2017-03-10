@@ -21,7 +21,7 @@
 import os
 import c4d
 import zipfile
-utils = require('../utils')
+utils = require('c4ddev/utils')
 
 
 PLUGIN_ID = 1033713

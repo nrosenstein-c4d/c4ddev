@@ -358,3 +358,6 @@ with context:
   module = context.load_module(filename, is_main=True, exec_=False)
   module.namespace.__res__ = __res__
   module.exec_()
+
+if hasattr(module.namespace, 'PluginMessage'):
+  PluginMessage = module.namespace.PluginMessage

@@ -138,6 +138,9 @@ def build_loader(entry_point, compress, minify, output):
     module = context.load_module(filename, is_main=True, exec_=False)
     module.namespace.__res__ = __res__
     module.exec_()
+
+  if hasattr(module.namespace, 'PluginMessage'):
+    PluginMessage = module.namespace.PluginMessage
   ''').lstrip()
 
   result = template.format(

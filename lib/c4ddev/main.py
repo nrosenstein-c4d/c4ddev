@@ -28,15 +28,21 @@ import sys
 require('./__res__', exports=False).namespace.exports = __res__
 require.context.path.append(os.path.dirname(__directory__))
 
+# Pre-load all components of the c4ddev library, since some require third
+# party Python modules which can not be loaded at a later point when Node.py's
+# localimpot context is no longer present.
+require('./pypkg')
+require('./resource')
+require('./utils')
+require('./scripting/localimport')
+
 def load_extensions():
   extensions = []
-  ext_dir = os.path.join(__directory__, 'plugins')
+  ext_dir = os.path.join(__directory__, '../../plugins')
   for file in os.listdir(ext_dir):
     if file.endswith('.py'):
       extensions.append(require(os.path.join(ext_dir, file)))
   return extensions
-
-extensions = load_extensions()
 
 def PluginMessage(msg_type, data):
   if msg_type == c4d.C4DPL_RELOADPYTHONPLUGINS:
@@ -51,12 +57,5 @@ def PluginMessage(msg_type, data):
 
   return True
 
+extensions = load_extensions()
 sys.modules['c4ddev'] = module.namespace
-
-# Pre-load all components of the c4ddev library, since some require third
-# party Python modules which can not be loaded at a later point when Node.py's
-# localimpot context is no longer present.
-require('./pypkg')
-require('./resource')
-require('./utils')
-require('./scripting/localimport')
