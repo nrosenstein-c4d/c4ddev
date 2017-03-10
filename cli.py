@@ -32,8 +32,8 @@ import textwrap
 with open(os.path.join(__directory__, 'package.json')) as fp:
   version = json.load(fp)['version']
 
-resource = require('./lib/resource')
-_pypkg = require('./lib/pypkg')
+resource = require('./lib/c4ddev/resource')
+_pypkg = require('./lib/c4ddev/pypkg')
 
 @click.group()
 def main():

@@ -348,7 +348,7 @@ context = nodepy.Context()
 context.register_binding('nodepy', nodepy)
 context.register_binding('localimport', nodepy.localimport)
 with context:
-  filename = context.resolve('entrypoint.py', directory, is_main=True)
+  filename = context.resolve('lib/c4ddev/main', directory, is_main=True)
   module = context.load_module(filename, is_main=True, exec_=False)
   module.namespace.__res__ = __res__
   module.exec_()

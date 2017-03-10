@@ -33,7 +33,7 @@ import textwrap
 from nr.parse import strex
 
 import json
-with open(os.path.join(__directory__, '../package.json')) as fp:
+with open(os.path.join(__directory__, '../../package.json')) as fp:
   __version__ = json.load(fp)['version']
 
 TEMPLATE_CLASS = textwrap.dedent('''
