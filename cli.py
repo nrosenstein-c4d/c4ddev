@@ -26,14 +26,44 @@ import click
 import json
 import nodepy
 import os
+import subprocess
 import sys
 import textwrap
+
+try:
+  from urllib.request import urlopen
+except ImportError:
+  from urllib2 import urlopen
 
 with open(os.path.join(__directory__, 'package.json')) as fp:
   version = json.load(fp)['version']
 
 resource = require('./lib/c4ddev/resource')
 _pypkg = require('./lib/c4ddev/pypkg')
+
+
+def get_c4d_dir(c4d_dir=None):
+  if not c4d_dir:
+    # Search the parent directories.
+    c4d_dir = os.getcwd()
+    while True:
+      res_modules = os.path.join(c4d_dir, 'resource/modules')
+      if os.path.isdir(res_modules):
+        break
+      dirname = os.path.dirname(c4d_dir)
+      if dirname == c4d_dir:
+        raise ValueError('C4D application directory could not be determined')
+      c4d_dir = dirname
+  return c4d_dir
+
+
+def get_c4d_python(c4d_dir):
+  # TODO: Support R15 with the old folder structure.
+  name = 'Python.win64.framework' if os.name == 'nt' else 'Python.mac.framework'
+  # TODO: Make sure that 'python' is the right executable name on Mac OS.
+  binname = 'python.exe' if os.name == 'nt' else 'python'
+  return os.path.join(c4d_dir, 'resource/modules/python', name, binname)
+
 
 @click.group()
 def main():
@@ -109,6 +139,7 @@ def pypkg(config):
     egg.build(binary, target, outfile)
     _pypkg.purge(egg.files)
 
+
 @main.command("build-loader")
 @click.option('-e', '--entry-point', default='entrypoint.py', metavar='ENTRYPOINT')
 @click.option('-c', '--compress', is_flag=True)
@@ -155,6 +186,45 @@ def build_loader(entry_point, compress, minify, output):
       fp.write(result)
   else:
     print(result)
+
+
+@main.command("pip-get")
+@click.option('--c4d', metavar='DIRECTORY')
+def pip_get(c4d):
+  """
+  Installs Pip into the Cinema 4D Python distribution. Specify the path to
+  Cinema 4D explicitly or run this command from inside the Cinema 4D application
+  directory.
+  """
+
+  c4d = get_c4d_dir(c4d)
+  python = get_c4d_python(c4d)
+
+  print('Grabbing recent get-pip.py ...')
+  with urlopen('https://bootstrap.pypa.io/get-pip.py') as fp:
+    script = fp.read()
+
+  print('Running get-pip.py ...')
+  process = subprocess.Popen([python, '-'], stdin=subprocess.PIPE)
+  process.communicate(input=script)
+  res = process.wait()
+  if res != 0:
+    print('Error: get-pip.py failed')
+
+
+@main.command(context_settings={'ignore_unknown_options': True})
+@click.argument('args', nargs=-1, type=click.UNPROCESSED)
+@click.option('--c4d', metavar='DIRECTORY')
+def pip(c4d, args):
+  """
+  Invokes Pip in the current Cinema 4D Python distribution. Must be used from
+  inside the Cinema 4D applications directory or specified with --c4d.
+  """
+
+  c4d = get_c4d_dir(c4d)
+  python = get_c4d_python(c4d)
+  res = subprocess.call([python, '-m', 'pip'] + list(args))
+  sys.exit(res)
 
 
 main()

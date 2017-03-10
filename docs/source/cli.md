@@ -89,6 +89,12 @@ exec ("""class res(object):
  res=res()""")
 ```
 
+__Available Formats__
+
+  - Python class (`class`) [default] -- Can be copied into the Python plugin source
+  - Python file (`file`)  -- Can be loaded as a module (make use of [`localimport`](localimport))
+  - JSON (`json`) -- Can be loaded using the `json` module
+
 
 ### build-loader
 
@@ -112,8 +118,27 @@ context, as it comes built-in with Node.py.
 
   [Node.py]: https://github.com/nodepy/nodepy
 
-__Available Formats__
 
-  - Python class (`class`) [default] -- Can be copied into the Python plugin source
-  - Python file (`file`)  -- Can be loaded as a module (make use of [`localimport`](localimport))
-  - JSON (`json`) -- Can be loaded using the `json` module
+### pip-get
+
+    Usage: c4ddev pip-get [OPTIONS]
+
+      Installs Pip into the Cinema 4D Python distribution. Specify the path to
+      Cinema 4D explicitly or run this command from inside the Cinema 4D
+      application directory.
+
+    Options:
+      --c4d DIRECTORY
+      --help      Show this message and exit.
+
+
+### pip
+
+    Usage: c4ddev pip [OPTIONS] [ARGS]...
+
+      Invokes Pip in the current Cinema 4D Python distribution. Must be used
+      from inside the Cinema 4D applications directory or specified with --c4d.
+
+    Options:
+      --c4d DIRECTORY
+      --help      Show this message and exit.
