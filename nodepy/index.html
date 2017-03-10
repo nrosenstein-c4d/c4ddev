@@ -15,7 +15,7 @@
     
     
       
-        <title>Resource Packages - c4ddev Documentation</title>
+        <title>Using Node.py in C4D - c4ddev Documentation</title>
       
     
     
@@ -72,7 +72,7 @@
             
               
             
-            Resource Packages
+            Using Node.py in C4D
           
         </span>
       </div>
@@ -165,45 +165,11 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
-    
-      
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="toc">
-        Resource Packages
-      </label>
-    
-    <a href="./" title="Resource Packages" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../rpkg/" title="Resource Packages" class="md-nav__link">
       Resource Packages
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#rpkg-format-information" title=".rpkg Format Information" class="md-nav__link">
-    .rpkg Format Information
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
     
@@ -223,11 +189,18 @@
       
       
 
+  
 
-  <li class="md-nav__item">
-    <a href="../nodepy/" title="Using Node.py in C4D" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+    
+    <a href="./" title="Using Node.py in C4D" class="md-nav__link md-nav__link--active">
       Using Node.py in C4D
     </a>
+    
   </li>
 
     
@@ -365,20 +338,6 @@
 <nav class="md-nav md-nav--secondary">
   
   
-    
-  
-  
-    <label class="md-nav__title" for="toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#rpkg-format-information" title=".rpkg Format Information" class="md-nav__link">
-    .rpkg Format Information
-  </a>
-  
-</li>
-      
-    </ul>
   
 </nav>
                   </div>
@@ -391,50 +350,24 @@
                
               
                 
-                <h1 id="resource-packages">Resource Packages</h1>
-<p>Resource packages allow you to more efficiently manage plugin resource files
-and translations by merging all information into a single file. Resource
-packages have the <code>.rpkg</code> suffix and are converted to real Cinema 4D resource
-files by using the <a href="../cli#rpkg"><code>c4ddev rpkg</code></a> command.</p>
-<div class="codehilite"><pre><span></span>ResourcePackage(Ocube)  # Mandatory, (XXX) part is optional
-# Basic Attributes
-PRIM_CUBE_LENGTH: 1001
-  us: Size
-  de: Größe
-PRIM_CUBE_SEGMENTS: 1002
-  us: Segments
-  de: Segmente
-# A symbol without ID is placed only into the Stringtable, except for
-# the c4d_symbols, where the ID is automatically incremented starting
-# from 10000.
-SOME_SEPARATOR_NAME:
-  us: A Separator
-  de: Ein Separator
-# More symbols to follow ...
+                  <h1>Using Node.py in C4D</h1>
+                
+                <p>[Node.py] is an isolated environment with a new way to load other Python
+modules using a <code>require()</code> function. It already makes use of the
+<a href="../localimport"><code>localimport</code></a> technique, which allows you to still use standard
+third party Python modules.</p>
+<p>C4DDev provides a script that can build a loader plugin that encapsulates a
+Node.py standalone version. To create such a loader, first install Node.py,
+which will also give you access to [PPYM], its package manager. Then, instal
+C4DDev via PPYM globally to get access to its command-line. The last step is
+to generate the loader plugin.</p>
+<div class="codehilite"><pre><span></span>$ pip install node.py
+$ ppym install @niklas/c4ddev --global
+$ c4ddev build-loader
 </pre></div>
 
 
-<p>A file called <code>c4d_symbols.rpkg</code> will be handled special and generate the respective
-<code>c4d_symbols.h</code> and <code>c4d_strings.str</code> files.</p>
-<div class="codehilite"><pre><span></span>$ c4ddev.py rpkg res/c4d_symbols.rpkg res/Ocube.rpkg
-Writing c4d_symbols.h ...
-Writing strings_de/c4d_strings.str ...
-Writing strings_us/c4d_strings.str ...
-Writing description/Ocube.h ...
-Writing strings_de/description/Ocube.str ...
-Writing strings_us/description/Ocube.str ...
-</pre></div>
-
-
-<h3 id="rpkg-format-information"><code>.rpkg</code> Format Information</h3>
-<ul>
-<li>The <code>ResourcePackage</code> line is mandatory and must be the first line in the file</li>
-<li>Comments begin with a number sign (<code>#</code>) and continue until the end of the line</li>
-<li>Assigning a fixed ID number to a symbol is mandatory</li>
-<li>Special characters in the localization are allowed (use <code>\n</code> for a newline and <code>\t</code> for a tab)</li>
-<li>If the file is named <code>c4d_symbols.rpkg</code>, it will automatically be created in the res folder
-  directly instead of the descriptions folder</li>
-</ul>
+<p>In fact, C4DDev uses this mechanism itself for its plugins and features.</p>
               
               
             </article>
@@ -448,7 +381,7 @@ Writing strings_us/description/Ocube.str ...
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../cli/" title="Command-line Tools" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../contents/" title="C4DDev Contents" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -457,19 +390,19 @@ Writing strings_us/description/Ocube.str ...
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Command-line Tools
+                C4DDev Contents
               </span>
             </div>
           </a>
         
         
-          <a href="../contents/" title="C4DDev Contents" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../api/" title="API Documentation" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                C4DDev Contents
+                API Documentation
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
