@@ -420,6 +420,8 @@ class ResourcePackage(object):
     if not basename:
       raise ValueError('no resource name')
 
+    cls._skip_newline(lexer)
+
     if lexer.next(cls.Token_Symbol).value != 'ResourcePackage':
       error('expected "ResourcePackage"')
     if lexer.accept(cls.Token_Popen):

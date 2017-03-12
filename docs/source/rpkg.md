@@ -5,27 +5,36 @@ and translations by merging all information into a single file. Resource
 packages have the `.rpkg` suffix and are converted to real Cinema 4D resource
 files by using the [`c4ddev rpkg`](cli#rpkg) command.
 
-    ResourcePackage(Ocube)  # Mandatory, (XXX) part is optional
+    # Must be the first statement in a .rpkg file. The (XXX) part is optional.
+    ResourcePackage(Ocube)
+
+    # It is common to assign the actual Plugin ID already in the description
+    # resource header file, so people can just include the header and also have
+    # the plugin ID available. In our description, we also use it as the object
+    # name (i.e. `NAME Ocube;` ).
     Ocube: 5405
       us: Cube
       de: Würfel
-    # Save ourselves some writing.
+
+    # We can save ourselves some writing by using SetPrefix().
     SetPrefix(PRIM_CUBE_)
-    # Basic Attributes
+
     LENGTH: 1001
       us: Size
       de: Größe
     SEGMENTS: 1002
       us: Segments
       de: Segmente
+
+    # Unset the prefix.
     SetPrefix()
+
     # A symbol without ID is placed only into the Stringtable, except for
     # the c4d_symbols, where the ID is automatically incremented starting
     # from 10000.
     DEBUGSECTION:
       us: Debug Section
       de: Debug Bereich
-    # More symbols to follow ...
 
 A file called `c4d_symbols.rpkg` will be handled special and generate the respective
 `c4d_symbols.h` and `c4d_strings.str` files.

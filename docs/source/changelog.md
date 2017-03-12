@@ -7,6 +7,7 @@
 *ResourcePackage*
 
 - add `SetPrefix()` keyword
+- allow newlines and skippable tokens before the `ResourcePackage` statement
 
 ### v0.1.3
 
