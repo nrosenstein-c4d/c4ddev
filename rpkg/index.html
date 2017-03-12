@@ -71,6 +71,10 @@
           
             
               
+                <span class="md-header-nav__parent">
+                  Contents
+                </span>
+              
             
             Resource Packages
           
@@ -155,8 +159,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../cli/" title="Command-line Tools" class="md-nav__link">
-      Command-line Tools
+    <a href="../plugins/" title="Plugins" class="md-nav__link">
+      Plugins
     </a>
   </li>
 
@@ -164,6 +168,51 @@
       
       
       
+
+
+  <li class="md-nav__item">
+    <a href="../cli/" title="CLI" class="md-nav__link">
+      CLI
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../api/" title="Scripting API" class="md-nav__link">
+      Scripting API
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" checked>
+    
+    <label class="md-nav__link" for="nav-6">
+      Contents
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Contents
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
 
   
 
@@ -206,22 +255,10 @@
     
   </li>
 
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../contents/" title="C4DDev Contents" class="md-nav__link">
-      C4DDev Contents
-    </a>
-  </li>
-
-    
-      
-      
-      
+        
+          
+          
+          
 
 
   <li class="md-nav__item">
@@ -230,28 +267,21 @@
     </a>
   </li>
 
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../api/" title="API Documentation" class="md-nav__link">
-      API Documentation
-    </a>
-  </li>
-
-    
-      
-      
-      
+        
+          
+          
+          
 
 
   <li class="md-nav__item">
     <a href="../localimport/" title="Localimport" class="md-nav__link">
       Localimport
     </a>
+  </li>
+
+        
+      </ul>
+    </nav>
   </li>
 
     
@@ -262,13 +292,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
     
-    <label class="md-nav__link" for="nav-9">
+    <label class="md-nav__link" for="nav-7">
       C++ Information
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-9">
+      <label class="md-nav__title" for="nav-7">
         C++ Information
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -310,13 +340,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-10" type="checkbox" id="nav-10">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
     
-    <label class="md-nav__link" for="nav-10">
+    <label class="md-nav__link" for="nav-8">
       Python Information
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-10">
+      <label class="md-nav__title" for="nav-8">
         Python Information
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -397,19 +427,25 @@ and translations by merging all information into a single file. Resource
 packages have the <code>.rpkg</code> suffix and are converted to real Cinema 4D resource
 files by using the <a href="../cli#rpkg"><code>c4ddev rpkg</code></a> command.</p>
 <div class="codehilite"><pre><span></span>ResourcePackage(Ocube)  # Mandatory, (XXX) part is optional
+Ocube: 5405
+  us: Cube
+  de: Würfel
+# Save ourselves some writing.
+SetPrefix(PRIM_CUBE_)
 # Basic Attributes
-PRIM_CUBE_LENGTH: 1001
+LENGTH: 1001
   us: Size
   de: Größe
-PRIM_CUBE_SEGMENTS: 1002
+SEGMENTS: 1002
   us: Segments
   de: Segmente
+SetPrefix()
 # A symbol without ID is placed only into the Stringtable, except for
 # the c4d_symbols, where the ID is automatically incremented starting
 # from 10000.
-SOME_SEPARATOR_NAME:
-  us: A Separator
-  de: Ein Separator
+DEBUGSECTION:
+  us: Debug Section
+  de: Debug Bereich
 # More symbols to follow ...
 </pre></div>
 
@@ -448,7 +484,7 @@ Writing strings_us/description/Ocube.str ...
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../cli/" title="Command-line Tools" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../api/" title="Scripting API" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -457,19 +493,19 @@ Writing strings_us/description/Ocube.str ...
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Command-line Tools
+                Scripting API
               </span>
             </div>
           </a>
         
         
-          <a href="../contents/" title="C4DDev Contents" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../nodepy/" title="Using Node.py in C4D" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                C4DDev Contents
+                Using Node.py in C4D
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

@@ -4,7 +4,7 @@
     
     <url>
      <loc>/</loc>
-     <lastmod>2017-03-10</lastmod>
+     <lastmod>2017-03-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -12,7 +12,15 @@
     
     <url>
      <loc>/changelog/</loc>
-     <lastmod>2017-03-10</lastmod>
+     <lastmod>2017-03-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>/plugins/</loc>
+     <lastmod>2017-03-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -20,31 +28,7 @@
     
     <url>
      <loc>/cli/</loc>
-     <lastmod>2017-03-10</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>/rpkg/</loc>
-     <lastmod>2017-03-10</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>/contents/</loc>
-     <lastmod>2017-03-10</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>/nodepy/</loc>
-     <lastmod>2017-03-10</lastmod>
+     <lastmod>2017-03-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -52,30 +36,44 @@
     
     <url>
      <loc>/api/</loc>
-     <lastmod>2017-03-10</lastmod>
+     <lastmod>2017-03-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
 
     
+        
     <url>
-     <loc>/localimport/</loc>
-     <lastmod>2017-03-10</lastmod>
+     <loc>/rpkg/</loc>
+     <lastmod>2017-03-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
+        
+    <url>
+     <loc>/nodepy/</loc>
+     <lastmod>2017-03-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/localimport/</loc>
+     <lastmod>2017-03-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
     
 
     
         
     <url>
      <loc>/cpp/resources/</loc>
-     <lastmod>2017-03-10</lastmod>
+     <lastmod>2017-03-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/cpp/snippets/</loc>
-     <lastmod>2017-03-10</lastmod>
+     <lastmod>2017-03-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -85,13 +83,13 @@
         
     <url>
      <loc>/python/asyncgui/</loc>
-     <lastmod>2017-03-10</lastmod>
+     <lastmod>2017-03-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/python/scripts/</loc>
-     <lastmod>2017-03-10</lastmod>
+     <lastmod>2017-03-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
         

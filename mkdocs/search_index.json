@@ -17,7 +17,7 @@
         },
         {
             "location": "/changelog/",
-            "text": "c4ddev Changelog\n\n\nv1.3 (under development)\n\n\n\n\nrewrite PyDrawHelper code (cb5aa58)\n\n\nfix reloading of c4ddev plugins by reloading the \nrequire\n module (7f61b5b)\n\n\nadd option to install \nc4ddev\n command-line interface\n\n\nadd \nc4ddev pypkg\n command\n\n\nadd \nc4ddev build-loader\n command\n\n\nupdate C4DDev to be based completely on \nNode.py\n\n\nremoved additional dependencies and convenience libraries like \nrequests\n for now\n\n\n\n\nv1.2\n\n\n\n\nupdate \nrequire\n module to v0.10\n\n\nmerge PyDrawHelper plugin\n\n\nmerge \nPyShader\n plugin\n\n\n\n\nv1.1\n\n\n\n\nadd \n.pubfile\n for \ngit-publish\n\n\nadd \nlocalimport\n v1.4.16 module\n\n\nadd \nrequire\n v0.8 module\n\n\nadd \nrequests\n v2.10.0 module\n\n\nrestructure c4ddev plugins to be loaded with \nrequire()\n\n\nrestructure \nc4ddev\n modules to be loaded with \nrequire()",
+            "text": "c4ddev Changelog\n\n\nv0.1.4 (unreleased)\n\n\nResourcePackage\n\n\n\n\nadd \nSetPrefix()\n keyword\n\n\n\n\nv0.1.3\n\n\n\n\nrewrite PyDrawHelper code (cb5aa58)\n\n\nfix reloading of c4ddev plugins by reloading the \nrequire\n module (7f61b5b)\n\n\nadd option to install \nc4ddev\n command-line interface\n\n\nadd \nc4ddev pypkg\n command\n\n\nadd \nc4ddev build-loader\n command\n\n\nupdate C4DDev to be based completely on \nNode.py\n\n\nremoved additional dependencies and convenience libraries like \nrequests\n for now\n\n\nadd \nResourcePackage(resource_name)\n syntax\n\n\n\n\nv1.2\n\n\n\n\nupdate \nrequire\n module to v0.10\n\n\nmerge PyDrawHelper plugin\n\n\nmerge \nPyShader\n plugin\n\n\n\n\nv1.1\n\n\n\n\nadd \n.pubfile\n for \ngit-publish\n\n\nadd \nlocalimport\n v1.4.16 module\n\n\nadd \nrequire\n v0.8 module\n\n\nadd \nrequests\n v2.10.0 module\n\n\nrestructure c4ddev plugins to be loaded with \nrequire()\n\n\nrestructure \nc4ddev\n modules to be loaded with \nrequire()",
             "title": "Changelog"
         },
         {
@@ -26,9 +26,14 @@
             "title": "c4ddev Changelog"
         },
         {
-            "location": "/changelog/#v13-under-development",
-            "text": "rewrite PyDrawHelper code (cb5aa58)  fix reloading of c4ddev plugins by reloading the  require  module (7f61b5b)  add option to install  c4ddev  command-line interface  add  c4ddev pypkg  command  add  c4ddev build-loader  command  update C4DDev to be based completely on  Node.py  removed additional dependencies and convenience libraries like  requests  for now",
-            "title": "v1.3 (under development)"
+            "location": "/changelog/#v014-unreleased",
+            "text": "ResourcePackage   add  SetPrefix()  keyword",
+            "title": "v0.1.4 (unreleased)"
+        },
+        {
+            "location": "/changelog/#v013",
+            "text": "rewrite PyDrawHelper code (cb5aa58)  fix reloading of c4ddev plugins by reloading the  require  module (7f61b5b)  add option to install  c4ddev  command-line interface  add  c4ddev pypkg  command  add  c4ddev build-loader  command  update C4DDev to be based completely on  Node.py  removed additional dependencies and convenience libraries like  requests  for now  add  ResourcePackage(resource_name)  syntax",
+            "title": "v0.1.3"
         },
         {
             "location": "/changelog/#v12",
@@ -41,9 +46,44 @@
             "title": "v1.1"
         },
         {
+            "location": "/plugins/",
+            "text": "C4DDev Plugins\n\n\nC4DDev comes with a bunch of useful plugins.\n\n\nUnicode Escape Tool\n\n\nString resources require special characters to be escaped with unicode\nescape sequences in the format of \n\\UXXXX\n. The \u201cUnicode Escape Tool\u201d\ncan handle this for you. Just enter or paste the stringtable or text\nand you can convert it.\n\n\n\n\nPyShader\n\n\nThis simple Cinema 4D plugin allows you to write shaders on-the-fly or\nprototype for a native shader plugin.\n\n\n\n\nPyDrawHelper\n\n\nThis is a very old plugin that I wrote in 2011. It\u2019s a Python Object in which you can\nwrite Python code and that code is executed during the \nDraw()\n function. Very useful\nfor testing and prototyping.\n\n\n\n\nNote\n: The code also looks like it was written back in 2011! I will update it\nsoon to bring it up to speed with my current standards.\n\n\n\n\n\n\nPython Batch Compiler\n\n\nThis simple command lets you select a directory and it will compile all\nPython \n*.py\n files it can find to \n*.pyc\n files using the built-in\nCinema 4D Python Interpreter. This is useful to avoid Python magic\nnumber issues if you try to use \npython -m compileall\n from the command\nline since Cinema 4D uses \nPython 2.6\n and you may have a different\nversion installed.\n\n\nEgg Maker\n\n\nCreate a Python \n*.egg\n from a directory. Optionally, it will include\nnon-Python files and prefer compiled Python over source files.",
+            "title": "Plugins"
+        },
+        {
+            "location": "/plugins/#c4ddev-plugins",
+            "text": "C4DDev comes with a bunch of useful plugins.",
+            "title": "C4DDev Plugins"
+        },
+        {
+            "location": "/plugins/#unicode-escape-tool",
+            "text": "String resources require special characters to be escaped with unicode\nescape sequences in the format of  \\UXXXX . The \u201cUnicode Escape Tool\u201d\ncan handle this for you. Just enter or paste the stringtable or text\nand you can convert it.",
+            "title": "Unicode Escape Tool"
+        },
+        {
+            "location": "/plugins/#pyshader",
+            "text": "This simple Cinema 4D plugin allows you to write shaders on-the-fly or\nprototype for a native shader plugin.",
+            "title": "PyShader"
+        },
+        {
+            "location": "/plugins/#pydrawhelper",
+            "text": "This is a very old plugin that I wrote in 2011. It\u2019s a Python Object in which you can\nwrite Python code and that code is executed during the  Draw()  function. Very useful\nfor testing and prototyping.   Note : The code also looks like it was written back in 2011! I will update it\nsoon to bring it up to speed with my current standards.",
+            "title": "PyDrawHelper"
+        },
+        {
+            "location": "/plugins/#python-batch-compiler",
+            "text": "This simple command lets you select a directory and it will compile all\nPython  *.py  files it can find to  *.pyc  files using the built-in\nCinema 4D Python Interpreter. This is useful to avoid Python magic\nnumber issues if you try to use  python -m compileall  from the command\nline since Cinema 4D uses  Python 2.6  and you may have a different\nversion installed.",
+            "title": "Python Batch Compiler"
+        },
+        {
+            "location": "/plugins/#egg-maker",
+            "text": "Create a Python  *.egg  from a directory. Optionally, it will include\nnon-Python files and prefer compiled Python over source files.",
+            "title": "Egg Maker"
+        },
+        {
             "location": "/cli/",
-            "text": "Command-line Tools\n\n\nc4ddev\n comes with a set of command-line tools that can be installed via Pip.\n\n\n$ pip install c4ddev\n$ c4ddev --help\nUsage: c4ddev \n[\nOPTIONS\n]\n COMMAND \n[\nARGS\n]\n...\n\nOptions:\n  --help  Show this message and exit.\n\nCommands:\n  pypkg    Reads a JSON configuration file, by default...\n  rpkg\n  symbols\n\n\n\n\n\nCommands\n\n\npypkg\n\n\nc4ddev pypkg [CONFIG]\n\n\n\n\n\nThe \npypkg\n command compiles Python modules and packages into \n.pyc\n files\nand merges them into a Python Egg archive or directory. This is useful to\nprotect your Python code and to distribute your Python plugin.\n\n\n\n\nNote\n\n\nKeep in mind that you should always use \nlocalimport\n\nto import any third-party Python modules from a Cinema 4D plugin in\norder to keep the global importer state clean.\n\n\n\n\nExample Configuration\n (\n.pypkg\n)\n\n\nThis is a real-world example configuration file.\n\n\n{\n\n  \n\"output\"\n:\n \n\"res/modules{target}/cloudui.egg\"\n,\n\n  \n\"include\"\n:\n \n[\n\n    \n\"devel/res.py\"\n,\n\n    \n\"../vendor/python/c4dtools/c4dtools\"\n,\n\n    \n\"../vendor/python/nr/nr\"\n,\n\n    \n\"../vendor/python/cloudui/cloudui\"\n\n  \n]\n\n\n}\n\n\n\n\n\n\nrpkg\n\n\nFor more information, see \nResource Packages\n.\n\n\nsymbols\n\n\nc4ddev symbols [-f,--format] [-o,--outfile] [-d,--res-dir]\n\n\n\n\n\nExtracts the resource symbols from all header files in \nres/\n directory or the\ndirectory/ies specified via \n-d,--res-dir\n and formats them as a Python class,\nPython file or JSON.\n\n\n$ \npwd\n\n/Users/niklas/Applications/Cinema 4D R18/plugins/myplugin\n$ c4ddev symbols\n\n\nexec\n \n(\n\"\"\"class res(object):\n\n\n # Automatically generated with c4ddev v1.3.\n\n\n project_path = os.path.dirname(__file__)\n\n\n def string(self, name, *subst):\n\n\n  result = __res__.LoadString(getattr(self, name))\n\n\n  for item in subst: result = result.replace('#', item, 1)\n\n\n  return result\n\n\n def tup(self, name, *subst):\n\n\n  return (getattr(self, name), self.string(name, *subst))\n\n\n def path(self, *parts):\n\n\n  path = os.path.join(*parts)\n\n\n  if not os.path.isabs(path):\n\n\n   path = os.path.join(self.project_path, path)\n\n\n  return path\n\n\n file = path  # backwards compatibility\n\n\n def bitmap(self, *parts):\n\n\n  b = c4d.bitmaps.BaseBitmap()\n\n\n  if b.InitWith(self.path(*parts))[0] != c4d.IMAGERESULT_OK: return None\n\n\n  return b\n\n\n MYSYMBOL = 1000\n\n\n MYOTHERSYMBOLS = 1001\n\n\n res=res()\"\"\"\n)\n\n\n\n\n\n\nbuild-loader\n\n\nUsage\n:\n \nc4ddev\n \nbuild\n-\nloader\n \n[\nOPTIONS\n]\n\n\n  \nGenerate\n \na\n \nCinema\n \n4\nD\n \nPython\n \nplugin\n \nthat\n \nuses\n \nNode\n.\npy\n \nto\n \nload\n \nan\n\n  \nentrypoint\n.\n\n\n\nOptions\n:\n\n  \n-\ne\n,\n \n--\nentry\n-\npoint\n \nENTRYPOINT\n\n  \n-\nc\n,\n \n--\ncompress\n\n  \n-\nm\n,\n \n--\nminify\n\n  \n-\no\n,\n \n--\noutput\n \nFILENAME\n\n  \n--\nhelp\n                  \nShow\n \nthis\n \nmessage\n \nand\n \nexit\n.\n\n\n\n\n\n\nCreates a Cinema 4D \n.pyp\n file that loads the specified ENTRYPOINT with\n\nNode.py\n. From that point on, the complete Node.py environment may be used\nand plugins can use \nrequire()\n to load other components. Also, the plugin\nwill be automatically loaded completely isolated in a \nlocalimport\n\ncontext, as it comes built-in with Node.py.\n\n\nAvailable Formats\n\n\n\n\nPython class (\nclass\n) [default] \u2013 Can be copied into the Python plugin source\n\n\nPython file (\nfile\n)  \u2013 Can be loaded as a module (make use of \nlocalimport\n)\n\n\nJSON (\njson\n) \u2013 Can be loaded using the \njson\n module",
-            "title": "Command-line Tools"
+            "text": "Command-line Tools\n\n\nc4ddev\n comes with a set of command-line tools that can be installed via Pip.\n\n\n$ pip install c4ddev\n$ c4ddev --help\nUsage: c4ddev \n[\nOPTIONS\n]\n COMMAND \n[\nARGS\n]\n...\n\nOptions:\n  --help  Show this message and exit.\n\nCommands:\n  pypkg    Reads a JSON configuration file, by default...\n  rpkg\n  symbols\n\n\n\n\n\nCommands\n\n\npypkg\n\n\nc4ddev pypkg [CONFIG]\n\n\n\n\n\nThe \npypkg\n command compiles Python modules and packages into \n.pyc\n files\nand merges them into a Python Egg archive or directory. This is useful to\nprotect your Python code and to distribute your Python plugin.\n\n\n\n\nNote\n\n\nKeep in mind that you should always use \nlocalimport\n\nto import any third-party Python modules from a Cinema 4D plugin in\norder to keep the global importer state clean.\n\n\n\n\nExample Configuration\n (\n.pypkg\n)\n\n\nThis is a real-world example configuration file.\n\n\n{\n\n  \n\"output\"\n:\n \n\"res/modules{target}/cloudui.egg\"\n,\n\n  \n\"include\"\n:\n \n[\n\n    \n\"devel/res.py\"\n,\n\n    \n\"../vendor/python/c4dtools/c4dtools\"\n,\n\n    \n\"../vendor/python/nr/nr\"\n,\n\n    \n\"../vendor/python/cloudui/cloudui\"\n\n  \n]\n\n\n}\n\n\n\n\n\n\nrpkg\n\n\nFor more information, see \nResource Packages\n.\n\n\nsymbols\n\n\nc4ddev symbols [-f,--format] [-o,--outfile] [-d,--res-dir]\n\n\n\n\n\nExtracts the resource symbols from all header files in \nres/\n directory or the\ndirectory/ies specified via \n-d,--res-dir\n and formats them as a Python class,\nPython file or JSON.\n\n\n$ \npwd\n\n/Users/niklas/Applications/Cinema 4D R18/plugins/myplugin\n$ c4ddev symbols\n\n\nexec\n \n(\n\"\"\"class res(object):\n\n\n # Automatically generated with c4ddev v1.3.\n\n\n project_path = os.path.dirname(__file__)\n\n\n def string(self, name, *subst):\n\n\n  result = __res__.LoadString(getattr(self, name))\n\n\n  for item in subst: result = result.replace('#', item, 1)\n\n\n  return result\n\n\n def tup(self, name, *subst):\n\n\n  return (getattr(self, name), self.string(name, *subst))\n\n\n def path(self, *parts):\n\n\n  path = os.path.join(*parts)\n\n\n  if not os.path.isabs(path):\n\n\n   path = os.path.join(self.project_path, path)\n\n\n  return path\n\n\n file = path  # backwards compatibility\n\n\n def bitmap(self, *parts):\n\n\n  b = c4d.bitmaps.BaseBitmap()\n\n\n  if b.InitWith(self.path(*parts))[0] != c4d.IMAGERESULT_OK: return None\n\n\n  return b\n\n\n MYSYMBOL = 1000\n\n\n MYOTHERSYMBOLS = 1001\n\n\n res=res()\"\"\"\n)\n\n\n\n\n\n\nAvailable Formats\n\n\n\n\nPython class (\nclass\n) [default] \u2013 Can be copied into the Python plugin source\n\n\nPython file (\nfile\n)  \u2013 Can be loaded as a module (make use of \nlocalimport\n)\n\n\nJSON (\njson\n) \u2013 Can be loaded using the \njson\n module\n\n\n\n\nbuild-loader\n\n\nUsage\n:\n \nc4ddev\n \nbuild\n-\nloader\n \n[\nOPTIONS\n]\n\n\n  \nGenerate\n \na\n \nCinema\n \n4\nD\n \nPython\n \nplugin\n \nthat\n \nuses\n \nNode\n.\npy\n \nto\n \nload\n \nan\n\n  \nentrypoint\n.\n\n\n\nOptions\n:\n\n  \n-\ne\n,\n \n--\nentry\n-\npoint\n \nENTRYPOINT\n\n  \n-\nc\n,\n \n--\ncompress\n\n  \n-\nm\n,\n \n--\nminify\n\n  \n-\no\n,\n \n--\noutput\n \nFILENAME\n\n  \n--\nhelp\n                  \nShow\n \nthis\n \nmessage\n \nand\n \nexit\n.\n\n\n\n\n\n\nCreates a Cinema 4D \n.pyp\n file that loads the specified ENTRYPOINT with\n\nNode.py\n. From that point on, the complete Node.py environment may be used\nand plugins can use \nrequire()\n to load other components. Also, the plugin\nwill be automatically loaded completely isolated in a \nlocalimport\n\ncontext, as it comes built-in with Node.py.\n\n\npip-get\n\n\nUsage\n:\n \nc4ddev\n \npip\n-\nget\n \n[\nOPTIONS\n]\n\n\n  \nInstalls\n \nPip\n \ninto\n \nthe\n \nCinema\n \n4\nD\n \nPython\n \ndistribution\n.\n \nSpecify\n \nthe\n \npath\n \nto\n\n  \nCinema\n \n4\nD\n \nexplicitly\n \nor\n \nrun\n \nthis\n \ncommand\n \nfrom\n \ninside\n \nthe\n \nCinema\n \n4\nD\n\n  \napplication\n \ndirectory\n.\n\n\n\nOptions\n:\n\n  \n--\nc4d\n \nDIRECTORY\n\n  \n--\nhelp\n      \nShow\n \nthis\n \nmessage\n \nand\n \nexit\n.\n\n\n\n\n\n\npip\n\n\nUsage\n:\n \nc4ddev\n \npip\n \n[\nOPTIONS\n]\n \n[\nARGS\n]...\n\n\n  \nInvokes\n \nPip\n \nin\n \nthe\n \ncurrent\n \nCinema\n \n4\nD\n \nPython\n \ndistribution\n.\n \nMust\n \nbe\n \nused\n\n  \nfrom\n \ninside\n \nthe\n \nCinema\n \n4\nD\n \napplications\n \ndirectory\n \nor\n \nspecified\n \nwith\n \n--\nc4d\n.\n\n\n\nOptions\n:\n\n  \n--\nc4d\n \nDIRECTORY\n\n  \n--\nhelp\n      \nShow\n \nthis\n \nmessage\n \nand\n \nexit\n.",
+            "title": "CLI"
         },
         {
             "location": "/cli/#command-line-tools",
@@ -67,73 +107,28 @@
         },
         {
             "location": "/cli/#symbols",
-            "text": "c4ddev symbols [-f,--format] [-o,--outfile] [-d,--res-dir]  Extracts the resource symbols from all header files in  res/  directory or the\ndirectory/ies specified via  -d,--res-dir  and formats them as a Python class,\nPython file or JSON.  $  pwd \n/Users/niklas/Applications/Cinema 4D R18/plugins/myplugin\n$ c4ddev symbols exec   ( \"\"\"class res(object):   # Automatically generated with c4ddev v1.3.   project_path = os.path.dirname(__file__)   def string(self, name, *subst):    result = __res__.LoadString(getattr(self, name))    for item in subst: result = result.replace('#', item, 1)    return result   def tup(self, name, *subst):    return (getattr(self, name), self.string(name, *subst))   def path(self, *parts):    path = os.path.join(*parts)    if not os.path.isabs(path):     path = os.path.join(self.project_path, path)    return path   file = path  # backwards compatibility   def bitmap(self, *parts):    b = c4d.bitmaps.BaseBitmap()    if b.InitWith(self.path(*parts))[0] != c4d.IMAGERESULT_OK: return None    return b   MYSYMBOL = 1000   MYOTHERSYMBOLS = 1001   res=res()\"\"\" )",
+            "text": "c4ddev symbols [-f,--format] [-o,--outfile] [-d,--res-dir]  Extracts the resource symbols from all header files in  res/  directory or the\ndirectory/ies specified via  -d,--res-dir  and formats them as a Python class,\nPython file or JSON.  $  pwd \n/Users/niklas/Applications/Cinema 4D R18/plugins/myplugin\n$ c4ddev symbols exec   ( \"\"\"class res(object):   # Automatically generated with c4ddev v1.3.   project_path = os.path.dirname(__file__)   def string(self, name, *subst):    result = __res__.LoadString(getattr(self, name))    for item in subst: result = result.replace('#', item, 1)    return result   def tup(self, name, *subst):    return (getattr(self, name), self.string(name, *subst))   def path(self, *parts):    path = os.path.join(*parts)    if not os.path.isabs(path):     path = os.path.join(self.project_path, path)    return path   file = path  # backwards compatibility   def bitmap(self, *parts):    b = c4d.bitmaps.BaseBitmap()    if b.InitWith(self.path(*parts))[0] != c4d.IMAGERESULT_OK: return None    return b   MYSYMBOL = 1000   MYOTHERSYMBOLS = 1001   res=res()\"\"\" )   Available Formats   Python class ( class ) [default] \u2013 Can be copied into the Python plugin source  Python file ( file )  \u2013 Can be loaded as a module (make use of  localimport )  JSON ( json ) \u2013 Can be loaded using the  json  module",
             "title": "symbols"
         },
         {
             "location": "/cli/#build-loader",
-            "text": "Usage :   c4ddev   build - loader   [ OPTIONS ] \n\n   Generate   a   Cinema   4 D   Python   plugin   that   uses   Node . py   to   load   an \n   entrypoint .  Options : \n   - e ,   -- entry - point   ENTRYPOINT \n   - c ,   -- compress \n   - m ,   -- minify \n   - o ,   -- output   FILENAME \n   -- help                    Show   this   message   and   exit .   Creates a Cinema 4D  .pyp  file that loads the specified ENTRYPOINT with Node.py . From that point on, the complete Node.py environment may be used\nand plugins can use  require()  to load other components. Also, the plugin\nwill be automatically loaded completely isolated in a  localimport \ncontext, as it comes built-in with Node.py.  Available Formats   Python class ( class ) [default] \u2013 Can be copied into the Python plugin source  Python file ( file )  \u2013 Can be loaded as a module (make use of  localimport )  JSON ( json ) \u2013 Can be loaded using the  json  module",
+            "text": "Usage :   c4ddev   build - loader   [ OPTIONS ] \n\n   Generate   a   Cinema   4 D   Python   plugin   that   uses   Node . py   to   load   an \n   entrypoint .  Options : \n   - e ,   -- entry - point   ENTRYPOINT \n   - c ,   -- compress \n   - m ,   -- minify \n   - o ,   -- output   FILENAME \n   -- help                    Show   this   message   and   exit .   Creates a Cinema 4D  .pyp  file that loads the specified ENTRYPOINT with Node.py . From that point on, the complete Node.py environment may be used\nand plugins can use  require()  to load other components. Also, the plugin\nwill be automatically loaded completely isolated in a  localimport \ncontext, as it comes built-in with Node.py.",
             "title": "build-loader"
         },
         {
-            "location": "/rpkg/",
-            "text": "Resource Packages\n\n\nResource packages allow you to more efficiently manage plugin resource files\nand translations by merging all information into a single file. Resource\npackages have the \n.rpkg\n suffix and are converted to real Cinema 4D resource\nfiles by using the \nc4ddev rpkg\n command.\n\n\nResourcePackage(Ocube)  # Mandatory, (XXX) part is optional\n# Basic Attributes\nPRIM_CUBE_LENGTH: 1001\n  us: Size\n  de: Gr\u00f6\u00dfe\nPRIM_CUBE_SEGMENTS: 1002\n  us: Segments\n  de: Segmente\n# A symbol without ID is placed only into the Stringtable, except for\n# the c4d_symbols, where the ID is automatically incremented starting\n# from 10000.\nSOME_SEPARATOR_NAME:\n  us: A Separator\n  de: Ein Separator\n# More symbols to follow ...\n\n\n\n\n\nA file called \nc4d_symbols.rpkg\n will be handled special and generate the respective\n\nc4d_symbols.h\n and \nc4d_strings.str\n files.\n\n\n$ c4ddev.py rpkg res/c4d_symbols.rpkg res/Ocube.rpkg\nWriting c4d_symbols.h ...\nWriting strings_de/c4d_strings.str ...\nWriting strings_us/c4d_strings.str ...\nWriting description/Ocube.h ...\nWriting strings_de/description/Ocube.str ...\nWriting strings_us/description/Ocube.str ...\n\n\n\n\n\n.rpkg\n Format Information\n\n\n\n\nThe \nResourcePackage\n line is mandatory and must be the first line in the file\n\n\nComments begin with a number sign (\n#\n) and continue until the end of the line\n\n\nAssigning a fixed ID number to a symbol is mandatory\n\n\nSpecial characters in the localization are allowed (use \n\\n\n for a newline and \n\\t\n for a tab)\n\n\nIf the file is named \nc4d_symbols.rpkg\n, it will automatically be created in the res folder\n  directly instead of the descriptions folder",
-            "title": "Resource Packages"
+            "location": "/cli/#pip-get",
+            "text": "Usage :   c4ddev   pip - get   [ OPTIONS ] \n\n   Installs   Pip   into   the   Cinema   4 D   Python   distribution .   Specify   the   path   to \n   Cinema   4 D   explicitly   or   run   this   command   from   inside   the   Cinema   4 D \n   application   directory .  Options : \n   -- c4d   DIRECTORY \n   -- help        Show   this   message   and   exit .",
+            "title": "pip-get"
         },
         {
-            "location": "/rpkg/#resource-packages",
-            "text": "Resource packages allow you to more efficiently manage plugin resource files\nand translations by merging all information into a single file. Resource\npackages have the  .rpkg  suffix and are converted to real Cinema 4D resource\nfiles by using the  c4ddev rpkg  command.  ResourcePackage(Ocube)  # Mandatory, (XXX) part is optional\n# Basic Attributes\nPRIM_CUBE_LENGTH: 1001\n  us: Size\n  de: Gr\u00f6\u00dfe\nPRIM_CUBE_SEGMENTS: 1002\n  us: Segments\n  de: Segmente\n# A symbol without ID is placed only into the Stringtable, except for\n# the c4d_symbols, where the ID is automatically incremented starting\n# from 10000.\nSOME_SEPARATOR_NAME:\n  us: A Separator\n  de: Ein Separator\n# More symbols to follow ...  A file called  c4d_symbols.rpkg  will be handled special and generate the respective c4d_symbols.h  and  c4d_strings.str  files.  $ c4ddev.py rpkg res/c4d_symbols.rpkg res/Ocube.rpkg\nWriting c4d_symbols.h ...\nWriting strings_de/c4d_strings.str ...\nWriting strings_us/c4d_strings.str ...\nWriting description/Ocube.h ...\nWriting strings_de/description/Ocube.str ...\nWriting strings_us/description/Ocube.str ...",
-            "title": "Resource Packages"
-        },
-        {
-            "location": "/rpkg/#rpkg-format-information",
-            "text": "The  ResourcePackage  line is mandatory and must be the first line in the file  Comments begin with a number sign ( # ) and continue until the end of the line  Assigning a fixed ID number to a symbol is mandatory  Special characters in the localization are allowed (use  \\n  for a newline and  \\t  for a tab)  If the file is named  c4d_symbols.rpkg , it will automatically be created in the res folder\n  directly instead of the descriptions folder",
-            "title": ".rpkg Format Information"
-        },
-        {
-            "location": "/contents/",
-            "text": "Contents\n\n\nC4DDev comes with a bunch of useful plugins.\n\n\nUnicode Escape Tool\n\n\nString resources require special characters to be escaped with unicode\nescape sequences in the format of \n\\UXXXX\n. The \u201cUnicode Escape Tool\u201d\ncan handle this for you. Just enter or paste the stringtable or text\nand you can convert it.\n\n\n\n\nPyShader\n\n\nThis simple Cinema 4D plugin allows you to write shaders on-the-fly or\nprototype for a native shader plugin.\n\n\n\n\nPyDrawHelper\n\n\nThis is a very old plugin that I wrote in 2011. It\u2019s a Python Object in which you can\nwrite Python code and that code is executed during the \nDraw()\n function. Very useful\nfor testing and prototyping.\n\n\n\n\nNote\n: The code also looks like it was written back in 2011! I will update it\nsoon to bring it up to speed with my current standards.\n\n\n\n\n\n\nPython Batch Compiler\n\n\nThis simple command lets you select a directory and it will compile all\nPython \n*.py\n files it can find to \n*.pyc\n files using the built-in\nCinema 4D Python Interpreter. This is useful to avoid Python magic\nnumber issues if you try to use \npython -m compileall\n from the command\nline since Cinema 4D uses \nPython 2.6\n and you may have a different\nversion installed.\n\n\nEgg Maker\n\n\nCreate a Python \n*.egg\n from a directory. Optionally, it will include\nnon-Python files and prefer compiled Python over source files.",
-            "title": "C4DDev Contents"
-        },
-        {
-            "location": "/contents/#contents",
-            "text": "C4DDev comes with a bunch of useful plugins.",
-            "title": "Contents"
-        },
-        {
-            "location": "/contents/#unicode-escape-tool",
-            "text": "String resources require special characters to be escaped with unicode\nescape sequences in the format of  \\UXXXX . The \u201cUnicode Escape Tool\u201d\ncan handle this for you. Just enter or paste the stringtable or text\nand you can convert it.",
-            "title": "Unicode Escape Tool"
-        },
-        {
-            "location": "/contents/#pyshader",
-            "text": "This simple Cinema 4D plugin allows you to write shaders on-the-fly or\nprototype for a native shader plugin.",
-            "title": "PyShader"
-        },
-        {
-            "location": "/contents/#pydrawhelper",
-            "text": "This is a very old plugin that I wrote in 2011. It\u2019s a Python Object in which you can\nwrite Python code and that code is executed during the  Draw()  function. Very useful\nfor testing and prototyping.   Note : The code also looks like it was written back in 2011! I will update it\nsoon to bring it up to speed with my current standards.",
-            "title": "PyDrawHelper"
-        },
-        {
-            "location": "/contents/#python-batch-compiler",
-            "text": "This simple command lets you select a directory and it will compile all\nPython  *.py  files it can find to  *.pyc  files using the built-in\nCinema 4D Python Interpreter. This is useful to avoid Python magic\nnumber issues if you try to use  python -m compileall  from the command\nline since Cinema 4D uses  Python 2.6  and you may have a different\nversion installed.",
-            "title": "Python Batch Compiler"
-        },
-        {
-            "location": "/contents/#egg-maker",
-            "text": "Create a Python  *.egg  from a directory. Optionally, it will include\nnon-Python files and prefer compiled Python over source files.",
-            "title": "Egg Maker"
-        },
-        {
-            "location": "/nodepy/",
-            "text": "[Node.py] is an isolated environment with a new way to load other Python\nmodules using a \nrequire()\n function. It already makes use of the\n\nlocalimport\n technique, which allows you to still use standard\nthird party Python modules.\n\n\nC4DDev provides a script that can build a loader plugin that encapsulates a\nNode.py standalone version. To create such a loader, first install Node.py,\nwhich will also give you access to [PPYM], its package manager. Then, instal\nC4DDev via PPYM globally to get access to its command-line. The last step is\nto generate the loader plugin.\n\n\n$ pip install node.py\n$ ppym install @niklas/c4ddev --global\n$ c4ddev build-loader\n\n\n\n\n\nIn fact, C4DDev uses this mechanism itself for its plugins and features.",
-            "title": "Using Node.py in C4D"
+            "location": "/cli/#pip",
+            "text": "Usage :   c4ddev   pip   [ OPTIONS ]   [ ARGS ]... \n\n   Invokes   Pip   in   the   current   Cinema   4 D   Python   distribution .   Must   be   used \n   from   inside   the   Cinema   4 D   applications   directory   or   specified   with   -- c4d .  Options : \n   -- c4d   DIRECTORY \n   -- help        Show   this   message   and   exit .",
+            "title": "pip"
         },
         {
             "location": "/api/",
             "text": "The \nc4ddev\n API\n\n\nThe \nc4ddev\n API provides some utilities that are especially useful for\nscripting and prototyping in Cinema 4D. All contents of the \nc4ddev\n library\nmust be loaded with the \nc4ddev.require()\n function (which is the \nrequire()\n\nfunction from the \nc4ddev/main\n module, exported by Node.py).\n\n\nfrom\n \nc4ddev\n \nimport\n \nrequire\n\n\nlocalimport\n \n=\n \nrequire\n(\n'c4ddev/scripting/localimport'\n)\n\n\n# This is a version of localimport that is tuned to work from inside any\n\n\n# scripting context in Cinema 4D (Tag, Object, XPresso Node).\n\n\n\nwith\n \nlocalimport\n(\ndoc\n):\n\n  \nimport\n \ntwitter\n\n\n\ndef\n \nmain\n():\n\n  \n# TODO: Some clever example\n\n\n\n\n\n\nNamespaces\n\n\n\n\nc4ddev\n\n\nc4ddev/pypkg\n\n\nc4ddev/resource\n\n\nc4ddev/scripting/localimport\n \u2013 localimport tuned for Cinema 4D scripting\n\n\nc4ddev/utils\n \u2013 utilities that are used by the c4ddev extensions (in \next/\n)",
-            "title": "API Documentation"
+            "title": "Scripting API"
         },
         {
             "location": "/api/#the-c4ddev-api",
@@ -144,6 +139,26 @@
             "location": "/api/#namespaces",
             "text": "c4ddev  c4ddev/pypkg  c4ddev/resource  c4ddev/scripting/localimport  \u2013 localimport tuned for Cinema 4D scripting  c4ddev/utils  \u2013 utilities that are used by the c4ddev extensions (in  ext/ )",
             "title": "Namespaces"
+        },
+        {
+            "location": "/rpkg/",
+            "text": "Resource Packages\n\n\nResource packages allow you to more efficiently manage plugin resource files\nand translations by merging all information into a single file. Resource\npackages have the \n.rpkg\n suffix and are converted to real Cinema 4D resource\nfiles by using the \nc4ddev rpkg\n command.\n\n\nResourcePackage(Ocube)  # Mandatory, (XXX) part is optional\nOcube: 5405\n  us: Cube\n  de: W\u00fcrfel\n# Save ourselves some writing.\nSetPrefix(PRIM_CUBE_)\n# Basic Attributes\nLENGTH: 1001\n  us: Size\n  de: Gr\u00f6\u00dfe\nSEGMENTS: 1002\n  us: Segments\n  de: Segmente\nSetPrefix()\n# A symbol without ID is placed only into the Stringtable, except for\n# the c4d_symbols, where the ID is automatically incremented starting\n# from 10000.\nDEBUGSECTION:\n  us: Debug Section\n  de: Debug Bereich\n# More symbols to follow ...\n\n\n\n\n\nA file called \nc4d_symbols.rpkg\n will be handled special and generate the respective\n\nc4d_symbols.h\n and \nc4d_strings.str\n files.\n\n\n$ c4ddev.py rpkg res/c4d_symbols.rpkg res/Ocube.rpkg\nWriting c4d_symbols.h ...\nWriting strings_de/c4d_strings.str ...\nWriting strings_us/c4d_strings.str ...\nWriting description/Ocube.h ...\nWriting strings_de/description/Ocube.str ...\nWriting strings_us/description/Ocube.str ...\n\n\n\n\n\n.rpkg\n Format Information\n\n\n\n\nThe \nResourcePackage\n line is mandatory and must be the first line in the file\n\n\nComments begin with a number sign (\n#\n) and continue until the end of the line\n\n\nAssigning a fixed ID number to a symbol is mandatory\n\n\nSpecial characters in the localization are allowed (use \n\\n\n for a newline and \n\\t\n for a tab)\n\n\nIf the file is named \nc4d_symbols.rpkg\n, it will automatically be created in the res folder\n  directly instead of the descriptions folder",
+            "title": "Resource Packages"
+        },
+        {
+            "location": "/rpkg/#resource-packages",
+            "text": "Resource packages allow you to more efficiently manage plugin resource files\nand translations by merging all information into a single file. Resource\npackages have the  .rpkg  suffix and are converted to real Cinema 4D resource\nfiles by using the  c4ddev rpkg  command.  ResourcePackage(Ocube)  # Mandatory, (XXX) part is optional\nOcube: 5405\n  us: Cube\n  de: W\u00fcrfel\n# Save ourselves some writing.\nSetPrefix(PRIM_CUBE_)\n# Basic Attributes\nLENGTH: 1001\n  us: Size\n  de: Gr\u00f6\u00dfe\nSEGMENTS: 1002\n  us: Segments\n  de: Segmente\nSetPrefix()\n# A symbol without ID is placed only into the Stringtable, except for\n# the c4d_symbols, where the ID is automatically incremented starting\n# from 10000.\nDEBUGSECTION:\n  us: Debug Section\n  de: Debug Bereich\n# More symbols to follow ...  A file called  c4d_symbols.rpkg  will be handled special and generate the respective c4d_symbols.h  and  c4d_strings.str  files.  $ c4ddev.py rpkg res/c4d_symbols.rpkg res/Ocube.rpkg\nWriting c4d_symbols.h ...\nWriting strings_de/c4d_strings.str ...\nWriting strings_us/c4d_strings.str ...\nWriting description/Ocube.h ...\nWriting strings_de/description/Ocube.str ...\nWriting strings_us/description/Ocube.str ...",
+            "title": "Resource Packages"
+        },
+        {
+            "location": "/rpkg/#rpkg-format-information",
+            "text": "The  ResourcePackage  line is mandatory and must be the first line in the file  Comments begin with a number sign ( # ) and continue until the end of the line  Assigning a fixed ID number to a symbol is mandatory  Special characters in the localization are allowed (use  \\n  for a newline and  \\t  for a tab)  If the file is named  c4d_symbols.rpkg , it will automatically be created in the res folder\n  directly instead of the descriptions folder",
+            "title": ".rpkg Format Information"
+        },
+        {
+            "location": "/nodepy/",
+            "text": "[Node.py] is an isolated environment with a new way to load other Python\nmodules using a \nrequire()\n function. It already makes use of the\n\nlocalimport\n technique, which allows you to still use standard\nthird party Python modules.\n\n\nC4DDev provides a script that can build a loader plugin that encapsulates a\nNode.py standalone version. To create such a loader, first install Node.py,\nwhich will also give you access to [PPYM], its package manager. Then, instal\nC4DDev via PPYM globally to get access to its command-line. The last step is\nto generate the loader plugin.\n\n\n$ pip install node.py\n$ ppym install @niklas/c4ddev --global\n$ c4ddev build-loader\n\n\n\n\n\nIn fact, C4DDev uses this mechanism itself for its plugins and features.",
+            "title": "Using Node.py in C4D"
         },
         {
             "location": "/localimport/",
