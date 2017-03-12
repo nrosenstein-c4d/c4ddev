@@ -2,7 +2,13 @@
 
   [Node.py]: https://github.com/nodepy/nodepy
 
-#### v1.3 (under development)
+### v0.1.4 (unreleased)
+
+*ResourcePackage*
+
+- add `SetPrefix()` keyword
+
+### v0.1.3
 
 - rewrite PyDrawHelper code (cb5aa58)
 - fix reloading of c4ddev plugins by reloading the `require` module (7f61b5b)
@@ -11,14 +17,15 @@
 - add `c4ddev build-loader` command
 - update C4DDev to be based completely on [Node.py]
 - removed additional dependencies and convenience libraries like `requests` for now
+- add `ResourcePackage(resource_name)` syntax
 
-#### v1.2
+### v1.2
 
 - update `require` module to v0.10
 - merge PyDrawHelper plugin
 - merge [PyShader](https://github.com/nr-plugins/pyshader) plugin
 
-#### v1.1
+### v1.1
 
 - add `.pubfile` for [git-publish](https://pypi.python.org/pypi/git-publish)
 - add [`localimport`](https://github.com/NiklasRosenstein/py-localimport) v1.4.16 module

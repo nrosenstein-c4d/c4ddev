@@ -8,12 +8,13 @@ theme: material
 pages:
   - Home: index.md
   - Changelog: changelog.md
-  - Command-line Tools: cli.md
-  - Resource Packages: rpkg.md
-  - C4DDev Contents: contents.md
-  - Using Node.py in C4D: nodepy.md
-  - API Documentation: api/index.md
-  - Localimport: localimport.md
+  - Plugins: plugins.md
+  - CLI: cli.md
+  - Scripting API: api/index.md
+  - Contents:
+    - Resource Packages: rpkg.md
+    - Using Node.py in C4D: nodepy.md
+    - Localimport: localimport.md
   - C++ Information:
     - Resources: cpp/resources.md
     - Snippets: cpp/snippets.md

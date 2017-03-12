@@ -24,6 +24,7 @@ Utilities for Cinema 4D resource symbols.
 from __future__ import print_function
 
 import collections
+import codecs
 import errno
 import glob
 import os
@@ -370,22 +371,24 @@ class ResourcePackage(object):
     is only used in `c4d_symbols.rpkg` files.
   '''
 
-  Token_Newline = 'newline'
-  Token_Def = 'def'
+  Token_Newline = '\n'
+  Token_Def = ':'
   Token_Number = 'number'
   Token_Symbol = 'symbol'
   Token_Indent = 'indent'
   Token_Whitespace = 'ws'
   Token_Comment = 'comment'
-  Token_Popen = 'popen'
-  Token_Pclose = 'pclose'
+  Token_Popen = '('
+  Token_Pclose = ')'
+  Token_SetPrefix = 'SetPrefix'
   Token_EOF = strex.eof
 
   Rules = [
-    strex.Keyword(Token_Newline, '\n'),
-    strex.Keyword(Token_Def, ':'),
-    strex.Keyword(Token_Popen, '('),
-    strex.Keyword(Token_Pclose, ')'),
+    strex.Keyword(Token_Newline, Token_Newline),
+    strex.Keyword(Token_Def, Token_Def),
+    strex.Keyword(Token_Popen, Token_Popen),
+    strex.Keyword(Token_Pclose, Token_Pclose),
+    strex.Keyword(Token_SetPrefix, Token_SetPrefix),
     strex.Charset(Token_Number, string.digits),
     strex.Charset(Token_Symbol, string.ascii_letters + '_' + string.digits),
     strex.Charset(Token_Indent, string.whitespace, at_column=0),
@@ -429,35 +432,46 @@ class ResourcePackage(object):
     cls._skip_newline(lexer)
 
     # Parse the resource symbols.
-    while lexer.accept(cls.Token_Symbol):
-      name = lexer.token.value
-      if name in pkg.symbols:
-        error('duplicate symbol "{0}"'.format(name))
+    current_prefix = ''
+    while lexer.next(cls.Token_Symbol, cls.Token_SetPrefix, cls.Token_EOF):
+      token = lexer.token
+      if token.type == cls.Token_EOF: break
+      if token.type == cls.Token_SetPrefix:
+        lexer.next(cls.Token_Popen)
+        prefix_token = lexer.next(cls.Token_Symbol, cls.Token_Pclose)
+        if prefix_token.type == cls.Token_Symbol:
+          current_prefix = prefix_token.value
+          lexer.next(cls.Token_Pclose)
+        else:
+          current_prefix = ''
+      else:
+        name = current_prefix + token.value
+        if name in pkg.symbols:
+          error('duplicate symbol "{0}"'.format(name))
 
-      lexer.next(cls.Token_Def)
-      lexer.next(cls.Token_Number, cls.Token_Newline, cls.Token_EOF)
+        lexer.next(cls.Token_Def)
+        lexer.next(cls.Token_Number, cls.Token_Newline, cls.Token_EOF)
 
-      value = None
-      if lexer.token.type == cls.Token_Number:
-        value = int(lexer.token.value)
-        lexer.next(cls.Token_Newline, cls.Token_EOF)
-      elif is_c4d_symbols:
-        value = pkg.autoid_counter
-        pkg.autoid_counter += 1
+        value = None
+        if lexer.token.type == cls.Token_Number:
+          value = int(lexer.token.value)
+          lexer.next(cls.Token_Newline, cls.Token_EOF)
+        elif is_c4d_symbols:
+          value = pkg.autoid_counter
+          pkg.autoid_counter += 1
 
-      if value is not None:
-        pkg.symbols[name] = value
+        if value is not None:
+          pkg.symbols[name] = value
 
-      for lang_code, string in cls._parse_localization(lexer, error).items():
-        try:
-          table = pkg.localizations[lang_code]
-        except KeyError:
-          pkg.localizations[lang_code] = table = collections.OrderedDict()
-        table[name] = string
+        for lang_code, string in cls._parse_localization(lexer, error).items():
+          try:
+            table = pkg.localizations[lang_code]
+          except KeyError:
+            pkg.localizations[lang_code] = table = collections.OrderedDict()
+          table[name] = string
 
       cls._skip_newline(lexer)
 
-    lexer.next(strex.eof)
     return pkg
 
   @classmethod
@@ -517,8 +531,8 @@ def build_rpkg(files, res_dir, no_header):
   if not os.path.isdir(res_dir):
     raise OSError('directory "{}" does not exist'.format(res_dir))
   for fname in files:
-    with open(fname, 'r', encoding='utf8') as fp:
-      content = fp.read()
+    with codecs.open(fname, 'r', encoding='utf8') as fp:
+      content = fp.read().replace('\r\n', '\n')
     rpkg = ResourcePackage.parse(content, fname)
     if rpkg.name == 'c4d_symbols':
       header = os.path.join(res_dir, 'c4d_symbols.h')

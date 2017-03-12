@@ -1,4 +1,4 @@
-# Contents
+# C4DDev Plugins
 
 C4DDev comes with a bunch of useful plugins.
 

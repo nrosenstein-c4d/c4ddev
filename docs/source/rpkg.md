@@ -6,19 +6,25 @@ packages have the `.rpkg` suffix and are converted to real Cinema 4D resource
 files by using the [`c4ddev rpkg`](cli#rpkg) command.
 
     ResourcePackage(Ocube)  # Mandatory, (XXX) part is optional
+    Ocube: 5405
+      us: Cube
+      de: Würfel
+    # Save ourselves some writing.
+    SetPrefix(PRIM_CUBE_)
     # Basic Attributes
-    PRIM_CUBE_LENGTH: 1001
+    LENGTH: 1001
       us: Size
       de: Größe
-    PRIM_CUBE_SEGMENTS: 1002
+    SEGMENTS: 1002
       us: Segments
       de: Segmente
+    SetPrefix()
     # A symbol without ID is placed only into the Stringtable, except for
     # the c4d_symbols, where the ID is automatically incremented starting
     # from 10000.
-    SOME_SEPARATOR_NAME:
-      us: A Separator
-      de: Ein Separator
+    DEBUGSECTION:
+      us: Debug Section
+      de: Debug Bereich
     # More symbols to follow ...
 
 A file called `c4d_symbols.rpkg` will be handled special and generate the respective
