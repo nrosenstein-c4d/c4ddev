@@ -10,7 +10,7 @@ pages:
   - Changelog: changelog.md
   - Plugins:
     - C4D IDE: plugins/c4dide.md
-    - PyDrawHelper: plugins/pydrawhelper.md
+    - PyObject: plugins/pyobject.md
     - PyShader: plugins/pyshader.md
     - Unicode Escape Tool: plugins/uescapetool.md
   - Command-line Interface:
