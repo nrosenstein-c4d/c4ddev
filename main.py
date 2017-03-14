@@ -25,23 +25,29 @@ import os
 import c4d
 import sys
 
-require('./__res__', exports=False).namespace.exports = __res__
-require.context.path.append(os.path.dirname(__directory__))
+require.context.path.append(os.path.join(__directory__, 'lib'))
+require('c4ddev/__res__', exports=False).namespace.exports = __res__
 
 # Pre-load all components of the c4ddev library, since some require third
 # party Python modules which can not be loaded at a later point when Node.py's
 # localimpot context is no longer present.
-require('./pypkg')
-require('./resource')
-require('./utils')
-require('./scripting/localimport')
+require('c4ddev/pypkg')
+require('c4ddev/resource')
+require('c4ddev/utils')
+require('c4ddev/scripting/localimport')
 
 def load_extensions():
   extensions = []
-  ext_dir = os.path.join(__directory__, '../../plugins')
+  ext_dir = os.path.join(__directory__, 'plugins')
   for file in os.listdir(ext_dir):
+    file = os.path.join(ext_dir, file)
     if file.endswith('.py'):
-      extensions.append(require(os.path.join(ext_dir, file)))
+      extensions.append(require(file))
+      continue
+    file = os.path.join(file, 'main.py')
+    if os.path.isfile(file):
+      extensions.append(require(file))
+
   return extensions
 
 def PluginMessage(msg_type, data):

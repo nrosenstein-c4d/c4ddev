@@ -10,7 +10,7 @@
     "c4ddev": "cli"
   },
   "dependencies": {
-    "nodepy-standalone-builder": "^0.0.2"
+    "@niklas/nodepy-standalone-builder": "~0.0.1"
   },
   "python-dependencies": {
     "click": ">=6.7",
