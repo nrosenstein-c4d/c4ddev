@@ -36,7 +36,7 @@ class PyShader(c4d.plugins.ShaderData):
   edited during runtime in the shader parameters. '''
 
   PluginID = 1036204
-  PluginName = 'c4ddev PyShader'
+  PluginName = 'PyShader'
   PluginFlags = 0
   PluginDesc = 'nr_pyshader'
 

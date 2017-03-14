@@ -1,5 +1,5 @@
 STRINGTABLE nr_pyshader {
-  nr_pyshader "c4ddev PyShader";
+  nr_pyshader "PyShader";
   NR_PYSHADER_CODE "Code";
   NR_PYSHADER_INFO "Status";
 }

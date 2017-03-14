@@ -1,0 +1,9 @@
+CONTAINER nr_pyobject {
+    NAME nr_pyobject;
+    INCLUDE Obase;
+    GROUP ID_OBJECTPROPERTIES {
+        SCALE_V;
+        STRING NR_PYOBJECT_SOURCE { CUSTOMGUI MULTISTRING; SCALE_V; }
+        BUTTON NR_PYOBJECT_OPENEDITOR { }
+    }
+}

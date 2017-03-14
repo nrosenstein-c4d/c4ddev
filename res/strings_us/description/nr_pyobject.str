@@ -1,0 +1,5 @@
+STRINGTABLE nr_pyobject {
+  nr_pyobject "PyObject";
+  NR_PYOBJECT_SOURCE "Code";
+  NR_PYOBJECT_OPENEDITOR "Open Editor";
+}
