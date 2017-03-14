@@ -51,6 +51,20 @@ class PyShader(c4d.plugins.ShaderData):
     self.scope = None
     self.code_hash = None
 
+  def _reload(self, sh):
+    # Re-evaluate the shader code in case it changed.
+    code = sh[res.NR_PYSHADER_CODE]
+    code_hash = adler32(code)
+    if code_hash != self.code_hash:
+      self.scope = types.ModuleType(sh.GetName())
+      try:
+        exec(compile(code, sh.GetName(), 'exec'), vars(self.scope))
+      except BaseException as exc:
+        traceback.print_exc()
+        sh[res.NR_PYSHADER_INFO] = str(exc)
+      else:
+        sh[res.NR_PYSHADER_INFO] = ''
+
   def Init(self, sh):
     with open(os.path.join(utils.plugin_dir, 'res', 'PyShader.py')) as fp:
       sh[res.NR_PYSHADER_CODE] = fp.read()
@@ -58,18 +72,7 @@ class PyShader(c4d.plugins.ShaderData):
 
   def Message(self, sh, msg, data):
     if msg == c4d.MSG_DESCRIPTION_POSTSETPARAMETER:
-      # Re-evaluate the shader code in case it changed.
-      code = sh[res.NR_PYSHADER_CODE]
-      code_hash = adler32(code)
-      if code_hash != self.code_hash:
-        self.scope = types.ModuleType(sh.GetName())
-        try:
-          exec(compile(code, sh.GetName(), 'exec'), vars(self.scope))
-        except BaseException as exc:
-          traceback.print_exc()
-          sh[res.NR_PYSHADER_INFO] = str(exc)
-        else:
-          sh[res.NR_PYSHADER_INFO] = ''
+      self._reload(sh)
     if msg == c4d.MSG_DESCRIPTION_COMMAND:
       id = data['id'][0].id
       if id == res.NR_PYSHADER_OPENEDITOR:
@@ -80,6 +83,7 @@ class PyShader(c4d.plugins.ShaderData):
     return True
 
   def InitRender(self, sh, irs):
+    self._reload(sh)
     self.customdata = {}
     self.first_output = True
     if self.scope and hasattr(self.scope, 'InitRender'):

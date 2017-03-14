@@ -16,6 +16,7 @@
 
 - changed interface to match the method names in `ShaderData`
 - add "Open Editor" button
+- Python code is now also evaluated in Material preview
 
 *ResourcePackage*
 
