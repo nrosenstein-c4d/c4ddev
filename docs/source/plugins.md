@@ -28,17 +28,3 @@ for testing and prototyping.
 > soon to bring it up to speed with my current standards.
 
 ![PyDrawHelper Screenshot](https://i.imgur.com/xyY4btk.png)
-
-### Python Batch Compiler
-
-This simple command lets you select a directory and it will compile all
-Python `*.py` files it can find to `*.pyc` files using the built-in
-Cinema 4D Python Interpreter. This is useful to avoid Python magic
-number issues if you try to use `python -m compileall` from the command
-line since Cinema 4D uses `Python 2.6` and you may have a different
-version installed.
-
-### Egg Maker
-
-Create a Python `*.egg` from a directory. Optionally, it will include
-non-Python files and prefer compiled Python over source files.
