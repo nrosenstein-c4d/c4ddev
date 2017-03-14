@@ -9,20 +9,20 @@
       
       
       
-        <link rel="shortcut icon" href="../assets/images/favicon.png">
+        <link rel="shortcut icon" href="../../assets/images/favicon.png">
       
       <meta name="generator" content="mkdocs-0.16.1, mkdocs-material-1.2.0">
     
     
       
-        <title>Resource Packages - c4ddev Documentation</title>
+        <title>Installation - c4ddev Documentation</title>
       
     
     
-      <script src="../assets/javascripts/modernizr-56ade86843.js"></script>
+      <script src="../../assets/javascripts/modernizr-56ade86843.js"></script>
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application-e17eeafcbc.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application-e17eeafcbc.css">
       
     
     
@@ -59,7 +59,7 @@
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
         
-          <a href=".." title="c4ddev Documentation" class="md-icon md-icon--home md-header-nav__button">
+          <a href="../.." title="c4ddev Documentation" class="md-icon md-icon--home md-header-nav__button">
           </a>
         
       </div>
@@ -72,11 +72,11 @@
             
               
                 <span class="md-header-nav__parent">
-                  Contents
+                  Command-line Interface
                 </span>
               
             
-            Resource Packages
+            Installation
           
         </span>
       </div>
@@ -135,7 +135,7 @@
 
 
   <li class="md-nav__item">
-    <a href=".." title="Home" class="md-nav__link">
+    <a href="../.." title="Home" class="md-nav__link">
       Home
     </a>
   </li>
@@ -147,7 +147,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../changelog/" title="Changelog" class="md-nav__link">
+    <a href="../../changelog/" title="Changelog" class="md-nav__link">
       Changelog
     </a>
   </li>
@@ -158,34 +158,70 @@
       
 
 
-  <li class="md-nav__item">
-    <a href="../plugins/" title="Plugins" class="md-nav__link">
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
       Plugins
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../cli/" title="CLI" class="md-nav__link">
-      CLI
-    </a>
-  </li>
-
-    
-      
-      
-      
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Plugins
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
 
 
   <li class="md-nav__item">
-    <a href="../api/" title="Scripting API" class="md-nav__link">
-      Scripting API
+    <a href="../../plugins/c4dide/" title="C4D IDE" class="md-nav__link">
+      C4D IDE
     </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../plugins/pyobject/" title="PyObject" class="md-nav__link">
+      PyObject
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../plugins/pyshader/" title="PyShader" class="md-nav__link">
+      PyShader
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../plugins/uescapetool/" title="Unicode Escape Tool" class="md-nav__link">
+      Unicode Escape Tool
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
   </li>
 
     
@@ -198,14 +234,14 @@
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
     
-    <label class="md-nav__link" for="nav-6">
-      Contents
+    <label class="md-nav__link" for="nav-4">
+      Command-line Interface
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-6">
-        Contents
+      <label class="md-nav__title" for="nav-4">
+        Command-line Interface
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
         
@@ -221,37 +257,10 @@
     
     <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
     
-      
     
-    
-      <label class="md-nav__link md-nav__link--active" for="toc">
-        Resource Packages
-      </label>
-    
-    <a href="./" title="Resource Packages" class="md-nav__link md-nav__link--active">
-      Resource Packages
+    <a href="./" title="Installation" class="md-nav__link md-nav__link--active">
+      Installation
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#rpkg-format-information" title=".rpkg Format Information" class="md-nav__link">
-    .rpkg Format Information
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
     
   </li>
 
@@ -262,8 +271,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../nodepy/" title="Using Node.py in C4D" class="md-nav__link">
-      Using Node.py in C4D
+    <a href="../build-loader/" title="build-loader" class="md-nav__link">
+      build-loader
     </a>
   </li>
 
@@ -274,14 +283,86 @@
 
 
   <li class="md-nav__item">
-    <a href="../localimport/" title="Localimport" class="md-nav__link">
-      Localimport
+    <a href="../pip-get/" title="pip-get" class="md-nav__link">
+      pip-get
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../pip/" title="pip" class="md-nav__link">
+      pip
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../pypkg/" title="pypkg" class="md-nav__link">
+      pypkg
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../rpkg/" title="rpkg" class="md-nav__link">
+      rpkg
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../symbols/" title="symbols" class="md-nav__link">
+      symbols
     </a>
   </li>
 
         
       </ul>
     </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../localimport/" title="Localimport" class="md-nav__link">
+      Localimport
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../api/" title="Scripting API" class="md-nav__link">
+      Scripting API
+    </a>
   </li>
 
     
@@ -310,7 +391,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../cpp/resources/" title="Resources" class="md-nav__link">
+    <a href="../../cpp/resources/" title="Resources" class="md-nav__link">
       Resources
     </a>
   </li>
@@ -322,7 +403,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../cpp/snippets/" title="Snippets" class="md-nav__link">
+    <a href="../../cpp/snippets/" title="Snippets" class="md-nav__link">
       Snippets
     </a>
   </li>
@@ -358,7 +439,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../python/asyncgui/" title="Async GUI" class="md-nav__link">
+    <a href="../../python/asyncgui/" title="Async GUI" class="md-nav__link">
       Async GUI
     </a>
   </li>
@@ -370,7 +451,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../python/scripts/" title="Scripts & Snippets" class="md-nav__link">
+    <a href="../../python/scripts/" title="Scripts & Snippets" class="md-nav__link">
       Scripts & Snippets
     </a>
   </li>
@@ -395,20 +476,6 @@
 <nav class="md-nav md-nav--secondary">
   
   
-    
-  
-  
-    <label class="md-nav__title" for="toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#rpkg-format-information" title=".rpkg Format Information" class="md-nav__link">
-    .rpkg Format Information
-  </a>
-  
-</li>
-      
-    </ul>
   
 </nav>
                   </div>
@@ -421,56 +488,14 @@
                
               
                 
-                <h1 id="resource-packages">Resource Packages</h1>
-<p>Resource packages allow you to more efficiently manage plugin resource files
-and translations by merging all information into a single file. Resource
-packages have the <code>.rpkg</code> suffix and are converted to real Cinema 4D resource
-files by using the <a href="../cli#rpkg"><code>c4ddev rpkg</code></a> command.</p>
-<div class="codehilite"><pre><span></span>ResourcePackage(Ocube)  # Mandatory, (XXX) part is optional
-Ocube: 5405
-  us: Cube
-  de: Würfel
-# Save ourselves some writing.
-SetPrefix(PRIM_CUBE_)
-# Basic Attributes
-LENGTH: 1001
-  us: Size
-  de: Größe
-SEGMENTS: 1002
-  us: Segments
-  de: Segmente
-SetPrefix()
-# A symbol without ID is placed only into the Stringtable, except for
-# the c4d_symbols, where the ID is automatically incremented starting
-# from 10000.
-DEBUGSECTION:
-  us: Debug Section
-  de: Debug Bereich
-# More symbols to follow ...
+                  <h1>Installation</h1>
+                
+                <p>To install the C4DDev command-line tools, you need to install <a href="https://pypi.python.org/pypi/node.py">Node.py</a>. Then
+you can use PPYM (which is installed together with Node.py) to install the
+C4DDev command-line tools.</p>
+<div class="codehilite"><pre><span></span>$ pip install node.py
+$ ppym install -g @niklas/c4ddev
 </pre></div>
-
-
-<p>A file called <code>c4d_symbols.rpkg</code> will be handled special and generate the respective
-<code>c4d_symbols.h</code> and <code>c4d_strings.str</code> files.</p>
-<div class="codehilite"><pre><span></span>$ c4ddev.py rpkg res/c4d_symbols.rpkg res/Ocube.rpkg
-Writing c4d_symbols.h ...
-Writing strings_de/c4d_strings.str ...
-Writing strings_us/c4d_strings.str ...
-Writing description/Ocube.h ...
-Writing strings_de/description/Ocube.str ...
-Writing strings_us/description/Ocube.str ...
-</pre></div>
-
-
-<h3 id="rpkg-format-information"><code>.rpkg</code> Format Information</h3>
-<ul>
-<li>The <code>ResourcePackage</code> line is mandatory and must be the first line in the file</li>
-<li>Comments begin with a number sign (<code>#</code>) and continue until the end of the line</li>
-<li>Assigning a fixed ID number to a symbol is mandatory</li>
-<li>Special characters in the localization are allowed (use <code>\n</code> for a newline and <code>\t</code> for a tab)</li>
-<li>If the file is named <code>c4d_symbols.rpkg</code>, it will automatically be created in the res folder
-  directly instead of the descriptions folder</li>
-</ul>
               
               
             </article>
@@ -484,7 +509,7 @@ Writing strings_us/description/Ocube.str ...
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../api/" title="Scripting API" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../../plugins/uescapetool/" title="Unicode Escape Tool" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -493,19 +518,19 @@ Writing strings_us/description/Ocube.str ...
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Scripting API
+                Unicode Escape Tool
               </span>
             </div>
           </a>
         
         
-          <a href="../nodepy/" title="Using Node.py in C4D" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../build-loader/" title="build-loader" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Using Node.py in C4D
+                build-loader
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
@@ -535,8 +560,8 @@ Writing strings_us/description/Ocube.str ...
       
     </div>
     
-      <script src="../assets/javascripts/application-30ac6a1727.js"></script>
-      <script>app.initialize({url:{base:".."}})</script>
+      <script src="../../assets/javascripts/application-30ac6a1727.js"></script>
+      <script>app.initialize({url:{base:"../.."}})</script>
       
     
     

@@ -15,7 +15,7 @@
     
     
       
-        <title>Snippets - c4ddev Documentation</title>
+        <title>symbols - c4ddev Documentation</title>
       
     
     
@@ -72,11 +72,11 @@
             
               
                 <span class="md-header-nav__parent">
-                  C++ Information
+                  Command-line Interface
                 </span>
               
             
-            Snippets
+            symbols
           
         </span>
       </div>
@@ -229,10 +229,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
     
     <label class="md-nav__link" for="nav-4">
       Command-line Interface
@@ -250,7 +252,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../cli/_install/" title="Installation" class="md-nav__link">
+    <a href="../_install/" title="Installation" class="md-nav__link">
       Installation
     </a>
   </li>
@@ -262,7 +264,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../cli/build-loader/" title="build-loader" class="md-nav__link">
+    <a href="../build-loader/" title="build-loader" class="md-nav__link">
       build-loader
     </a>
   </li>
@@ -274,7 +276,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../cli/pip-get/" title="pip-get" class="md-nav__link">
+    <a href="../pip-get/" title="pip-get" class="md-nav__link">
       pip-get
     </a>
   </li>
@@ -286,7 +288,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../cli/pip/" title="pip" class="md-nav__link">
+    <a href="../pip/" title="pip" class="md-nav__link">
       pip
     </a>
   </li>
@@ -298,7 +300,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../cli/pypkg/" title="pypkg" class="md-nav__link">
+    <a href="../pypkg/" title="pypkg" class="md-nav__link">
       pypkg
     </a>
   </li>
@@ -310,7 +312,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../cli/rpkg/" title="rpkg" class="md-nav__link">
+    <a href="../rpkg/" title="rpkg" class="md-nav__link">
       rpkg
     </a>
   </li>
@@ -320,11 +322,18 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../../cli/symbols/" title="symbols" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+    
+    <a href="./" title="symbols" class="md-nav__link md-nav__link--active">
       symbols
     </a>
+    
   </li>
 
         
@@ -361,12 +370,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
     
     <label class="md-nav__link" for="nav-7">
       C++ Information
@@ -384,7 +391,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../resources/" title="Resources" class="md-nav__link">
+    <a href="../../cpp/resources/" title="Resources" class="md-nav__link">
       Resources
     </a>
   </li>
@@ -394,45 +401,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
-    
-      
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="toc">
-        Snippets
-      </label>
-    
-    <a href="./" title="Snippets" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../../cpp/snippets/" title="Snippets" class="md-nav__link">
       Snippets
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#hide-dialog-menubar" title="Hide Dialog Menubar" class="md-nav__link">
-    Hide Dialog Menubar
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
         
@@ -503,20 +476,6 @@
 <nav class="md-nav md-nav--secondary">
   
   
-    
-  
-  
-    <label class="md-nav__title" for="toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#hide-dialog-menubar" title="Hide Dialog Menubar" class="md-nav__link">
-    Hide Dialog Menubar
-  </a>
-  
-</li>
-      
-    </ul>
   
 </nav>
                   </div>
@@ -529,29 +488,59 @@
                
               
                 
-                <h1 id="snippets">Snippets</h1>
-<h4 id="hide-dialog-menubar">Hide Dialog Menubar</h4>
-<p>There is a non-member function available in the SDK that can be accessed
-through the <code>C4DOS</code> to add special gadgets to the dialog, and it appears
-that the state &ldquo;no menubar&rdquo; is also represented internally as a dialog
-gadgets.</p>
-<div class="codehilite"><pre><span></span><span class="kr">inline</span> <span class="n">Bool</span> <span class="nf">AddGadget</span><span class="p">(</span><span class="n">GeDialog</span><span class="o">*</span> <span class="n">dlg</span><span class="p">,</span> <span class="n">Int32</span> <span class="n">gadget_type</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">String</span> <span class="k">const</span> <span class="n">name</span><span class="p">;</span>
-  <span class="n">BaseContainer</span> <span class="k">const</span> <span class="n">bc</span><span class="p">;</span>
-  <span class="k">return</span> <span class="n">C4DOS</span><span class="p">.</span><span class="n">Cd</span><span class="o">-&gt;</span><span class="n">AddGadget</span><span class="p">(</span><span class="n">dlg</span><span class="o">-&gt;</span><span class="n">Get</span><span class="p">(),</span> <span class="n">gadget_type</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">bc</span><span class="p">,</span> <span class="k">nullptr</span><span class="p">);</span>
-<span class="p">}</span>
+                  <h1>symbols</h1>
+                
+                <div class="codehilite"><pre><span></span><span class="n">Usage</span><span class="o">:</span> <span class="n">c4ddev</span> <span class="n">symbols</span> <span class="o">[</span><span class="n">OPTIONS</span><span class="o">]</span>
+
+<span class="n">Options</span><span class="o">:</span>
+  <span class="o">-</span><span class="n">f</span><span class="o">,</span> <span class="o">--</span><span class="n">format</span> <span class="n">FORMAT</span>      <span class="n">The</span> <span class="n">output</span> <span class="n">format</span><span class="o">,</span> <span class="n">one</span> <span class="n">of</span> <span class="o">{</span><span class="kd">class</span><span class="o">,</span><span class="n">file</span><span class="o">,</span><span class="n">json</span><span class="o">}.</span>
+                           <span class="n">Defaults</span> <span class="n">to</span> <span class="kd">class</span><span class="o">.</span>
+  <span class="o">-</span><span class="n">o</span><span class="o">,</span> <span class="o">--</span><span class="n">outfile</span> <span class="n">FILENAME</span>
+  <span class="o">-</span><span class="n">d</span><span class="o">,</span> <span class="o">--</span><span class="n">res</span><span class="o">-</span><span class="n">dir</span> <span class="n">DIRECTORY</span>  <span class="n">One</span> <span class="n">or</span> <span class="n">more</span> <span class="n">resource</span> <span class="n">directories</span> <span class="n">to</span> <span class="n">parse</span> <span class="k">for</span>
+                           <span class="n">symbols</span><span class="o">.</span> <span class="n">If</span> <span class="n">the</span> <span class="n">option</span> <span class="k">is</span> <span class="n">not</span> <span class="n">specified</span><span class="o">,</span> <span class="err">`</span><span class="n">res</span><span class="o">/</span><span class="err">`</span>
+                           <span class="n">will</span> <span class="n">be</span> <span class="n">used</span><span class="o">.</span>
+  <span class="o">--</span><span class="n">help</span>                   <span class="n">Show</span> <span class="k">this</span> <span class="n">message</span> <span class="n">and</span> <span class="n">exit</span><span class="o">.</span>
 </pre></div>
 
 
-<p>The gadget to remove the dialog menubar is <code>DIALOG_NOMENUBAR</code>. Be aware
-when adding this gadget: Adding it inside <code>CreateLayout()</code> won&rsquo;t work
-and calling it afterwards will crash C4D. You can call the function
-in the dialog&rsquo;s constructor though!</p>
-<div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">MyDialog</span> <span class="o">:</span> <span class="k">public</span> <span class="n">GeDialog</span><span class="p">()</span> <span class="p">{</span>
-<span class="k">public</span><span class="o">:</span>
-  <span class="n">MyDialog</span><span class="p">()</span> <span class="o">:</span> <span class="n">GeDialog</span><span class="p">()</span> <span class="p">{</span> <span class="n">AddGadget</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">DIALOG_NOMENUBAR</span><span class="p">);</span> <span class="p">}</span>
-<span class="p">};</span>
+<p>Extracts the resource symbols from all header files in <code>res/</code> directory or the
+directory/ies specified via <code>-d,--res-dir</code> and formats them as a Python class,
+Python file or JSON.</p>
+<div class="codehilite"><pre><span></span>$ <span class="nb">pwd</span>
+/Users/niklas/Applications/Cinema 4D R18/plugins/myplugin
+$ c4ddev symbols
+
+<span class="nb">exec</span> <span class="o">(</span><span class="s2">&quot;&quot;&quot;class res(object):</span>
+<span class="s2"> # Automatically generated with c4ddev v1.3.</span>
+<span class="s2"> project_path = os.path.dirname(__file__)</span>
+<span class="s2"> def string(self, name, *subst):</span>
+<span class="s2">  result = __res__.LoadString(getattr(self, name))</span>
+<span class="s2">  for item in subst: result = result.replace(&#39;#&#39;, item, 1)</span>
+<span class="s2">  return result</span>
+<span class="s2"> def tup(self, name, *subst):</span>
+<span class="s2">  return (getattr(self, name), self.string(name, *subst))</span>
+<span class="s2"> def path(self, *parts):</span>
+<span class="s2">  path = os.path.join(*parts)</span>
+<span class="s2">  if not os.path.isabs(path):</span>
+<span class="s2">   path = os.path.join(self.project_path, path)</span>
+<span class="s2">  return path</span>
+<span class="s2"> file = path  # backwards compatibility</span>
+<span class="s2"> def bitmap(self, *parts):</span>
+<span class="s2">  b = c4d.bitmaps.BaseBitmap()</span>
+<span class="s2">  if b.InitWith(self.path(*parts))[0] != c4d.IMAGERESULT_OK: return None</span>
+<span class="s2">  return b</span>
+<span class="s2"> MYSYMBOL = 1000</span>
+<span class="s2"> MYOTHERSYMBOLS = 1001</span>
+<span class="s2"> res=res()&quot;&quot;&quot;</span><span class="o">)</span>
 </pre></div>
+
+
+<p><strong>Available Formats</strong></p>
+<ul>
+<li>Python class (<code>class</code>) [default] &ndash; Can be copied into the Python plugin source</li>
+<li>Python file (<code>file</code>)  &ndash; Can be loaded as a module (make use of <a href="../localimport"><code>localimport</code></a>)</li>
+<li>JSON (<code>json</code>) &ndash; Can be loaded using the <code>json</code> module</li>
+</ul>
               
               
             </article>
@@ -565,7 +554,7 @@ in the dialog&rsquo;s constructor though!</p>
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../resources/" title="Resources" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../rpkg/" title="rpkg" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -574,19 +563,19 @@ in the dialog&rsquo;s constructor though!</p>
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Resources
+                rpkg
               </span>
             </div>
           </a>
         
         
-          <a href="../../python/asyncgui/" title="Async GUI" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../../localimport/" title="Localimport" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Async GUI
+                Localimport
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
