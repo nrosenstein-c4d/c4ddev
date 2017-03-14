@@ -2,7 +2,7 @@ import c4d
 from c4d import Vector
 
 def Message(op, msg, data):
-    return False
+    return True
 
 def AddToExecution(op, list):
     return False
@@ -14,8 +14,9 @@ def Draw(op, drawpass, bd, bh):
     if drawpass == c4d.DRAWPASS_OBJECT:
         bd.SetMatrix_Matrix(op, bh.GetMg())
         bd.SetTransparency(1)
-        points = [Vector(100, 0, 0), Vector(0, 100, 0), Vector(0, 0, 100)]
-        colors = [Vector(1,0,0), Vector(0,1,0), Vector(0,0,1)]
+        V = c4d.Vector
+        points = [V(100, 0, 0), V(0, 100, 0), V(0, 0, 100)]
+        colors = [V(1,0,0),     V(0,1,0),     V(0,0,1)]
         bd.DrawPolygon(points, colors)
     return True
 

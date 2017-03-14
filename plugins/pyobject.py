@@ -26,27 +26,32 @@ import types
 
 __res__ = require('c4ddev/__res__')
 utils = require('c4ddev/utils')
+res = require('c4ddev/res')
 
 class PyObjectEditor(c4d.gui.GeDialog):
     DRAWHELPER_EDITOR   = 10001
     BTN_COMMIT          = 10002
     EDT_SOURCE          = 10003
 
-    def __init__(self, op):
+    def __init__(self, op, title=None, target_id=res.NR_PYOBJECT_SOURCE):
         self.op = op
+        self.title = title
+        self.target_id = target_id
 
     def SetTarget(self, op):
         self.op = op
         if self.IsOpen():
-            self.SetSource(op[c4d.NR_PYOBJECT_SOURCE])
+            self.SetSource(op[self.target_id])
 
     def CreateLayout(self):
         self.LoadDialogResource(self.DRAWHELPER_EDITOR, flags = c4d.BFH_SCALEFIT | c4d.BFV_SCALEFIT)
+        if self.title:
+            self.SetTitle(str(self.title))
         return True
 
     def InitValues(self):
         if self.op:
-            self.SetSource(self.op[c4d.NR_PYOBJECT_SOURCE])
+            self.SetSource(self.op[self.target_id])
         return True
 
     def Command(self, id, msg):
@@ -58,7 +63,7 @@ class PyObjectEditor(c4d.gui.GeDialog):
         self.Commit()
 
     def Commit(self):
-        self.op[c4d.NR_PYOBJECT_SOURCE] = self.GetString(self.EDT_SOURCE)
+        self.op[self.target_id] = self.GetString(self.EDT_SOURCE)
         c4d.DrawViews()
 
     def SetSource(self, code):
@@ -69,25 +74,13 @@ class PyObject(c4d.plugins.ObjectData):
     PLUGIN_NAME = "PyObject"
     Editor = PyObjectEditor(None)
 
-    @staticmethod
-    def get_initial_source():
-        filename = os.path.join(utils.plugin_dir, "res", "PyObject.py")
-        try:
-            with open(filename) as fp:
-                return fp.read()
-        except (OSError, IOError) as exc:
-            traceback.print_exc()
-            return ''
-
     def __init__(self):
-        self.op = None
         self.scope = None
         self.code_hash = 0
 
     def Init(self, op):
-        self.op = op
-        self.InitAttr(op, str, [c4d.NR_PYOBJECT_SOURCE])
-        op[c4d.NR_PYOBJECT_SOURCE] = self.get_initial_source()
+        with open(os.path.join(utils.plugin_dir, 'res', 'PyObject.py')) as fp:
+            op[res.NR_PYOBJECT_SOURCE] = fp.read()
         return True
 
     def AddToExecution(self, op, list):
@@ -103,11 +96,11 @@ class PyObject(c4d.plugins.ObjectData):
     def Message(self, op, msg, data):
         if msg == c4d.MSG_DESCRIPTION_COMMAND:
             id = data['id'][0].id
-            if id == c4d.NR_PYOBJECT_OPENEDITOR:
+            if id == res.NR_PYOBJECT_OPENEDITOR:
                 self.Editor.SetTarget(op)
                 self.Editor.Open(c4d.DLG_TYPE_ASYNC, self.PLUGIN_ID, 250, 200, 600, 500)
         elif msg in (c4d.MSG_UPDATE, c4d.MSG_DESCRIPTION_POSTSETPARAMETER):
-            code = op[c4d.NR_PYOBJECT_SOURCE]
+            code = op[res.NR_PYOBJECT_SOURCE]
             if hash(code) != self.code_hash:
                 self.code_hash = hash(code)
                 try:

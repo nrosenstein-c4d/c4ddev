@@ -24,8 +24,11 @@ __res__ = require('c4ddev/__res__')
 import os, sys
 import c4d
 import traceback
+import types
 
 from zlib import adler32
+utils = require('c4ddev/utils')
+res = require('c4ddev/res')
 
 __author__ = 'Niklas Rosenstein <rosensteinniklas(at)gmail.com>'
 __version__ = '1.0-dev'
@@ -39,83 +42,70 @@ class PyShader(c4d.plugins.ShaderData):
   PluginName = 'PyShader'
   PluginFlags = 0
   PluginDesc = 'nr_pyshader'
+  Editor = require('./pyobject').PyObjectEditor(None, title='PyShader Editor', target_id=res.NR_PYSHADER_CODE)
 
   def __init__(self):
     super(PyShader, self).__init__()
-    self._scope = None
-    self._code_hash = None
+    self.first_output = False
+    self.customdata = None
+    self.scope = None
+    self.code_hash = None
 
   def Init(self, sh):
-    sh[c4d.NR_PYSHADER_CODE] = (
-      '# c4ddev PyShader v{version} by Niklas Rosenstein\n'
-      '# https://github.com/nr-plugins/c4ddev\n'
-      '#\n'
-      '# Note: Use print() as a function instead of as a statement\n'
-      '\n'
-      'import c4d\n'
-      '\n'
-      'def message(msg_type, data):\n'
-      '    return True\n'
-      '\n'
-      'def init_render(ud, irs):\n'
-      '    return c4d.INITRENDERRESULT_OK\n'
-      '\n'
-      'def free_render(ud):\n'
-      '    pass\n'
-      '\n'
-      'def output(ud, cd, once):\n'
-      '    return c4d.Vector(0.0, 0.0, 0.0)\n').format(version=__version__)
+    with open(os.path.join(utils.plugin_dir, 'res', 'PyShader.py')) as fp:
+      sh[res.NR_PYSHADER_CODE] = fp.read()
     return True
 
-  def Message(self, sh, msg_type, data):
-    if msg_type == c4d.MSG_DESCRIPTION_POSTSETPARAMETER:
+  def Message(self, sh, msg, data):
+    if msg == c4d.MSG_DESCRIPTION_POSTSETPARAMETER:
       # Re-evaluate the shader code in case it changed.
-      code = sh[c4d.NR_PYSHADER_CODE]
+      code = sh[res.NR_PYSHADER_CODE]
       code_hash = adler32(code)
-      if code_hash != self._code_hash:
-        self._scope = {'op': sh, 'doc': sh.GetDocument()}
-        self._output = None
+      if code_hash != self.code_hash:
+        self.scope = types.ModuleType(sh.GetName())
         try:
-          exec compile(code, sh.GetName(), 'exec') in self._scope
+          exec(compile(code, sh.GetName(), 'exec'), vars(self.scope))
         except BaseException as exc:
-          self._scope = None
           traceback.print_exc()
-          sh[c4d.NR_PYSHADER_INFO] = str(exc)
+          sh[res.NR_PYSHADER_INFO] = str(exc)
         else:
-          self._code_hash = code_hash
-          sh[c4d.NR_PYSHADER_INFO] = 'Ok'
-
-    if self._scope is not None:
-      return self._scope['message'](msg_type, data)
+          sh[res.NR_PYSHADER_INFO] = ''
+    if msg == c4d.MSG_DESCRIPTION_COMMAND:
+      id = data['id'][0].id
+      if id == res.NR_PYSHADER_OPENEDITOR:
+        self.Editor.SetTarget(sh)
+        self.Editor.Open(c4d.DLG_TYPE_ASYNC, self.PluginID, 250, 200, 600, 500)
+    if self.scope and hasattr(self.scope, 'Message'):
+      self.scope.Message(sh, msg, data)
     return True
 
   def InitRender(self, sh, irs):
-    if self._scope is not None:
-      self._ud = {}
-      self._first_output = True
-      return self._scope['init_render'](self._ud, irs)
-    return c4d.INITRENDERRESULT_OK
+    self.customdata = {}
+    self.first_output = True
+    if self.scope and hasattr(self.scope, 'InitRender'):
+      res = self.scope.InitRender(sh, irs, self.customdata)
+    else:
+      res = None
+    if res is None:
+      res = c4d.INITRENDERRESULT_OK
+    return res
 
   def FreeRender(self, sh):
-    if self._scope is not None:
+    if self.scope and hasattr(self.scope, 'FreeRender'):
       try:
-        self._scope['free_render'](self._ud)
+        self.scope.FreeRender(sh, self.customdata)
       finally:
-        del self._ud
-        del self._first_output
+        self.first_output = False
+        self.customdata = None
 
   def Output(self, sh, cd):
-    if self._scope is not None:
-      first_output = self._first_output
-      if first_output:
-        self._first_output = False
-      return self._scope['output'](self._ud, cd, first_output)
+    output = getattr(self.scope, 'Output')
+    if output is not None:
+      try:
+        return output(sh, cd, self.customdata, self.first_output)
+      finally:
+        self.first_output = False
     return c4d.Vector(1.0, 1.0, 0.0)
-
-  def CopyTo(self, dest, snode, dnode, flags, trn):
-    dest._scope = self._scope
-    dest._code_hash = self._code_hash
-    return True
 
   @classmethod
   def Register(cls):

@@ -52,12 +52,6 @@ def load_extensions():
   return extensions
 
 def PluginMessage(msg_type, data):
-  if msg_type == c4d.C4DPL_RELOADPYTHONPLUGINS:
-    reload(require)
-    for mod, path in _added_paths:
-      try: mod.path.remove(path)
-      except ValueError: pass
-
   for extension in extensions:
     if hasattr(extension, 'PluginMessage'):
       extension.PluginMessage(msg_type, data)

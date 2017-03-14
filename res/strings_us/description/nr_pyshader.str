@@ -2,4 +2,5 @@ STRINGTABLE nr_pyshader {
   nr_pyshader "PyShader";
   NR_PYSHADER_CODE "Code";
   NR_PYSHADER_INFO "Status";
+  NR_PYSHADER_OPENEDITOR "Open Editor";
 }

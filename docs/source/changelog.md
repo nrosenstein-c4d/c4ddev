@@ -12,6 +12,11 @@
 - renamed from *DrawHelper*
 - extended to allow overriding of other `ObjectData` methods
 
+*PyShader*
+
+- changed interface to match the method names in `ShaderData`
+- add "Open Editor" button
+
 *ResourcePackage*
 
 - add `SetPrefix()` keyword
