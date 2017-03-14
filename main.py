@@ -31,6 +31,7 @@ require('c4ddev/__res__', exports=False).namespace.exports = __res__
 # Pre-load all components of the c4ddev library, since some require third
 # party Python modules which can not be loaded at a later point when Node.py's
 # localimpot context is no longer present.
+require('c4ddev/res')
 require('c4ddev/pypkg')
 require('c4ddev/resource')
 require('c4ddev/utils')

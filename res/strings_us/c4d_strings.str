@@ -1,0 +1,33 @@
+STRINGTABLE {
+  // c4d-ide symbols
+  BUTTON_UNDO "Undo";
+  BUTTON_REDO "Redo";
+  BUTTON_SEND_TOOLTIP "Execute";
+
+  MENU_FILE "File";
+  MENU_FILE_OPEN "Open ...";
+  MENU_FILE_SAVETO "Save To ...";
+
+  MENU_VIEW "View";
+  MENU_VIEW_TRACEBACK "Traceback";
+
+  MENU_HELP "Help";
+  MENU_HELP_ABOUT "About ...";
+
+  ABOUT_LINE1 "Developed by Niklas Rosenstein";
+  ABOUT_LINE2 "http://niklasrosenstein.de/";
+  ABOUT_LINE3 "http://github.com/nr-plugins/c4d-ide";
+
+  IDC_SCRIPT_EDITOR "Python IDE (old)";
+  IDC_SCRIPT_EDITOR_HELP "Open the Cinema 4D Python IDE.";
+  IDC_NO_INTERFACE "Error: No Interface attached!";
+  IDC_CODE_OK "No Exceptions";
+  IDC_NO_TRACEBACK "No Traceback";
+
+  // Editor Window IDs
+  IDS_EDITOR "Python IDE";
+  IDS_EDITOR_HELP "Open the Python IDE Editor Window.";
+  IDS_EDITOR_TABS "";
+  IDS_EDITOR_CODE "";
+  IDC_EDITOR_ASKCLOSE "This document has unsaved changes. Do you want to save them now?";
+}
