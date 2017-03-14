@@ -1,4 +1,11 @@
-# Resource Packages
+    Usage: c4ddev rpkg [OPTIONS] RPKG
+
+    Options:
+      -r, --res DIRETORY
+      --no-header TEXT
+      --help              Show this message and exit.
+
+## Resource Packages
 
 Resource packages allow you to more efficiently manage plugin resource files
 and translations by merging all information into a single file. Resource
@@ -47,7 +54,7 @@ A file called `c4d_symbols.rpkg` will be handled special and generate the respec
     Writing strings_de/description/Ocube.str ...
     Writing strings_us/description/Ocube.str ...
 
-### `.rpkg` Format Information
+## `.rpkg` Format Information
 
 * The `ResourcePackage` line is mandatory and must be the first line in the file
 * Comments begin with a number sign (`#`) and continue until the end of the line

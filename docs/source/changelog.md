@@ -4,6 +4,9 @@
 
 ### v0.1.4 (unreleased)
 
+- merge https://github.com/NiklasRosenstein/c4d-deprecated-ide into C4DDev
+- update docs
+
 *ResourcePackage*
 
 - add `SetPrefix()` keyword

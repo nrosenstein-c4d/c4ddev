@@ -71,9 +71,12 @@ def main():
 
 
 @main.command()
-@click.option('-f', '--format', default='class')
-@click.option('-o', '--outfile')
-@click.option('-d', '--res-dir', multiple=True)
+@click.option('-f', '--format', default='class', metavar='FORMAT',
+    help='The output format, one of {class,file,json}. Defaults to class.')
+@click.option('-o', '--outfile', metavar='FILENAME')
+@click.option('-d', '--res-dir', metavar='DIRECTORY', multiple=True,
+    help='One or more resource directories to parse for symbols. If the '
+    'option is not specified, `res/` will be used.')
 def symbols(format, outfile, res_dir):
   if not res_dir:
     res_dir = ['res']

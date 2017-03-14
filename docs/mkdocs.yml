@@ -8,13 +8,21 @@ theme: material
 pages:
   - Home: index.md
   - Changelog: changelog.md
-  - Plugins: plugins.md
-  - CLI: cli.md
+  - Plugins:
+    - C4D IDE: plugins/c4dide.md
+    - PyDrawHelper: plugins/pydrawhelper.md
+    - PyShader: plugins/pyshader.md
+    - Unicode Escape Tool: plugins/uescapetool.md
+  - Command-line Interface:
+    - Installation: cli/_install.md
+    - build-loader: cli/build-loader.md
+    - pip-get: cli/pip-get.md
+    - pip: cli/pip.md
+    - pypkg: cli/pypkg.md
+    - rpkg: cli/rpkg.md
+    - symbols: cli/symbols.md
+  - Localimport: localimport.md
   - Scripting API: api/index.md
-  - Contents:
-    - Resource Packages: rpkg.md
-    - Using Node.py in C4D: nodepy.md
-    - Localimport: localimport.md
   - C++ Information:
     - Resources: cpp/resources.md
     - Snippets: cpp/snippets.md
