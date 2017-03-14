@@ -7,6 +7,11 @@
 - merge https://github.com/NiklasRosenstein/c4d-deprecated-ide into C4DDev
 - update docs
 
+*PyObject*
+
+- renamed from *DrawHelper*
+- extended to allow overriding of other `ObjectData` methods
+
 *ResourcePackage*
 
 - add `SetPrefix()` keyword
