@@ -27,6 +27,7 @@ import pipes
 import py_compile
 import random
 import re
+import shlex
 import shutil
 import subprocess
 import sys
@@ -331,7 +332,7 @@ def create_egg(pybin, source, dest, exclude_source=True):
     source = [source]
 
   if pybin is not None:
-    command = [pybin, __file__, 'create_egg'] + source + [dest, str(bool(exclude_source))]
+    command = shlex.split(pybin) + [__file__, 'create_egg'] + source + [dest, str(bool(exclude_source))]
     return shell_run(command)
 
   dirname = os.path.dirname(dest)
