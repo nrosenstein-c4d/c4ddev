@@ -7,6 +7,7 @@ title = "Changelog"
 ## v0.1.5
 
 - merge https://github.com/NiklasRosenstein/c4d-apex into C4DDev
+- merge https://github.com/NiklasRosenstein/py-c4dtools into C4DDev
 
 ## v0.1.4
 

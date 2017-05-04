@@ -24,3 +24,5 @@ This is extremely useful when using third party libraries in scripts or
 Python Objects/Tags. You can keep the dependencies together with your
 Cinema 4D scene file and only make sure that **C4DDev** is installed if
 you move the scene around.
+
+See also: [C4DTools]({{< ref "c4dtools.md" >}})

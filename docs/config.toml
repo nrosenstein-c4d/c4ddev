@@ -91,6 +91,11 @@ theme = "hugo-material-docs"
 	url    = "apex/"
 	weight = 100
 
+[[menu.main]]
+	name   = "C4DTools"
+	url    = "c4dtools/"
+	weight = 100
+
 [blackfriday]
 	smartypants	= true
 	fractions = true
