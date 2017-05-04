@@ -1,6 +1,8 @@
-# Python Scripts & Snippets
++++
+title = "Python Resources"
++++
 
-This page links to a number of useful Cinema 4D scripts.
+This page links to useful Python resources.
 
 ## Snippets
 

@@ -168,7 +168,7 @@ def pypkg(config):
 
 
 @main.command("build-loader")
-@click.option('-e', '--entry-point', default='entrypoint.py', metavar='ENTRYPOINT')
+@click.option('-e', '--entry-point', default='entrypoint', metavar='ENTRYPOINT')
 @click.option('-c', '--compress', is_flag=True)
 @click.option('-m', '--minify', is_flag=True)
 @click.option('-o', '--output', metavar='FILENAME')

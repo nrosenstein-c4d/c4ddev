@@ -1,0 +1,93 @@
+baseURL = "https://niklasrosenstein.github.io/"
+languageCode = "en-us"
+title = "C4DDev"
+theme = "hugo-material-docs"
+
+[params]
+	# General information
+	author = "Niklas Rosenstein"
+	description = "The C4DDev project documentation/"
+	copyright = "Released under the MIT license"
+
+	# Repository
+	provider = "GitHub"
+	repo_url = "https://github.com/NiklasRosenstein/c4ddev"
+
+	version = "1.3.3"
+	logo = "images/logo.png"
+	favicon = ""
+
+	permalink = "#"
+
+	# Custom assets
+	custom_css = []
+	custom_js  = []
+
+	# Syntax highlighting theme
+	highlight_css  = ""
+
+	[params.palette]
+    	primary = "red"
+    	accent  = "teal"
+
+    [params.font]
+    	text = "Ubuntu"
+    	code = "Ubuntu Mono"
+
+
+[social]
+	twitter = ""
+	github  = "NiklasRosenstein"
+	email   = "rosensteinniklas@gmail.com"
+
+
+[[menu.main]]
+	name   = "Home"
+	url    = "/"
+	weight = 10
+
+[[menu.main]]
+	name   = "Changelog"
+	url    = "/changelog/"
+	weight = 20
+
+[[menu.main]]
+	name   = "Scripting"
+	url    = "scripting/"
+	weight = 30
+
+[[menu.main]]
+	name   = "Command-line Tools"
+	url    = "cli/"
+	weight = 40
+
+[[menu.main]]
+	name   = "Resource Packages"
+	url    = "resource-packages/"
+	weight = 50
+
+[[menu.main]]
+	name   = "Plugins"
+	url    = "plugins/"
+	weight = 60
+
+[[menu.main]]
+	name   = "Py4D Imports: How-To"
+	url    = "py4d-imports-howto/"
+	weight = 70
+
+[[menu.main]]
+	name   = "Python Resources"
+	url    = "python/"
+	weight = 80
+
+[[menu.main]]
+	name   = "C++ Resources"
+	url    = "c++/"
+	weight = 90
+
+[blackfriday]
+	smartypants	= true
+	fractions = true
+	smartDashes = true
+	plainIDAnchors = true

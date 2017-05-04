@@ -1,3 +1,4 @@
 versionPatterns:
   "c4ddev.pyp": "__version__ = '$VERSION'"
   "setup.py": "  version = '$VERSION'"
+  "docs/config.toml": "	version = \"$VERSION\""

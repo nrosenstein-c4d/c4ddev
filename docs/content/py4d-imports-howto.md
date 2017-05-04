@@ -1,49 +1,101 @@
-# Localimport
++++
+title = "Py4D Imports: How-To"
++++
 
-This is not directly a feature of **c4ddev**, but it is something that needs to
-be considered by every Python Plugin author. When you import modules from your
-Python Plugin's directory, you should **never** do it the naive way (exceptions
-apply\*)!
+When using and distributing third-party modules in a Cinema 4D Python plugin,
+many problems can arise when used incorrectly. Some users have hundreds of
+Cinema 4D plugins, and many of them use third-party modules. Some plugins will
+stop working when another plugin delivers the same third-party module in a
+different version or even one with the same name but completely different
+functionality!
+
+When you import modules from your Python Plugin's directory, you should
+**never** do it the naive way, unless you EXPLICITLY WANT these third-party
+modules to be accessible from the outside (eg. when exposing a Python API
+for your plugin).
 
 ```python
 import os, sys
 sys.path.append(os.path.join(os.path.dirname(__file__), 'lib'))
-import some_module
+import some_module  # The module will live on in sys.modules after the plugin finished loading
 ```
 
-!!!danger
-    Using the naive approach shown above is dangerous and can lead to
-    incompatibilties between plugins.
+{{< warning title="Warning" >}}
+  Using the naive approach shown above is dangerous and can lead to
+  incompatibilties between plugins.
+{{< /warning >}}
 
-Instead, it is highly recommended to make sure that the global importer state
-stays clean and unaware of your additional modules. While you could code that
-all yourself, someone already racked their brain over this. The
-[`localimport`][0] module provides a context-manager that allows you to safely
-import modules from a directory, automatically cleaning up afterwards and
-reverting the global Python data (`sys.modules`, `sys.path`, etc.) to its
-original state.
+## Using the Node.Py Runtime
+
+It is generally recommended to make use of the [Node.Py] runtime. This can
+be achieved by generating a stand-alone version using the `c4ddev build-loader`
+command.
+
+    $ c4ddev build-loader -cmo loader.pyp -e myentrypoint
+
+The generated `loader.pyp` contains the [Node.Py] runtime and its dependencies
+and will load `myentrypoint.py` when the plugin is loaded. This file will then
+have full access to the Node.Py runtime and can make use of the [PPYM] package
+manager.
+
+  [Node.Py]: https://github.com/nodepy/nodepy
+  [PPYM]: https://ppym.org
+
+    $ ppym pip-install numpy
+    $ tree
+    | loader.pyp
+    | myentrypoint.py
+    | utils.py
+    | nodepy_modules/
+    \-| .pip/
+      \-| Lib/
+        \-| site-packages/
+          \-| numpy/ ...
+            | numpy-1.9.2.dist-info/ ...
+    $ cat myentrypoint
+
+```python
+# myentrypoint.py
+import numpy  # loaded from nodepy_modules/.pip/Lib/site-packages
+utils = require('./utils')
+
+# Register your C4D Python plugins ...
+```
+
+The Node.Py runtime will manage the full isolation of the module environment
+(using [localimport][]) and imported Python modules will not be visible to
+other plugins.
+
+{{< note title="Note" >}}
+C4DDev currently provides no mechanism to automatically compile Python sources
+and package them as it does with the `c4ddev pypkg` command. There is an
+outstanding task to bring this feature to C4DDev:
+[NiklasRosenstein/c4ddev#8](https://github.com/NiklasRosenstein/c4ddev/issues/8)
+{{< /note >}}
+
+## Using localimport
+
+  [localimport]: https://github.com/NiklasRosenstein/py-localimport
+
+Using the `localimport` module allows you to import Python modules in an
+isolated environment and will ensure that other plugins will not see the
+modules that another plugin has imported.
 
 ```python
 with localimport(['lib']) as _importer:
   # This line would not be necessary if everyone would use localimport,
   # but since we can not garuantee that...
   _importer.disable(['some_module'])
-
   import some_module
   assert 'some_module' in sys.modules
-
 assert 'some_module' not in sys.modules
 ```
 
-  [0]: https://github.com/NiklasRosenstein/py-localimport
+But how do you use `localimport` when it is a module, too?
 
-## Minified Version
-
-Now of course, [`localimport`][0] is, in itself, also a Python module. Instead
-of actually loading the class from a Python module, it is recommended to include
-the actual source code at the top of your Python plugin. Below is a minified
-version of `localimport-v1.5`. Other (and eventually newer) versions are
-available [**here**][1].
+The answer is a minified version that you can copy&paste directly into your
+plugins source code. Below is a minified version of `localimport-v1.5`. Other
+(and eventually newer) versions are available [**here**][1].
 
   [1]: https://gist.github.com/NiklasRosenstein/f5690d8f36bbdc8e5556
 
@@ -82,17 +134,7 @@ exec(z.decompress(b.b64decode(blob)), s)
 localimport=s["localimport"]; del blob, b, z, s;""")
 ```
 
-## Exceptions
-
-If your Python Plugin provides a unique API that is intended to be exposed to
-other plugins or scripts, it is a valid method of adding that module to the
-global `sys.path`.
-
-For example, the [PV Render Queue][2] plugin does exactly that.
-
-  [2]: https://public.niklasrosenstein.com/docs/pvrenderqueue/
-
-## Extended Example
+## Using localimport + pypkg
 
 If you're using [`c4ddev pypkg`](cli#pypkg) to package additional Python
 modules, it is common to have a `devel/` directory with all the dependencies.
@@ -150,6 +192,7 @@ we simply add the following line to the `devel.pth` file.
 
     requests/requests
 
-!!!note
-    You don't need this file in release mode when your third-party modules
-    are packaged with [`c4ddev pypkg`](cli#pypkg).
+{{< note title="Note" >}}
+  You don't need this file in release mode when your third-party modules
+  are packaged with [`c4ddev pypkg`](cli#pypkg).
+{{< /note >}}

@@ -1,29 +1,35 @@
-# c4ddev Changelog
++++
+title = "Changelog"
++++
 
   [Node.py]: https://github.com/nodepy/nodepy
 
-### v0.1.4 (unreleased)
+## v0.1.4 (unreleased)
 
 - merge https://github.com/NiklasRosenstein/c4d-deprecated-ide into C4DDev
 - update docs
+- add `c4ddev run` command
+- rename `c4ddev pip-get` command to `c4ddev get-pip`
+- fix `c4ddev/scripting/localimport` and add `python/` to `PYTHONPATH` inside
+  the context
 
-*PyObject*
+__PyObject__
 
 - renamed from *DrawHelper*
 - extended to allow overriding of other `ObjectData` methods
 
-*PyShader*
+__PyShader__
 
 - changed interface to match the method names in `ShaderData`
 - add "Open Editor" button
 - Python code is now also evaluated in Material preview
 
-*ResourcePackage*
+__ResourcePackage__
 
 - add `SetPrefix()` keyword
 - allow newlines and skippable tokens before the `ResourcePackage` statement
 
-### v0.1.3
+## v0.1.3
 
 - rewrite PyDrawHelper code (cb5aa58)
 - fix reloading of c4ddev plugins by reloading the `require` module (7f61b5b)
@@ -34,13 +40,13 @@
 - removed additional dependencies and convenience libraries like `requests` for now
 - add `ResourcePackage(resource_name)` syntax
 
-### v1.2
+## v1.2
 
 - update `require` module to v0.10
 - merge PyDrawHelper plugin
 - merge [PyShader](https://github.com/nr-plugins/pyshader) plugin
 
-### v1.1
+## v1.1
 
 - add `.pubfile` for [git-publish](https://pypi.python.org/pypi/git-publish)
 - add [`localimport`](https://github.com/NiklasRosenstein/py-localimport) v1.4.16 module

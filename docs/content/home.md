@@ -1,6 +1,9 @@
-# Welcome to the c4ddev Documentation!
++++
+title = "C4DDev"
+type = "index"
++++
 
-The **c4ddev** project is a set of Cinema 4D plugins, command-line tools and
+The **C4DDev** project is a set of Cinema 4D plugins, command-line tools and
 utilities for scripting inside of Cinema 4D that aims to make the prototyping,
 development and distribution of Cinema 4D plugins easier.
 

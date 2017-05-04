@@ -1,6 +1,8 @@
-# The `c4ddev` API
++++
+title = "Scripting"
++++
 
-The **c4ddev** API provides some utilities that are especially useful for
+The **C4DDev** API provides some utilities that are especially useful for
 scripting and prototyping in Cinema 4D. All contents of the `c4ddev` library
 must be loaded with the `c4ddev.require()` function (which is the `require()`
 function from the `c4ddev/main` module, exported by Node.py).
@@ -18,10 +20,7 @@ def main():
   # TODO: Some clever example
 ```
 
-## Namespaces
-
-- `c4ddev`
-- `c4ddev/pypkg`
-- `c4ddev/resource`
-- `c4ddev/scripting/localimport` -- localimport tuned for Cinema 4D scripting
-- `c4ddev/utils` -- utilities that are used by the c4ddev extensions (in `ext/`)
+This is extremely useful when using third party libraries in scripts or
+Python Objects/Tags. You can keep the dependencies together with your
+Cinema 4D scene file and only make sure that **C4DDev** is installed if
+you move the scene around.
