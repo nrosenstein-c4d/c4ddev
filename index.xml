@@ -37,7 +37,7 @@ License The MIT License (MIT) Copyright (c) 2014 Niklas Rosenstein Permission is
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://niklasrosenstein.github.io/c4ddev/changelog/</guid>
-      <description>v0.1.4 (unreleased)  merge https://github.com/NiklasRosenstein/c4d-deprecated-ide into C4DDev update docs add c4ddev run command rename c4ddev pip-get command to c4ddev get-pip fix c4ddev/scripting/localimport and add python/ to PYTHONPATH inside the context  PyObject
+      <description>v0.1.4  merge https://github.com/NiklasRosenstein/c4d-deprecated-ide into C4DDev update docs add c4ddev run command rename c4ddev pip-get command to c4ddev get-pip fix c4ddev/scripting/localimport and add python/ to PYTHONPATH inside the context  PyObject
  renamed from DrawHelper extended to allow overriding of other ObjectData methods  PyShader
  changed interface to match the method names in ShaderData add &amp;ldquo;Open Editor&amp;rdquo; button Python code is now also evaluated in Material preview  ResourcePackage</description>
     </item>
