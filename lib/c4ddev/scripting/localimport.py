@@ -36,7 +36,7 @@ of Cinema 4D.
 """
 
 import os
-_localimport = require.context.binding('localimport')
+_localimport = require.context.binding('localimport').localimport
 importer_cache = {}
 
 def localimport(doc):
@@ -53,7 +53,7 @@ def localimport(doc):
 
   importer = importer_cache.get(path)
   if not importer:
-    importer = _localimport(['.'], path)
+    importer = _localimport(['.', './python'], path)
     importer_cache[path] = importer
 
   return importer
