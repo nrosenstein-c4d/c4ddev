@@ -9,18 +9,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=10" />
-    <title>C4DDev</title>
+    <title>Resource Packages - C4DDev</title>
     <meta name="generator" content="Hugo 0.20.1" />
 
     
     <meta name="description" content="The C4DDev project documentation/">
     
-    <link rel="canonical" href="https://niklasrosenstein.github.io/">
+    <link rel="canonical" href="https://niklasrosenstein.github.io/resource-packages/">
     
     <meta name="author" content="Niklas Rosenstein">
     
 
-    <meta property="og:url" content="https://niklasrosenstein.github.io/">
+    <meta property="og:url" content="https://niklasrosenstein.github.io/resource-packages/">
     <meta property="og:title" content="C4DDev">
     <meta property="og:image" content="https://niklasrosenstein.github.io/images/logo.png">
     <meta name="apple-mobile-web-app-title" content="C4DDev">
@@ -69,9 +69,6 @@
     <script src="https://niklasrosenstein.github.io/javascripts/modernizr.js"></script>
 
     
-    <link href="https://niklasrosenstein.github.io/index.xml" rel="alternate" type="application/rss+xml" title="C4DDev" />
-    <link href="https://niklasrosenstein.github.io/index.xml" rel="feed" type="application/rss+xml" title="C4DDev" />
-    
 
   </head>
   <body class="palette-primary-red palette-accent-teal">
@@ -100,7 +97,7 @@
     </div>
     <div class="stretch">
       <div class="title">
-        C4DDev
+        Resource Packages
       </div>
     </div>
 
@@ -183,14 +180,11 @@
 
 
 
-<a class="current" title="Home" href="/">
+<a  title="Home" href="/">
 	
 	Home
 </a>
 
-
-<ul id="scrollspy">
-</ul>
 
 
   
@@ -258,11 +252,14 @@
 
 
 
-<a  title="Resource Packages" href="/resource-packages/">
+<a class="current" title="Resource Packages" href="/resource-packages/">
 	
 	Resource Packages
 </a>
 
+
+<ul id="scrollspy">
+</ul>
 
 
   
@@ -377,41 +374,72 @@
 
 	<article class="article">
 		<div class="wrapper">
+			<h1>Resource Packages </h1>
+
 			
-				<h1>C4DDev </h1>
 
-				
+<p>Resource packages allow you to more efficiently manage plugin resource files
+and translations by merging all information into a single file. Resource
+packages have the <code>.rpkg</code> suffix and are converted to real Cinema 4D resource
+files by using the <a href="cli#rpkg"><code>c4ddev rpkg</code></a> command.</p>
 
-<p>The <strong>C4DDev</strong> project is a set of Cinema 4D plugins, command-line tools and
-utilities for scripting inside of Cinema 4D that aims to make the prototyping,
-development and distribution of Cinema 4D plugins easier.</p>
+<h2 id="example">Example</h2>
 
-<h2 id="license">License</h2>
+<pre><code># Must be the first statement in a .rpkg file. The (XXX) part is optional.
+ResourcePackage(Ocube)
 
-<pre><code>The MIT License (MIT)
+# It is common to assign the actual Plugin ID already in the description
+# resource header file, so people can just include the header and also have
+# the plugin ID available. In our description, we also use it as the object
+# name (i.e. `NAME Ocube;` ).
+Ocube: 5405
+  us: Cube
+  de: Würfel
 
-Copyright (c) 2014  Niklas Rosenstein
+# We can save ourselves some writing by using SetPrefix().
+SetPrefix(PRIM_CUBE_)
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the &quot;Software&quot;), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+LENGTH: 1001
+  us: Size
+  de: Größe
+SEGMENTS: 1002
+  us: Segments
+  de: Segmente
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+# Unset the prefix.
+SetPrefix()
 
-THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+# A symbol without ID is placed only into the Stringtable, except for
+# the c4d_symbols, where the ID is automatically incremented starting
+# from 10000.
+DEBUGSECTION:
+  us: Debug Section
+  de: Debug Bereich
 </code></pre>
 
-			
+<p>A file called <code>c4d_symbols.rpkg</code> will be handled special and generate the respective
+<code>c4d_symbols.h</code> and <code>c4d_strings.str</code> files.</p>
+
+<pre><code>$ c4ddev rpkg res/c4d_symbols.rpkg res/Ocube.rpkg
+Writing c4d_symbols.h ...
+Writing strings_de/c4d_strings.str ...
+Writing strings_us/c4d_strings.str ...
+Writing description/Ocube.h ...
+Writing strings_de/description/Ocube.str ...
+Writing strings_us/description/Ocube.str ...
+</code></pre>
+
+<h2 id="syntax-behaviour">Syntax &amp; Behaviour</h2>
+
+<ul>
+<li>The <code>ResourcePackage</code> line is mandatory and must be the first line in the file</li>
+<li>Comments begin with a number sign (<code>#</code>) and continue until the end of the line</li>
+<li>Assigning a fixed ID number to a symbol is mandatory</li>
+<li>Special characters in the localization are allowed (use <code>\n</code> for a newline and <code>\t</code> for a tab)</li>
+<li>If the file is named <code>c4d_symbols.rpkg</code>, it will automatically be created in the res folder
+directly instead of the descriptions folder</li>
+</ul>
+
 
 			<aside class="copyright" role="note">
 				
@@ -426,23 +454,37 @@ SOFTWARE.
 			<footer class="footer">
 				
 
-
-
 <nav class="pagination" aria-label="Footer">
   <div class="previous">
+  
+      <a href="https://niklasrosenstein.github.io/python/" title="Python Resources">
+        <span class="direction">
+          Previous
+        </span>
+        <div class="page">
+          <div class="button button-previous" role="button" aria-label="Previous">
+            <i class="icon icon-back"></i>
+          </div>
+          <div class="stretch">
+            <div class="title">
+              Python Resources
+            </div>
+          </div>
+        </div>
+      </a>
+  
   </div>
 
-  
-  
   <div class="next">
-      <a href="https://niklasrosenstein.github.io/" title="C4DDev">
+  
+      <a href="https://niklasrosenstein.github.io/scripting/" title="Scripting">
         <span class="direction">
           Next
         </span>
         <div class="page">
           <div class="stretch">
             <div class="title">
-              C4DDev
+              Scripting
             </div>
           </div>
           <div class="button button-next" role="button" aria-label="Next">
@@ -450,8 +492,11 @@ SOFTWARE.
           </div>
         </div>
       </a>
+  
   </div>
 </nav>
+
+
 
 
 

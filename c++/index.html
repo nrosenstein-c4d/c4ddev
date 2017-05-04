@@ -9,18 +9,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=10" />
-    <title>C4DDev</title>
+    <title>C&#43;&#43; Resource - C4DDev</title>
     <meta name="generator" content="Hugo 0.20.1" />
 
     
     <meta name="description" content="The C4DDev project documentation/">
     
-    <link rel="canonical" href="https://niklasrosenstein.github.io/">
+    <link rel="canonical" href="https://niklasrosenstein.github.io/c&#43;&#43;/">
     
     <meta name="author" content="Niklas Rosenstein">
     
 
-    <meta property="og:url" content="https://niklasrosenstein.github.io/">
+    <meta property="og:url" content="https://niklasrosenstein.github.io/c&#43;&#43;/">
     <meta property="og:title" content="C4DDev">
     <meta property="og:image" content="https://niklasrosenstein.github.io/images/logo.png">
     <meta name="apple-mobile-web-app-title" content="C4DDev">
@@ -69,9 +69,6 @@
     <script src="https://niklasrosenstein.github.io/javascripts/modernizr.js"></script>
 
     
-    <link href="https://niklasrosenstein.github.io/index.xml" rel="alternate" type="application/rss+xml" title="C4DDev" />
-    <link href="https://niklasrosenstein.github.io/index.xml" rel="feed" type="application/rss+xml" title="C4DDev" />
-    
 
   </head>
   <body class="palette-primary-red palette-accent-teal">
@@ -100,7 +97,7 @@
     </div>
     <div class="stretch">
       <div class="title">
-        C4DDev
+        C&#43;&#43; Resource
       </div>
     </div>
 
@@ -183,14 +180,11 @@
 
 
 
-<a class="current" title="Home" href="/">
+<a  title="Home" href="/">
 	
 	Home
 </a>
 
-
-<ul id="scrollspy">
-</ul>
 
 
   
@@ -330,11 +324,14 @@
 
 
 
-<a  title="C&#43;&#43; Resources" href="/c&#43;&#43;/">
+<a class="current" title="C&#43;&#43; Resources" href="/c&#43;&#43;/">
 	
 	C&#43;&#43; Resources
 </a>
 
+
+<ul id="scrollspy">
+</ul>
 
 
   
@@ -377,41 +374,57 @@
 
 	<article class="article">
 		<div class="wrapper">
+			<h1>C&#43;&#43; Resource </h1>
+
 			
-				<h1>C4DDev </h1>
 
-				
+<p>This page contains a list of resources about Cinema 4D C++ plugin development
+and useful links.</p>
 
-<p>The <strong>C4DDev</strong> project is a set of Cinema 4D plugins, command-line tools and
-utilities for scripting inside of Cinema 4D that aims to make the prototyping,
-development and distribution of Cinema 4D plugins easier.</p>
+<h2 id="posts">Posts</h2>
 
-<h2 id="license">License</h2>
+<ul>
+<li><a href="https://c4dprogramming.wordpress.com/2012/11/20/drawing-text-in-the-viewport/">Drawing Text in the Viewport</a></li>
+<li><a href="http://www.plugincafe.com/forum/forum_posts.asp?TID=12112">Saving EXR</a></li>
+<li><a href="http://www.plugincafe.com/forum/forum_posts.asp?TID=12865&amp;PID=50965#50965">Exposing C++ functionality to Python</a></li>
+<li><a href="http://www.plugincafe.com/forum/forum_posts.asp?TID=11764&amp;PID=46315#46315">Viewport HUD API</a></li>
+<li><a href="http://www.plugincafe.com/forum/forum_posts.asp?TID=12927">Saving Custom GUI layouts</a></li>
+</ul>
 
-<pre><code>The MIT License (MIT)
+<h2 id="tools">Tools</h2>
 
-Copyright (c) 2014  Niklas Rosenstein
+<ul>
+<li><a href="https://github.com/craftr-build/NiklasRosenstein.maxon.c4d">craftr:NiklasRosenstein.maxon.c4d</a>
+&ndash; Build Cinema 4D Plugins on Windows, macOS and Linux</li>
+</ul>
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the &quot;Software&quot;), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+<h2 id="snippets">Snippets</h2>
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+<h3 id="hide-dialog-menubar">Hide Dialog Menubar</h3>
 
-THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+<p>There is a non-member function available in the SDK that can be accessed
+through the <code>C4DOS</code> to add special gadgets to the dialog, and it appears
+that the state &ldquo;no menubar&rdquo; is also represented internally as a dialog
+gadgets.</p>
+
+<pre><code class="language-cpp">inline Bool AddGadget(GeDialog* dlg, Int32 gadget_type) {
+  String const name;
+  BaseContainer const bc;
+  return C4DOS.Cd-&gt;AddGadget(dlg-&gt;Get(), gadget_type, 0, &amp;name, 0, 0, 0, 0, &amp;bc, nullptr);
+}
 </code></pre>
 
-			
+<p>The gadget to remove the dialog menubar is <code>DIALOG_NOMENUBAR</code>. Be aware
+when adding this gadget: Adding it inside <code>CreateLayout()</code> won&rsquo;t work
+and calling it afterwards will crash C4D. You can call the function
+in the dialog&rsquo;s constructor though!</p>
+
+<pre><code class="language-cpp">class MyDialog : public GeDialog() {
+public:
+  MyDialog() : GeDialog() { AddGadget(this, DIALOG_NOMENUBAR); }
+};
+</code></pre>
+
 
 			<aside class="copyright" role="note">
 				
@@ -426,16 +439,14 @@ SOFTWARE.
 			<footer class="footer">
 				
 
-
-
 <nav class="pagination" aria-label="Footer">
   <div class="previous">
+  
   </div>
 
-  
-  
   <div class="next">
-      <a href="https://niklasrosenstein.github.io/" title="C4DDev">
+  
+      <a href="https://niklasrosenstein.github.io/home/" title="C4DDev">
         <span class="direction">
           Next
         </span>
@@ -450,8 +461,11 @@ SOFTWARE.
           </div>
         </div>
       </a>
+  
   </div>
 </nav>
+
+
 
 
 

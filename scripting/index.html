@@ -9,18 +9,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=10" />
-    <title>C4DDev</title>
+    <title>Scripting - C4DDev</title>
     <meta name="generator" content="Hugo 0.20.1" />
 
     
     <meta name="description" content="The C4DDev project documentation/">
     
-    <link rel="canonical" href="https://niklasrosenstein.github.io/">
+    <link rel="canonical" href="https://niklasrosenstein.github.io/scripting/">
     
     <meta name="author" content="Niklas Rosenstein">
     
 
-    <meta property="og:url" content="https://niklasrosenstein.github.io/">
+    <meta property="og:url" content="https://niklasrosenstein.github.io/scripting/">
     <meta property="og:title" content="C4DDev">
     <meta property="og:image" content="https://niklasrosenstein.github.io/images/logo.png">
     <meta name="apple-mobile-web-app-title" content="C4DDev">
@@ -69,9 +69,6 @@
     <script src="https://niklasrosenstein.github.io/javascripts/modernizr.js"></script>
 
     
-    <link href="https://niklasrosenstein.github.io/index.xml" rel="alternate" type="application/rss+xml" title="C4DDev" />
-    <link href="https://niklasrosenstein.github.io/index.xml" rel="feed" type="application/rss+xml" title="C4DDev" />
-    
 
   </head>
   <body class="palette-primary-red palette-accent-teal">
@@ -100,7 +97,7 @@
     </div>
     <div class="stretch">
       <div class="title">
-        C4DDev
+        Scripting
       </div>
     </div>
 
@@ -183,14 +180,11 @@
 
 
 
-<a class="current" title="Home" href="/">
+<a  title="Home" href="/">
 	
 	Home
 </a>
 
-
-<ul id="scrollspy">
-</ul>
 
 
   
@@ -222,11 +216,14 @@
 
 
 
-<a  title="Scripting" href="/scripting/">
+<a class="current" title="Scripting" href="/scripting/">
 	
 	Scripting
 </a>
 
+
+<ul id="scrollspy">
+</ul>
 
 
   
@@ -377,41 +374,30 @@
 
 	<article class="article">
 		<div class="wrapper">
-			
-				<h1>C4DDev </h1>
+			<h1>Scripting </h1>
 
-				
+			<p>The <strong>C4DDev</strong> API provides some utilities that are especially useful for
+scripting and prototyping in Cinema 4D. All contents of the <code>c4ddev</code> library
+must be loaded with the <code>c4ddev.require()</code> function (which is the <code>require()</code>
+function from the <code>c4ddev/main</code> module, exported by Node.py).</p>
 
-<p>The <strong>C4DDev</strong> project is a set of Cinema 4D plugins, command-line tools and
-utilities for scripting inside of Cinema 4D that aims to make the prototyping,
-development and distribution of Cinema 4D plugins easier.</p>
+<pre><code class="language-python">from c4ddev import require
+localimport = require('c4ddev/scripting/localimport')
+# This is a version of localimport that is tuned to work from inside any
+# scripting context in Cinema 4D (Tag, Object, XPresso Node).
 
-<h2 id="license">License</h2>
+with localimport(doc):
+  import twitter
 
-<pre><code>The MIT License (MIT)
-
-Copyright (c) 2014  Niklas Rosenstein
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the &quot;Software&quot;), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+def main():
+  # TODO: Some clever example
 </code></pre>
 
-			
+<p>This is extremely useful when using third party libraries in scripts or
+Python Objects/Tags. You can keep the dependencies together with your
+Cinema 4D scene file and only make sure that <strong>C4DDev</strong> is installed if
+you move the scene around.</p>
+
 
 			<aside class="copyright" role="note">
 				
@@ -426,32 +412,33 @@ SOFTWARE.
 			<footer class="footer">
 				
 
-
-
 <nav class="pagination" aria-label="Footer">
   <div class="previous">
-  </div>
-
   
-  
-  <div class="next">
-      <a href="https://niklasrosenstein.github.io/" title="C4DDev">
+      <a href="https://niklasrosenstein.github.io/resource-packages/" title="Resource Packages">
         <span class="direction">
-          Next
+          Previous
         </span>
         <div class="page">
+          <div class="button button-previous" role="button" aria-label="Previous">
+            <i class="icon icon-back"></i>
+          </div>
           <div class="stretch">
             <div class="title">
-              C4DDev
+              Resource Packages
             </div>
-          </div>
-          <div class="button button-next" role="button" aria-label="Next">
-            <i class="icon icon-forward"></i>
           </div>
         </div>
       </a>
+  
+  </div>
+
+  <div class="next">
+  
   </div>
 </nav>
+
+
 
 
 

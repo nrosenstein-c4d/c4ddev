@@ -1,142 +1,55 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-    
-    <url>
-     <loc>/</loc>
-     <lastmod>2017-03-14</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>/changelog/</loc>
-     <lastmod>2017-03-14</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-        
-    <url>
-     <loc>/plugins/c4dide/</loc>
-     <lastmod>2017-03-14</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>/plugins/pyobject/</loc>
-     <lastmod>2017-03-14</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>/plugins/pyshader/</loc>
-     <lastmod>2017-03-14</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>/plugins/uescapetool/</loc>
-     <lastmod>2017-03-14</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    
-
-    
-        
-    <url>
-     <loc>/cli/_install/</loc>
-     <lastmod>2017-03-14</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>/cli/build-loader/</loc>
-     <lastmod>2017-03-14</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>/cli/pip-get/</loc>
-     <lastmod>2017-03-14</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>/cli/pip/</loc>
-     <lastmod>2017-03-14</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>/cli/pypkg/</loc>
-     <lastmod>2017-03-14</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>/cli/rpkg/</loc>
-     <lastmod>2017-03-14</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>/cli/symbols/</loc>
-     <lastmod>2017-03-14</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    
-
-    
-    <url>
-     <loc>/localimport/</loc>
-     <lastmod>2017-03-14</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>/api/</loc>
-     <lastmod>2017-03-14</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-        
-    <url>
-     <loc>/cpp/resources/</loc>
-     <lastmod>2017-03-14</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>/cpp/snippets/</loc>
-     <lastmod>2017-03-14</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    
-
-    
-        
-    <url>
-     <loc>/python/asyncgui/</loc>
-     <lastmod>2017-03-14</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>/python/scripts/</loc>
-     <lastmod>2017-03-14</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    
-
+  
+  <url>
+    <loc>https://niklasrosenstein.github.io/c&#43;&#43;/</loc>
+  </url>
+  
+  <url>
+    <loc>https://niklasrosenstein.github.io/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://niklasrosenstein.github.io/home/</loc>
+  </url>
+  
+  <url>
+    <loc>https://niklasrosenstein.github.io/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://niklasrosenstein.github.io/changelog/</loc>
+  </url>
+  
+  <url>
+    <loc>https://niklasrosenstein.github.io/cli/</loc>
+  </url>
+  
+  <url>
+    <loc>https://niklasrosenstein.github.io/plugins/</loc>
+  </url>
+  
+  <url>
+    <loc>https://niklasrosenstein.github.io/py4d-imports-howto/</loc>
+  </url>
+  
+  <url>
+    <loc>https://niklasrosenstein.github.io/python/</loc>
+  </url>
+  
+  <url>
+    <loc>https://niklasrosenstein.github.io/resource-packages/</loc>
+  </url>
+  
+  <url>
+    <loc>https://niklasrosenstein.github.io/scripting/</loc>
+  </url>
+  
+  <url>
+    <loc>https://niklasrosenstein.github.io/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
 </urlset>

@@ -9,18 +9,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=10" />
-    <title>C4DDev</title>
+    <title>Command-line Tools - C4DDev</title>
     <meta name="generator" content="Hugo 0.20.1" />
 
     
     <meta name="description" content="The C4DDev project documentation/">
     
-    <link rel="canonical" href="https://niklasrosenstein.github.io/">
+    <link rel="canonical" href="https://niklasrosenstein.github.io/cli/">
     
     <meta name="author" content="Niklas Rosenstein">
     
 
-    <meta property="og:url" content="https://niklasrosenstein.github.io/">
+    <meta property="og:url" content="https://niklasrosenstein.github.io/cli/">
     <meta property="og:title" content="C4DDev">
     <meta property="og:image" content="https://niklasrosenstein.github.io/images/logo.png">
     <meta name="apple-mobile-web-app-title" content="C4DDev">
@@ -69,9 +69,6 @@
     <script src="https://niklasrosenstein.github.io/javascripts/modernizr.js"></script>
 
     
-    <link href="https://niklasrosenstein.github.io/index.xml" rel="alternate" type="application/rss+xml" title="C4DDev" />
-    <link href="https://niklasrosenstein.github.io/index.xml" rel="feed" type="application/rss+xml" title="C4DDev" />
-    
 
   </head>
   <body class="palette-primary-red palette-accent-teal">
@@ -100,7 +97,7 @@
     </div>
     <div class="stretch">
       <div class="title">
-        C4DDev
+        Command-line Tools
       </div>
     </div>
 
@@ -183,14 +180,11 @@
 
 
 
-<a class="current" title="Home" href="/">
+<a  title="Home" href="/">
 	
 	Home
 </a>
 
-
-<ul id="scrollspy">
-</ul>
 
 
   
@@ -240,11 +234,14 @@
 
 
 
-<a  title="Command-line Tools" href="/cli/">
+<a class="current" title="Command-line Tools" href="/cli/">
 	
 	Command-line Tools
 </a>
 
+
+<ul id="scrollspy">
+</ul>
 
 
   
@@ -377,41 +374,208 @@
 
 	<article class="article">
 		<div class="wrapper">
+			<h1>Command-line Tools </h1>
+
 			
-				<h1>C4DDev </h1>
 
-				
+<h2 id="installation">Installation</h2>
 
-<p>The <strong>C4DDev</strong> project is a set of Cinema 4D plugins, command-line tools and
-utilities for scripting inside of Cinema 4D that aims to make the prototyping,
-development and distribution of Cinema 4D plugins easier.</p>
+<p>To install the command-line tools, you need <a href="https://github.com/nodepy/nodepy">Node.Py</a>.</p>
 
-<h2 id="license">License</h2>
-
-<pre><code>The MIT License (MIT)
-
-Copyright (c) 2014  Niklas Rosenstein
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the &quot;Software&quot;), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+<pre><code>$ pip install node.py
+$ ppym install --global c4ddev
 </code></pre>
 
-			
+<p><em>(Note: You can also install the command-line tools locally for your project
+by omitting the <code>--global</code> option and adding <code>nodepy_modules/.bin</code> to your
+<code>PATH</code>)</em></p>
+
+<h2 id="c4ddev"><code>c4ddev</code></h2>
+
+<pre><code>Usage: c4ddev [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  build-loader  Generate a Cinema 4D Python plugin that uses...
+  get-pip       Installs Pip into the Cinema 4D Python...
+  pip           Invokes Pip in the current Cinema 4D Python...
+  pypkg         Reads a JSON configuration file, by default...
+  rpkg          Converts a resource package file to...
+  run           Starts C4D.
+  symbols       Extracts resource symbols.
+</code></pre>
+
+<h2 id="c4ddev-build-loader"><code>c4ddev build-loader</code></h2>
+
+<pre><code>Usage: c4ddev build-loader [OPTIONS]
+
+  Generate a Cinema 4D Python plugin that uses Node.py to load an
+  entrypoint.
+
+Options:
+  -e, --entry-point ENTRYPOINT
+  -c, --compress
+  -m, --minify
+  -o, --output FILENAME
+  --help                        Show this message and exit.
+</code></pre>
+
+<p>Generates a Cinema 4D plugin that contains a stand-alone version of
+<a href="https://github.com/nodepy/nodepy">Node.Py</a> and loads the entrypoint specified with <code>-e,--entry-point</code>.
+The file loaded by this &ldquo;loader plugin&rdquo; has full access to the <a href="https://github.com/nodepy/nodepy">Node.Py</a>
+runtime. Access to the underlying module objects can be retrieved using
+<code>require.contenx.binding()</code>.</p>
+
+<pre><code class="language-python">nodepy = require.context.binding('nodepy')
+localimport = require.context.binding('localimport')
+</code></pre>
+
+<h2 id="c4ddev-get-pip"><code>c4ddev get-pip</code></h2>
+
+<pre><code>Usage: c4ddev get-pip [OPTIONS]
+
+  Installs Pip into the Cinema 4D Python distribution. Specify the path to
+  Cinema 4D explicitly or run this command from inside the Cinema 4D
+  application directory.
+
+Options:
+  --c4d DIRECTORY
+  --help           Show this message and exit
+</code></pre>
+
+<h2 id="c4ddev-pip"><code>c4ddev pip</code></h2>
+
+<pre><code>Usage: c4ddev pip [OPTIONS] [ARGS]...
+
+  Invokes Pip in the current Cinema 4D Python distribution. Must be used
+  from inside the Cinema 4D applications directory or specified with --c4d.
+
+Options:
+  --c4d DIRECTORY
+  --help           Show this message and exit.
+</code></pre>
+
+<h2 id="c4ddev-pypkg"><code>c4ddev pypkg</code></h2>
+
+<pre><code>Usage: c4ddev pypkg [OPTIONS] [CONFIG]
+
+Options:
+  --help  Show this message and exit.
+</code></pre>
+
+<p>The <strong>pypkg</strong> command compiles Python modules and packages into <code>.pyc</code> files
+and merges them into a Python Egg archive or directory. This is useful to
+protect your Python code and to distribute your Python plugin.</p>
+
+<p>!!!note
+    Keep in mind that you should always use <a href="localimport"><code>localimport</code></a>
+    to import any third-party Python modules from a Cinema 4D plugin in
+    order to keep the global importer state clean.</p>
+
+<p><strong>Example Configuration</strong> (<code>.pypkg</code>)</p>
+
+<p>This is a real-world example configuration file.</p>
+
+<pre><code class="language-json">{
+  &quot;zipped&quot;: true,
+  &quot;output&quot;: &quot;res/modules{target}/mylibs.egg&quot;,
+  &quot;include&quot;: [
+    &quot;devel/res.py&quot;,
+    &quot;../vendor/python/c4dtools/c4dtools&quot;,
+    &quot;../vendor/python/nr/nr&quot;
+  ]
+}
+</code></pre>
+
+<h2 id="c4ddev-rpkg"><code>c4ddev rpkg</code></h2>
+
+<pre><code>Usage: c4ddev rpkg [OPTIONS] RPKG
+
+  Converts a resource package file to description resource files.
+
+Options:
+  -r, --res DIRETORY
+  --no-header TEXT
+  --help              Show this message and exit.
+</code></pre>
+
+<p>See also: <a href="https://niklasrosenstein.github.io/resource-packages/">Resource Packages</a></p>
+
+<h2 id="c4ddev-run"><code>c4ddev run</code></h2>
+
+<pre><code>Usage: c4ddev run [OPTIONS] [ARGS]...
+
+  Starts C4D.
+
+Options:
+  -e, --exe TEXT  Name of the C4D executable to run. Defaults to &quot;CINEMA 4D&quot;.
+  --help          Show this message and exit.
+</code></pre>
+
+<p>Finds the Cinema 4D application directory from the current working directory
+and starts <code>CINEMA 4D.exe</code> or <code>CINEMA 4D.app/Contents/MacOS/CINEMA 4D</code>,
+depending on your platform. Additional arguments are passed to Cinema 4D.</p>
+
+<p>On Windows, Cinema 4D is started with the <code>start /b /wait &quot;parentconsole&quot;</code>
+command, which will cause the current terminal to inherit the output instead
+of Cinema 4D creating a separate terminal window.</p>
+
+<h2 id="c4ddev-symbols"><code>c4ddev symbols</code></h2>
+
+<pre><code>Usage: c4ddev symbols [OPTIONS]
+
+Options:
+  -f, --format FORMAT      The output format, one of {class,file,json}.
+                           Defaults to class.
+  -o, --outfile FILENAME
+  -d, --res-dir DIRECTORY  One or more resource directories to parse for
+                           symbols. If the option is not specified, `res/`
+                           will be used.
+  --help                   Show this message and exit.
+</code></pre>
+
+<p>Extracts the resource symbols from all header files in <code>res/</code> directory or the
+directory/ies specified via <code>-d,--res-dir</code> and formats them as a Python class,
+Python file or JSON.</p>
+
+<pre><code>$ pwd
+/Users/niklas/Applications/Cinema 4D R18/plugins/myplugin
+$ c4ddev symbols
+
+exec (&quot;&quot;&quot;class res(object):
+ # Automatically generated with c4ddev v1.3.
+ project_path = os.path.dirname(__file__)
+ def string(self, name, *subst):
+  result = __res__.LoadString(getattr(self, name))
+  for item in subst: result = result.replace('#', item, 1)
+  return result
+ def tup(self, name, *subst):
+  return (getattr(self, name), self.string(name, *subst))
+ def path(self, *parts):
+  path = os.path.join(*parts)
+  if not os.path.isabs(path):
+   path = os.path.join(self.project_path, path)
+  return path
+ file = path  # backwards compatibility
+ def bitmap(self, *parts):
+  b = c4d.bitmaps.BaseBitmap()
+  if b.InitWith(self.path(*parts))[0] != c4d.IMAGERESULT_OK: return None
+  return b
+ MYSYMBOL = 1000
+ MYOTHERSYMBOLS = 1001
+ res=res()&quot;&quot;&quot;)
+</code></pre>
+
+<p><strong>Available Formats</strong></p>
+
+<ul>
+<li>Python class (<code>class</code>) [default] &ndash; Can be copied into the Python plugin source</li>
+<li>Python file (<code>file</code>)  &ndash; Can be loaded as a module (make use of <a href="localimport"><code>localimport</code></a>)</li>
+<li>JSON (<code>json</code>) &ndash; Can be loaded using the <code>json</code> module</li>
+</ul>
+
 
 			<aside class="copyright" role="note">
 				
@@ -426,23 +590,37 @@ SOFTWARE.
 			<footer class="footer">
 				
 
-
-
 <nav class="pagination" aria-label="Footer">
   <div class="previous">
+  
+      <a href="https://niklasrosenstein.github.io/changelog/" title="Changelog">
+        <span class="direction">
+          Previous
+        </span>
+        <div class="page">
+          <div class="button button-previous" role="button" aria-label="Previous">
+            <i class="icon icon-back"></i>
+          </div>
+          <div class="stretch">
+            <div class="title">
+              Changelog
+            </div>
+          </div>
+        </div>
+      </a>
+  
   </div>
 
-  
-  
   <div class="next">
-      <a href="https://niklasrosenstein.github.io/" title="C4DDev">
+  
+      <a href="https://niklasrosenstein.github.io/plugins/" title="Plugins">
         <span class="direction">
           Next
         </span>
         <div class="page">
           <div class="stretch">
             <div class="title">
-              C4DDev
+              Plugins
             </div>
           </div>
           <div class="button button-next" role="button" aria-label="Next">
@@ -450,8 +628,11 @@ SOFTWARE.
           </div>
         </div>
       </a>
+  
   </div>
 </nav>
+
+
 
 
 

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>C4DDev</title>
+    <link>https://niklasrosenstein.github.io/</link>
+    <description>Recent content on C4DDev</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Released under the MIT license</copyright>
+    
+	<atom:link href="https://niklasrosenstein.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>C&#43;&#43; Resource</title>
+      <link>https://niklasrosenstein.github.io/c&#43;&#43;/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://niklasrosenstein.github.io/c&#43;&#43;/</guid>
+      <description>This page contains a list of resources about Cinema 4D C++ plugin development and useful links.
+Posts  Drawing Text in the Viewport Saving EXR Exposing C++ functionality to Python Viewport HUD API Saving Custom GUI layouts  Tools  craftr:NiklasRosenstein.maxon.c4d &amp;ndash; Build Cinema 4D Plugins on Windows, macOS and Linux  Snippets Hide Dialog Menubar There is a non-member function available in the SDK that can be accessed through the C4DOS to add special gadgets to the dialog, and it appears that the state &amp;ldquo;no menubar&amp;rdquo; is also represented internally as a dialog gadgets.</description>
+    </item>
+    
+    <item>
+      <title>C4DDev</title>
+      <link>https://niklasrosenstein.github.io/home/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://niklasrosenstein.github.io/home/</guid>
+      <description>The C4DDev project is a set of Cinema 4D plugins, command-line tools and utilities for scripting inside of Cinema 4D that aims to make the prototyping, development and distribution of Cinema 4D plugins easier.
+License The MIT License (MIT) Copyright (c) 2014 Niklas Rosenstein Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &amp;quot;Software&amp;quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</description>
+    </item>
+    
+    <item>
+      <title>Changelog</title>
+      <link>https://niklasrosenstein.github.io/changelog/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://niklasrosenstein.github.io/changelog/</guid>
+      <description>v0.1.4 (unreleased)  merge https://github.com/NiklasRosenstein/c4d-deprecated-ide into C4DDev update docs add c4ddev run command rename c4ddev pip-get command to c4ddev get-pip fix c4ddev/scripting/localimport and add python/ to PYTHONPATH inside the context  PyObject
+ renamed from DrawHelper extended to allow overriding of other ObjectData methods  PyShader
+ changed interface to match the method names in ShaderData add &amp;ldquo;Open Editor&amp;rdquo; button Python code is now also evaluated in Material preview  ResourcePackage</description>
+    </item>
+    
+    <item>
+      <title>Command-line Tools</title>
+      <link>https://niklasrosenstein.github.io/cli/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://niklasrosenstein.github.io/cli/</guid>
+      <description>Installation To install the command-line tools, you need Node.Py.
+$ pip install node.py $ ppym install --global c4ddev  (Note: You can also install the command-line tools locally for your project by omitting the --global option and adding nodepy_modules/.bin to your PATH)
+c4ddev Usage: c4ddev [OPTIONS] COMMAND [ARGS]... Options: --help Show this message and exit. Commands: build-loader Generate a Cinema 4D Python plugin that uses... get-pip Installs Pip into the Cinema 4D Python.</description>
+    </item>
+    
+    <item>
+      <title>Plugins</title>
+      <link>https://niklasrosenstein.github.io/plugins/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://niklasrosenstein.github.io/plugins/</guid>
+      <description>C4D IDE Also a very old plugin that is not very progressed and also currently provides two different approaches to implementing a Python IDE in Cinema 4D.
+PyObject An alternative to the Cinema 4D standard Python Generator object that allows you to implement a number of other ObjectData methods.
+PyShader This simple Cinema 4D plugin allows you to write shaders on-the-fly or prototype for a native shader plugin.
+Unicode Escape Tool String resources require special characters to be escaped with unicode escape sequences in the format of \UXXXX.</description>
+    </item>
+    
+    <item>
+      <title>Py4D Imports: How-To</title>
+      <link>https://niklasrosenstein.github.io/py4d-imports-howto/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://niklasrosenstein.github.io/py4d-imports-howto/</guid>
+      <description>When using and distributing third-party modules in a Cinema 4D Python plugin, many problems can arise when used incorrectly. Some users have hundreds of Cinema 4D plugins, and many of them use third-party modules. Some plugins will stop working when another plugin delivers the same third-party module in a different version or even one with the same name but completely different functionality!
+When you import modules from your Python Plugin&amp;rsquo;s directory, you should never do it the naive way, unless you EXPLICITLY WANT these third-party modules to be accessible from the outside (eg.</description>
+    </item>
+    
+    <item>
+      <title>Python Resources</title>
+      <link>https://niklasrosenstein.github.io/python/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://niklasrosenstein.github.io/python/</guid>
+      <description> This page links to useful Python resources.
+Snippets  TreeViewCustomGui Example copy_preset_texture()  Scripts  Cinema 4D Plugin Skeleton &amp;ndash; Skeleton to kick off Cinema 4D Python plugins from. Set as Startup Scene &amp;ndash; Script to set the current scene as the startup scene.  </description>
+    </item>
+    
+    <item>
+      <title>Resource Packages</title>
+      <link>https://niklasrosenstein.github.io/resource-packages/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://niklasrosenstein.github.io/resource-packages/</guid>
+      <description>Resource packages allow you to more efficiently manage plugin resource files and translations by merging all information into a single file. Resource packages have the .rpkg suffix and are converted to real Cinema 4D resource files by using the c4ddev rpkg command.
+Example # Must be the first statement in a .rpkg file. The (XXX) part is optional. ResourcePackage(Ocube) # It is common to assign the actual Plugin ID already in the description # resource header file, so people can just include the header and also have # the plugin ID available.</description>
+    </item>
+    
+    <item>
+      <title>Scripting</title>
+      <link>https://niklasrosenstein.github.io/scripting/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://niklasrosenstein.github.io/scripting/</guid>
+      <description>The C4DDev API provides some utilities that are especially useful for scripting and prototyping in Cinema 4D. All contents of the c4ddev library must be loaded with the c4ddev.require() function (which is the require() function from the c4ddev/main module, exported by Node.py).
+from c4ddev import require localimport = require(&#39;c4ddev/scripting/localimport&#39;) # This is a version of localimport that is tuned to work from inside any # scripting context in Cinema 4D (Tag, Object, XPresso Node).</description>
+    </item>
+    
+  </channel>
+</rss>
