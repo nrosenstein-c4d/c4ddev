@@ -191,9 +191,9 @@ def build_loader(entry_point, compress, minify, output):
     print(result)
 
 
-@main.command("pip-get")
+@main.command("get-pip")
 @click.option('--c4d', metavar='DIRECTORY')
-def pip_get(c4d):
+def get_pip(c4d):
   """
   Installs Pip into the Cinema 4D Python distribution. Specify the path to
   Cinema 4D explicitly or run this command from inside the Cinema 4D application
