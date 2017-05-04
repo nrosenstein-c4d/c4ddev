@@ -26,6 +26,7 @@ import click
 import json
 import nodepy
 import os
+import re
 import subprocess
 import sys
 import textwrap
@@ -35,11 +36,26 @@ try:
 except ImportError:
   from urllib2 import urlopen
 
+try:
+  from shlex import quote as _quote
+except ImportError:
+  from pipes import quote as _quote
+
 with open(os.path.join(__directory__, 'package.json')) as fp:
   version = json.load(fp)['version']
 
 resource = require('./lib/c4ddev/resource')
 _pypkg = require('./lib/c4ddev/pypkg')
+
+
+def quote(s):
+  if os.name == 'nt' and os.sep == '\\':
+    s = s.replace('"', '\\"')
+    if re.search('\s', s):
+      s = '"' + s + '"'
+  else:
+    s = _quote(s)
+  return s
 
 
 def get_c4d_dir(c4d_dir=None):
@@ -227,6 +243,35 @@ def pip(c4d, args):
   c4d = get_c4d_dir(c4d)
   python = get_c4d_python(c4d)
   res = subprocess.call([python, '-m', 'pip'] + list(args))
+  sys.exit(res)
+
+
+@main.command(context_settings={'ignore_unknown_options': True})
+@click.argument('args', nargs=-1, type=click.UNPROCESSED)
+@click.option('-e', '--exe', default='CINEMA 4D',
+    help='Name of the C4D executable to run. Defaults to "CINEMA 4D".')
+def run(exe, args):
+  """
+  Starts C4D.
+  """
+
+  c4d = get_c4d_dir()
+  if sys.platform.startswith('win32'):
+    exe = os.path.join(c4d, exe)
+    if not exe.endswith('.exe'):
+      exe += '.exe'
+    cmd = [exe] + list(args)
+    cmd = 'start /b /wait "parentconsole" ' + ' '.join(quote(x) for x in cmd)
+  elif sys.platform.startswith('darwin'):
+    if exe.endswith('.app'):
+      name = exe = exe[:-4]
+    exe = os.path.join(c4d, exe + '.app', 'Contents', 'MacOS', name)
+    cmd = [exe] + args
+  else:
+    print('error: unsupported platform:', sys.platform)
+    sys.exit(1)
+
+  res = subprocess.call(cmd, shell=isinstance(cmd, str))
   sys.exit(res)
 
 
