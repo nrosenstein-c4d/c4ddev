@@ -9,18 +9,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=10" />
-    <title>C4DDev</title>
+    <title>APEX - C4DDev</title>
     <meta name="generator" content="Hugo 0.20.1" />
 
     
     <meta name="description" content="The C4DDev project documentation/">
     
-    <link rel="canonical" href="https://niklasrosenstein.github.io/c4ddev/">
+    <link rel="canonical" href="https://niklasrosenstein.github.io/c4ddev/apex/">
     
     <meta name="author" content="Niklas Rosenstein">
     
 
-    <meta property="og:url" content="https://niklasrosenstein.github.io/c4ddev/">
+    <meta property="og:url" content="https://niklasrosenstein.github.io/c4ddev/apex/">
     <meta property="og:title" content="C4DDev">
     <meta property="og:image" content="https://niklasrosenstein.github.io/c4ddev/images/logo.png">
     <meta name="apple-mobile-web-app-title" content="C4DDev">
@@ -69,9 +69,6 @@
     <script src="https://niklasrosenstein.github.io/c4ddev/javascripts/modernizr.js"></script>
 
     
-    <link href="https://niklasrosenstein.github.io/c4ddev/index.xml" rel="alternate" type="application/rss+xml" title="C4DDev" />
-    <link href="https://niklasrosenstein.github.io/c4ddev/index.xml" rel="feed" type="application/rss+xml" title="C4DDev" />
-    
 
   </head>
   <body class="palette-primary-red palette-accent-teal">
@@ -100,7 +97,7 @@
     </div>
     <div class="stretch">
       <div class="title">
-        C4DDev
+        APEX
       </div>
     </div>
 
@@ -183,14 +180,11 @@
 
 
 
-<a class="current" title="Home" href="/c4ddev/">
+<a  title="Home" href="/c4ddev/">
 	
 	Home
 </a>
 
-
-<ul id="scrollspy">
-</ul>
 
 
   
@@ -348,11 +342,14 @@
 
 
 
-<a  title="APEX" href="/c4ddev/apex/">
+<a class="current" title="APEX" href="/c4ddev/apex/">
 	
 	APEX
 </a>
 
+
+<ul id="scrollspy">
+</ul>
 
 
   
@@ -395,41 +392,148 @@
 
 	<article class="article">
 		<div class="wrapper">
+			<h1>APEX </h1>
+
 			
-				<h1>C4DDev </h1>
 
-				
+<p align="right" style="float: right; margin-left: 1em; margin-bottom: 1em"><img src="apex.png"></p>
 
-<p>The <strong>C4DDev</strong> project is a set of Cinema 4D plugins, command-line tools and
-utilities for scripting inside of Cinema 4D that aims to make the prototyping,
-development and distribution of Cinema 4D plugins easier.</p>
+<p>APEX stands for &ldquo;Cinema 4D API Extensions&rdquo;. It is a C++ plugin that provides
+additions to the Python for Cinema 4D API but also for the C++ SDK. It was
+originally a side-project, but is now merged into the <strong>C4DDev</strong> codebase.</p>
 
-<h2 id="license">License</h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The C++ component of <strong>C4DDev</strong> must be installed, otherwise the API
+  extensions will not be available. Pre-compiled binaries are available in
+  the <a href="https://github.com/NiklasRosenstein/c4ddev/releases">GitHub Releases</a>
+  of C4DDev.</p>
+</div>
 
-<pre><code>The MIT License (MIT)
+<h2 id="c4d-command-line">C4D Command-line</h2>
 
-Copyright (c) 2014  Niklas Rosenstein
+<h3 id="apex-protect-source-filename"><code>-apex-protect-source &lt;filename&gt;</code></h3>
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the &quot;Software&quot;), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+<p>When APEX is available in a Cinema 4D installation, this command-line argument
+can be used to protect the source code of a Cinema 4D Python Plugin (<code>.pyp</code>),
+creating a <code>.pype</code> (before R15) or <code>.pypv</code> file (R15 and later). The argument
+can be specified multiple times to protected multiple files with a single
+invocation.</p>
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+<p>The <a href="https://niklasrosenstein.github.io/c4ddev/cli/#c4ddev-source-protector"><code>c4ddev source-protector</code></a>
+command can be used to protect source files from the Command-line conveniently.</p>
 
-THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+<pre><code>$ c4ddev source-protector myplugin.pyp
+...
+[apex / INFO]: Calling Source Protector for 'myplugin.pyp'.
 </code></pre>
 
-			
+<p>Alternatively, you can run Cinema 4D directly via the command-line or use
+the <a href="https://niklasrosenstein.github.io/c4ddev/cli/#c4ddev-run"><code>c4ddev run</code></a> command.</p>
+
+<pre><code>$ /Applications/Cinema 4D R16/plugins/myplugin $ &quot;..\..\CINEMA 4D.exe&quot; -nogui -apex-protect-source myplugin.pyp
+</code></pre>
+
+<h2 id="message-extensions">Message Extensions</h2>
+
+<p>APEX installs a SceneHook that takes special messages which are usually only
+sent to nodes in a document and redirects them as a global plugin message.
+Currently, the following messages sent to that scene hook are supported:</p>
+
+<ul>
+<li><code>MSG_DOCUMENTINFO</code></li>
+<li><code>MSG_MULTI_RENDERNOTIFICATION</code></li>
+</ul>
+
+<p>There&rsquo;s a little bit of effort involved in receiving these in Python, though. The
+data sent will by a <code>PyCObject</code> and you have to use APEX to read the data from these
+objects.</p>
+
+<pre><code class="language-python">import c4d.apex
+
+def PluginMessage(msg, data):
+  if msg == c4d.MSG_MULTI_RENDERNOTIFICATION:
+    data = c4d.apex.RenderNotificationData(data)
+    print data
+  elif msg == c4d.MSG_DOCUMENTINFO:
+    data = c4d.apex.DocumentInfoData(data)
+    print data
+  return True
+</code></pre>
+
+<h3 id="c4d-apex-documentinfodata-pycobject-dict"><code>c4d.apex.DocumentInfoData(pycobject) -&gt; dict</code></h3>
+
+<blockquote>
+<p>Pass the <code>PyCObject</code> received on <code>MSG_DOCUMENTINFO</code> to this function to get a
+dictionary of the structures data. <strong>Important</strong>: This will result in undefined
+behaviour (likely a crash) if you pass a wrong PyCObject!</p>
+</blockquote>
+
+<h3 id="c4d-apex-rendernotificationdata-pycobject-dict"><code>c4d.apex.RenderNotificationData(pycobject) -&gt; dict</code></h3>
+
+<blockquote>
+<p>Pass the <code>PyCObject</code> received on <code>MSG_MULTI_RENDERNOTIFICATION</code> this this function
+to get a dictionary of the structures data. <strong>Important</strong>: This will result in
+undefined behaviour (likely a crash) if you pass a wrong PyCObject!</p>
+</blockquote>
+
+<h2 id="python-api-extensions">Python API Extensions</h2>
+
+<h3 id="c4d-apex-cast-node-pycobject-c4d-gelistnode"><code>c4d.apex.cast_node(pycobject) -&gt; c4d.GeListNode</code></h3>
+
+<blockquote>
+<p>Given a <code>PyCObject</code> from which you know it is a Cinema 4D <code>GeListNode</code> instance,
+you can use this function to get a real Python object out of it. <strong>Important</strong>:
+This will result in undefined behaviour (likely a crash) if you pass a wrong PyCObject!</p>
+</blockquote>
+
+<h3 id="c4d-apex-fileselect-put-path"><code>c4d.apex.fileselect_put(path)</code></h3>
+
+<blockquote>
+<p>This extension allows you to prevent file selection dialogs from popping up
+and make them return a specific value. This is <em>very</em> useful if you want to
+streamline Cinema 4D commands that usually do open a file selection dialog.</p>
+
+<pre><code class="language-python">import c4d
+c4d.apex.fileselect_put('/Users/me/Desktop')
+print(c4d.storage.LoadDialog())
+# Doesn't open a dialog and prints /Users/me/Desktop
+</code></pre>
+</blockquote>
+
+<h3 id="c4d-apex-fileselect-pop"><code>c4d.apex.fileselect_pop()</code></h3>
+
+<blockquote>
+<p>Pop an element from the elements added to the FileSelect Hook queue with
+<code>fileselect_put()</code>.</p>
+</blockquote>
+
+<h3 id="c4d-apex-fileselect-size"><code>c4d.apex.fileselect_size()</code></h3>
+
+<blockquote>
+<p>Returns the number of elemenets in the queue added to the FileSelect Hook
+with <code>fileselect_put()</code>.</p>
+</blockquote>
+
+<h3 id="c4d-apex-handlemousedrag-area-msg-type-data-flags"><code>c4d.apex.handlemousedrag(area, msg, type, data, flags)</code></h3>
+
+<blockquote>
+<p>This function calls <code>GeUserArea::HandleMouseDrag()</code> on the <em>area</em> object,
+which is missing in the Py4D API. Currently supported values for <em>type</em>
+are:</p>
+
+<ul>
+<li><code>DRAGTYPE_FILES</code> (str)</li>
+<li><code>DRAGTYPE_FILENAME_IMAGE</code> (str)</li>
+<li><code>DRAGTYPE_FILENAME_SCENE</code> (str)</li>
+<li><code>DRAGTYPE_FILENAME_OTHER</code> (str)</li>
+<li><code>DRAGTYPE_ATOMARRAY</code> (list of c4d.GeListNode)</li>
+</ul>
+
+<p>The type of <em>data</em> is specified in the parentheses above. <em>msg</em> must be
+a <code>c4d.BaseContainer</code>, ideally the one passed from <code>GeUserArea.InputEvent()</code>.</p>
+</blockquote>
+
 
 			<aside class="copyright" role="note">
 				
@@ -444,15 +548,13 @@ SOFTWARE.
 			<footer class="footer">
 				
 
-
-
 <nav class="pagination" aria-label="Footer">
   <div class="previous">
+  
   </div>
 
-  
-  
   <div class="next">
+  
       <a href="https://niklasrosenstein.github.io/c4ddev/c&#43;&#43;/" title="C&#43;&#43; Resource">
         <span class="direction">
           Next
@@ -468,8 +570,11 @@ SOFTWARE.
           </div>
         </div>
       </a>
+  
   </div>
 </nav>
+
+
 
 
 

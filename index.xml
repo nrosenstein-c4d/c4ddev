@@ -12,6 +12,18 @@
     
     
     <item>
+      <title>APEX</title>
+      <link>https://niklasrosenstein.github.io/c4ddev/apex/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://niklasrosenstein.github.io/c4ddev/apex/</guid>
+      <description>APEX stands for &amp;ldquo;Cinema 4D API Extensions&amp;rdquo;. It is a C++ plugin that provides additions to the Python for Cinema 4D API but also for the C++ SDK. It was originally a side-project, but is now merged into the C4DDev codebase.
+Note
+The C++ component of C4DDev must be installed, otherwise the API extensions will not be available. Pre-compiled binaries are available in the GitHub Releases of C4DDev.
+ C4D Command-line -apex-protect-source &amp;lt;filename&amp;gt; When APEX is available in a Cinema 4D installation, this command-line argument can be used to protect the source code of a Cinema 4D Python Plugin (.</description>
+    </item>
+    
+    <item>
       <title>C&#43;&#43; Resource</title>
       <link>https://niklasrosenstein.github.io/c4ddev/c&#43;&#43;/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -37,7 +49,7 @@ License The MIT License (MIT) Copyright (c) 2014 Niklas Rosenstein Permission is
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://niklasrosenstein.github.io/c4ddev/changelog/</guid>
-      <description>v0.1.4  merge https://github.com/NiklasRosenstein/c4d-deprecated-ide into C4DDev update docs add c4ddev run command rename c4ddev pip-get command to c4ddev get-pip fix c4ddev/scripting/localimport and add python/ to PYTHONPATH inside the context  PyObject
+      <description>v0.1.5  merge https://github.com/NiklasRosenstein/c4d-apex into C4DDev  v0.1.4  merge https://github.com/NiklasRosenstein/c4d-deprecated-ide into C4DDev update docs add c4ddev run command rename c4ddev pip-get command to c4ddev get-pip fix c4ddev/scripting/localimport and add python/ to PYTHONPATH inside the context  PyObject
  renamed from DrawHelper extended to allow overriding of other ObjectData methods  PyShader
  changed interface to match the method names in ShaderData add &amp;ldquo;Open Editor&amp;rdquo; button Python code is now also evaluated in Material preview  ResourcePackage</description>
     </item>
