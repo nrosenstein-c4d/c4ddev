@@ -5,6 +5,7 @@ __pycache__/
 .env/
 docs/site/
 nodepy_modules/
+public/
 
 # C extensions
 *.so
