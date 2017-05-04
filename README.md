@@ -1,41 +1,60 @@
 # C4DDev
 
-<a href="https://niklasrosenstein.github.io/c4ddev/">
-  <img src="https://cdn2.iconfinder.com/data/icons/bitsies/128/EditDocument-32.png"
-      style="vertical-align:middle" align="right"></img>
-</a>
+C4DDev is a project that provides powerful tools and knowledge to Cinema 4D
+C++ and Python plugin developers. Check out the [documentation][] for detailed
+information on what C4DDev can do for you. It also contains a number of
+knowledge resources.
 
-The C4DDev project is a set of Cinema 4D plugins, command-line tools and
-scripting utilities for Cinema 4D that aims to make the prototyping, development
-and distribution of Cinema 4D plugins easier. The documentation also contains
-some interesting resources for Python and C++ plugin development.
+  [documentation]: https://niklasrosenstein.github.io/c4ddev/
 
-## Installing the Command-line Tools
+## What is C4DDev?
 
-To install the C4DDev command-line tools, you first need to install [Node.py]
-via [Pip] (the Python package manager), preferrably using Python 2.7 since
-Cinema 4D is also equipped with this version. Then you can install C4DDev via
-[PPYM] and you're ready to go.
+3 things.
+
+- A command-line tool
+- A Cinema 4D plugin
+- A knowledge resource
+
+The __Command-line Tools__ allow you to extract resource symbols in Python
+syntax, prepare third-party Python modules for distribution, install and run
+Pip in Python for Cinema 4D, start C4D from the command-line easily, and more.
+
+The __Cinema 4D plugin__ provides you with useful tools such as escaping
+unicode characters for Cinema 4D description stringtables, objects and
+shaders for rapid prototyping and a small integrated development environment.
+
+Additionally, you can use C4DDev to easily load an optimized version of the
+`localimport` context manager into a script, allowing you to use additional
+Python modules in Python scripts and generators. In the below example, the
+`twitter` module can be either in the same directory as your Cinema 4D scene
+file or in a `python/` subdirectory.
+
+```python
+import c4ddev
+localimport = c4ddev.require('c4ddev/scripting/localimport')
+
+with localimport(doc):
+  import twitter
+```
+
+## Installation
+
+To install the command-line tools, you need [Node.Py][].
 
     $ pip install node.py
-    $ ppym install --global @niklas/c4ddev
-    $ c4ddev version
+    $ ppym install --global c4ddev
 
-For a information on the available sub-commands, check out the
-[documentation](https://niklasrosenstein.github.io/c4ddev/cli/).
+*(Note: You can also install the command-line tools locally for your project
+by omitting the `--global` option and adding `nodepy_modules/.bin` to your
+`PATH`)*
 
-  [Node.py]: https://github.com/nodepy/nodepy
-  [Pip]: https://pypi.python.org/pypi/pip
+  [Node.Py]: https://github.com/nodepy/nodepy
   [PPYM]: https://ppym.org/
 
-## Installing the C4DDev Plugins and Scripting Utilities
+To install the Cinema 4D plugin, download the [latest release][releases]
+and unpack it into your Cinema 4D plugins folder.
 
-Check the [Releases][] page and download the latest ZIP archive. Unpack the
-contents your Cinema 4D plugins directory, and you're done. Check out the
-documentation on the available [plugins](https://niklasrosenstein.github.io/c4ddev/plugins/)
-and the [scripting utilities](https://niklasrosenstein.github.io/c4ddev/api/).
-
-  [Releases]: https://github.com/nr-plugins/c4ddev/releases
+  [releases]: https://github.com/NiklasRosenstein/c4ddev/releases
 
 ## License
 ```
