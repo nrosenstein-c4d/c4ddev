@@ -1,4 +1,4 @@
-baseURL = "https://niklasrosenstein.github.io/"
+baseURL = "https://niklasrosenstein.github.io/c4ddev/"
 languageCode = "en-us"
 title = "C4DDev"
 theme = "hugo-material-docs"
@@ -15,7 +15,7 @@ theme = "hugo-material-docs"
 
 	version = "1.3.3"
 	logo = "images/logo.png"
-	favicon = ""
+	favicon = "images/favicon.ico"
 
 	permalink = "#"
 
@@ -43,12 +43,12 @@ theme = "hugo-material-docs"
 
 [[menu.main]]
 	name   = "Home"
-	url    = "/"
+	url    = ""
 	weight = 10
 
 [[menu.main]]
 	name   = "Changelog"
-	url    = "/changelog/"
+	url    = "changelog/"
 	weight = 20
 
 [[menu.main]]
