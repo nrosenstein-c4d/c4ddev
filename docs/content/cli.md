@@ -23,13 +23,14 @@ by omitting the `--global` option and adding `nodepy_modules/.bin` to your
       --help  Show this message and exit.
 
     Commands:
-      build-loader  Generate a Cinema 4D Python plugin that uses...
-      get-pip       Installs Pip into the Cinema 4D Python...
-      pip           Invokes Pip in the current Cinema 4D Python...
-      pypkg         Reads a JSON configuration file, by default...
-      rpkg          Converts a resource package file to...
-      run           Starts C4D.
-      symbols       Extracts resource symbols.
+      build-loader      Generate a Cinema 4D Python plugin that uses...
+      get-pip           Installs Pip into the Cinema 4D Python...
+      pip               Invokes Pip in the current Cinema 4D Python...
+      pypkg             Reads a JSON configuration file, by default...
+      rpkg              Converts a resource package file to...
+      run               Starts C4D.
+      source-protector  Protect .pyp files (requires APEX).
+      symbols           Extracts resource symbols.
 
 
 ## `c4ddev build-loader`
@@ -142,6 +143,20 @@ depending on your platform. Additional arguments are passed to Cinema 4D.
 On Windows, Cinema 4D is started with the `start /b /wait "parentconsole"`
 command, which will cause the current terminal to inherit the output instead
 of Cinema 4D creating a separate terminal window.
+
+## `c4ddev source-protector`
+
+    Usage: c4ddev source-protector [OPTIONS] FILENAME [FILENAME [...]]
+
+      Protect .pyp files (requires APEX).
+
+    Options:
+      --help  Show this message and exit.
+
+Protects a Cinema 4D Python Plugin (`.pyp`). Requires the **C4DDev** C++
+parts installed. More information in the [APEX]({{< ref "apex.md" >}}) page.
+If the C++ parts are not installed, nothing will happen and no error will
+be printed.
 
 ## `c4ddev symbols`
 

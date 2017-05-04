@@ -283,4 +283,21 @@ def run(exe, args):
   sys.exit(res)
 
 
+@main.command('source-protector')
+@click.pass_context
+@click.argument('filenames', metavar='FILENAME [FILENAME [...]]', nargs=-1)
+def source_protector(ctx, filenames):
+  """
+  Protect .pyp files (requires APEX).
+  """
+
+  if not filenames:
+    ctx.fail('no input files')
+  args = ['--', '-nogui']
+  for fname in filenames:
+    args.append('-apex-protect-source')
+    args.append(os.path.abspath(fname))
+  return run(args)
+
+
 main()

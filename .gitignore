@@ -9,6 +9,11 @@ public/
 
 # C extensions
 *.so
+*.so64
+*.cdl64
+*.dylib
+*.lib
+*.exp
 
 # Distribution / packaging
 .Python

@@ -18,11 +18,21 @@
   },
   "dist": {
     "exclude_files": [
+      "Makefile",
+      "Craftfile",
+      "build/*",
+      "craftr/*",
       ".pubfile",
       "loader.pyp",
       "docs/*",
       "plugins/*",
-      "res/*"
+      "res/*",
+      "src/*",
+      "apex.pyp",
+      "*.cdl64",
+      "*.exp",
+      "*.lib",
+      "*.dylib"
     ]
   }
 }

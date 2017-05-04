@@ -1,0 +1,8 @@
+name: "NiklasRosenstein.c4d-apex"
+version: "1.0.0"
+author: ""
+url: ""
+dependencies:
+  "craftr.lang.cxx": "*"
+  "NiklasRosenstein.maxon.c4d": "*"
+options: {}

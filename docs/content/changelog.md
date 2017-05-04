@@ -4,6 +4,10 @@ title = "Changelog"
 
   [Node.py]: https://github.com/nodepy/nodepy
 
+## v0.1.5
+
+- merge https://github.com/NiklasRosenstein/c4d-apex into C4DDev
+
 ## v0.1.4
 
 - merge https://github.com/NiklasRosenstein/c4d-deprecated-ide into C4DDev

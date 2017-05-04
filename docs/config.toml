@@ -86,6 +86,11 @@ theme = "hugo-material-docs"
 	url    = "c++/"
 	weight = 90
 
+[[menu.main]]
+	name   = "APEX"
+	url    = "apex/"
+	weight = 100
+
 [blackfriday]
 	smartypants	= true
 	fractions = true

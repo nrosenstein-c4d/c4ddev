@@ -1,0 +1,15 @@
+# NiklasRosenstein.c4d-apex
+
+cxx = load('craftr.lang.cxx')
+c4d = load('NiklasRosenstein.maxon.c4d')
+
+sources = glob(['src/internal/*.cpp', 'src/public/*.cpp'])
+plugin = cxx.shared_library(
+  output = local('c4d-apex-r{}'.format(c4d.release)),
+  inputs = cxx.compile_cpp(
+    sources = sources,
+    include = [local('src/include')],
+    defines = ['NR_APEX_INTERNAL'],
+    frameworks = [c4d.sdk, c4d.python]
+  )
+)
