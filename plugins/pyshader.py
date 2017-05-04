@@ -30,9 +30,6 @@ from zlib import adler32
 utils = require('c4ddev/utils')
 res = require('c4ddev/res')
 
-__author__ = 'Niklas Rosenstein <rosensteinniklas(at)gmail.com>'
-__version__ = '1.0-dev'
-
 
 class PyShader(c4d.plugins.ShaderData):
   ''' Cinema 4D shader plugin that executes Python code that can be
