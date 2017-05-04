@@ -94,6 +94,10 @@ def main():
     help='One or more resource directories to parse for symbols. If the '
     'option is not specified, `res/` will be used.')
 def symbols(format, outfile, res_dir):
+  """
+  Extracts resource symbols.
+  """
+
   if not res_dir:
     res_dir = ['res']
   resource.export_symbols(format, res_dir, outfile=outfile)
@@ -104,6 +108,10 @@ def symbols(format, outfile, res_dir):
 @click.option('-r', '--res', metavar='DIRETORY', default='res')
 @click.option('--no-header', default=False)
 def rpkg(files, res, no_header):
+  """
+  Converts a resource package file to description resource files.
+  """
+
   if not files:
     click.echo("error: no input files", err=True)
     return 1
