@@ -4,7 +4,7 @@ title = "Changelog"
 
   [Node.py]: https://github.com/nodepy/nodepy
 
-## v0.1.4 (unreleased)
+## v0.1.4
 
 - merge https://github.com/NiklasRosenstein/c4d-deprecated-ide into C4DDev
 - update docs
