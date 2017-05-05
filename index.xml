@@ -44,12 +44,23 @@ License The MIT License (MIT) Copyright (c) 2014 Niklas Rosenstein Permission is
     </item>
     
     <item>
+      <title>C4DTools</title>
+      <link>https://niklasrosenstein.github.io/c4ddev/c4dtools/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://niklasrosenstein.github.io/c4ddev/c4dtools/</guid>
+      <description>The C4DTools is a Python library that can be used by other plugins that use the Node.Py runtime. To use C4DTools from a Python plugin, you have to install C4DDev locally with PPYM.
+$ ppym instal c4ddev --save $ ls nodepy_modules/ c4ddev  Then you can require the desired components of C4DTools in your plugin.
+aabb = require(&#39;c4ddev/lib/c4dtools/misc/aabb&#39;) gui = require(&#39;c4ddev/lib/c4dtools/gui&#39;) c4dmath = require(&#39;c4ddev/lib/c4dtools/math&#39;)  Note that from the C4D Script Manager, Python Objects, Tags and Nodes, the path to require the library components is different:</description>
+    </item>
+    
+    <item>
       <title>Changelog</title>
       <link>https://niklasrosenstein.github.io/c4ddev/changelog/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://niklasrosenstein.github.io/c4ddev/changelog/</guid>
-      <description>v0.1.5  merge https://github.com/NiklasRosenstein/c4d-apex into C4DDev  v0.1.4  merge https://github.com/NiklasRosenstein/c4d-deprecated-ide into C4DDev update docs add c4ddev run command rename c4ddev pip-get command to c4ddev get-pip fix c4ddev/scripting/localimport and add python/ to PYTHONPATH inside the context  PyObject
+      <description>v0.1.5  merge https://github.com/NiklasRosenstein/c4d-apex into C4DDev merge https://github.com/NiklasRosenstein/py-c4dtools into C4DDev  v0.1.4  merge https://github.com/NiklasRosenstein/c4d-deprecated-ide into C4DDev update docs add c4ddev run command rename c4ddev pip-get command to c4ddev get-pip fix c4ddev/scripting/localimport and add python/ to PYTHONPATH inside the context  PyObject
  renamed from DrawHelper extended to allow overriding of other ObjectData methods  PyShader
  changed interface to match the method names in ShaderData add &amp;ldquo;Open Editor&amp;rdquo; button Python code is now also evaluated in Material preview  ResourcePackage</description>
     </item>
