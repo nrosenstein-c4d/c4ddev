@@ -202,3 +202,6 @@ class TreeNode(object):
   down = property(get_down)
   down_last = property(get_down_last)
   children = property(get_children)
+
+
+exports = TreeNode

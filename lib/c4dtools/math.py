@@ -21,6 +21,7 @@
 # THE SOFTWARE.
 
 import c4d
+import collections
 
 
 def closest_point_on_line(a, b, p):
@@ -66,42 +67,64 @@ def line_line_intersection(p1, d1, p2, d2, precision=1.0e-7):
 
 
 def vmin(a, b, copy=True):
-    ''' Combines the lowest components of the two vectors *a* and *b*
-    into a new vector.
+  ''' Combines the lowest components of the two vectors *a* and *b*
+  into a new vector.
 
-    :param a: The first vector.
-    :param b: The second vector.
-    :param copy: If True, a copy of *a* will be created and returned
-      from this function. Otherwise, *a* will be used and returned
-      directly.
-    '''
+  :param a: The first vector.
+  :param b: The second vector.
+  :param copy: If True, a copy of *a* will be created and returned
+    from this function. Otherwise, *a* will be used and returned
+    directly.
+  '''
 
-    if copy:
-      c = c4d.Vector(a)
-    else:
-      c = a
-    if b.x < a.x: c.x = b.x
-    if b.y < a.y: c.y = b.y
-    if b.z < a.z: c.z = b.z
-    return c
+  if copy:
+    c = c4d.Vector(a)
+  else:
+    c = a
+  if b.x < a.x: c.x = b.x
+  if b.y < a.y: c.y = b.y
+  if b.z < a.z: c.z = b.z
+  return c
 
 
 def vmax(a, b, copy=True):
-    ''' Combines the highest components of the two vectors *a* and *b*
-    into a new vector.
+  ''' Combines the highest components of the two vectors *a* and *b*
+  into a new vector.
 
-    :param a: The first vector.
-    :param b: The second vector.
-    :param copy: If True, a copy of *a* will be created and returned
-      from this function. Otherwise, *a* will be used and returned
-      directly.
-    '''
+  :param a: The first vector.
+  :param b: The second vector.
+  :param copy: If True, a copy of *a* will be created and returned
+    from this function. Otherwise, *a* will be used and returned
+    directly.
+  '''
 
-    if copy:
-      c = c4d.Vector(a)
-    else:
-      c = a
-    if b.x > a.x: c.x = b.x
-    if b.y > a.y: c.y = b.y
-    if b.z > a.z: c.z = b.z
-    return c
+  if copy:
+    c = c4d.Vector(a)
+  else:
+    c = a
+  if b.x > a.x: c.x = b.x
+  if b.y > a.y: c.y = b.y
+  if b.z > a.z: c.z = b.z
+  return c
+
+def vbbmid(vectors):
+  ''' Returns the mid-point of the bounding box spanned by the list
+  of vectors. This is different to the arithmetic middle of the points.
+
+  Returns: :class:`c4d.Vector`
+  Raises: :class:`ValueError` if *vectors* is not a sequence type or is empty.
+  '''
+
+  if not isinstance(vectors, collections.Sequence):
+    raise ValueError('vectors must be a Sequence')
+  vectors = tuple(vectors)
+  if not vectors:
+    raise ValueError('An empty sequence is not accepted.')
+
+  min = Vector(vectors[0])
+  max = Vector(min)
+  for v in vectors:
+    vmin(min, v)
+    vmax(max, v)
+
+  return (min + max) * 0.5

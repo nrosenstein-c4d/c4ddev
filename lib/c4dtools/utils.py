@@ -24,6 +24,8 @@
 import c4d
 import warnings
 
+OrderedDict = require('./structures/ordereddict')
+
 # General Helpers
 
 def serial_info():
@@ -592,6 +594,38 @@ class PolygonObjectInfo(object):
       self.polygons = None
 
 
+def assoc_mats_with_objects(doc):
+  ''' This function goes through the complete object hierarchy of the
+  passed :class:`c4d.BaseDocument` and all materials with the objects
+  that carry a texture-tag with that material. The returnvalue is an
+  :class:`OrderedDict` instance. The keys of the dictionary-like object
+  are the materials in the document, their associated values are lists
+  of :class:`c4d.BaseObject`. Note that an object *can* occure twice in
+  the same list when the object has two tags with the same material on
+  it.
+
+  :param doc: :class:`c4d.BaseDocument`
+  :return: :class:`OrderedDict`
+  '''
+
+  data = OrderedDict()
+
+  def callback(op):
+    for tag in op.GetTags():
+      if tag.CheckType(c4d.Ttexture):
+        mat = tag[c4d.TEXTURETAG_MATERIAL]
+        if not mat: continue
+        data.setdefault(mat, []).append(op)
+
+    for child in op.GetChildren():
+      callback(child)
+
+  for obj in doc.GetObjects():
+    callback(obj)
+
+  return data
+
+
 # Bitmaps
 
 def load_bitmap(filename):
@@ -622,3 +656,21 @@ def find_root(node):
     node = parent
     parent = node.GetUp()
   return node
+
+# Cinema 4D SDK
+
+def candidates(value, obj, callback=lambda vref, vcmp, kcmp: vref == vcmp):
+  ''' Searches for *value* in *obj* and returns a list of all keys where
+  the callback returns True, being passed *value* as first argument,
+  the value to compare it with as the second argument and the name
+  of the attribute as the third.
+
+  Returns: list of str
+  '''
+
+  results = []
+  for k, v in vars(obj).iteritems():
+    if callback(value, v, k):
+      results.append(k)
+
+  return results

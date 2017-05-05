@@ -195,3 +195,6 @@ class OrderedDict(object):
     if key is None:
       key = lambda x: x[0]
     self.__items.sort(key=key)
+
+
+exports = OrderedDict
