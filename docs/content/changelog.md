@@ -4,7 +4,7 @@ title = "Changelog"
 
   [Node.py]: https://github.com/nodepy/nodepy
 
-## v0.1.5
+## v0.1.5 (development)
 
 - merge https://github.com/NiklasRosenstein/c4d-apex into C4DDev and
   rename everything from `c4d.apex` to `c4ddev`
