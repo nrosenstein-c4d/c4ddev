@@ -9,18 +9,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=10" />
-    <title>APEX - C4DDev</title>
+    <title>Py4D API Extensions - C4DDev</title>
     <meta name="generator" content="Hugo 0.20.1" />
 
     
     <meta name="description" content="The C4DDev project documentation/">
     
-    <link rel="canonical" href="https://niklasrosenstein.github.io/c4ddev/apex/">
+    <link rel="canonical" href="https://niklasrosenstein.github.io/c4ddev/apiext/">
     
     <meta name="author" content="Niklas Rosenstein">
     
 
-    <meta property="og:url" content="https://niklasrosenstein.github.io/c4ddev/apex/">
+    <meta property="og:url" content="https://niklasrosenstein.github.io/c4ddev/apiext/">
     <meta property="og:title" content="C4DDev">
     <meta property="og:image" content="https://niklasrosenstein.github.io/c4ddev/images/logo.png">
     <meta name="apple-mobile-web-app-title" content="C4DDev">
@@ -97,7 +97,7 @@
     </div>
     <div class="stretch">
       <div class="title">
-        APEX
+        Py4D API Extensions
       </div>
     </div>
 
@@ -342,14 +342,11 @@
 
 
 
-<a class="current" title="APEX" href="/c4ddev/apex/">
+<a  title="C4DTools" href="/c4ddev/c4dtools/">
 	
-	APEX
+	C4DTools
 </a>
 
-
-<ul id="scrollspy">
-</ul>
 
 
   
@@ -363,11 +360,14 @@
 
 
 
-<a  title="C4DTools" href="/c4ddev/c4dtools/">
+<a class="current" title="Py4D API Extensions" href="/c4ddev/apiext/">
 	
-	C4DTools
+	Py4D API Extensions
 </a>
 
+
+<ul id="scrollspy">
+</ul>
 
 
   
@@ -410,15 +410,14 @@
 
 	<article class="article">
 		<div class="wrapper">
-			<h1>APEX </h1>
+			<h1>Py4D API Extensions </h1>
 
 			
 
 <p align="right" style="float: right; margin-left: 1em; margin-bottom: 1em"><img src="apex.png"></p>
 
-<p>APEX stands for &ldquo;Cinema 4D API Extensions&rdquo;. It is a C++ plugin that provides
-additions to the Python for Cinema 4D API but also for the C++ SDK. It was
-originally a side-project, but is now merged into the <strong>C4DDev</strong> codebase.</p>
+<p>The C4DDev Py4D API Extensions are a C++ plugin that provide additional
+functions that can be used from Python.</p>
 
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -428,114 +427,58 @@ originally a side-project, but is now merged into the <strong>C4DDev</strong> co
   of C4DDev.</p>
 </div>
 
-<h2 id="c4d-command-line">C4D Command-line</h2>
+<h2 id="members">Members</h2>
 
-<h3 id="apex-protect-source-filename"><code>-apex-protect-source &lt;filename&gt;</code></h3>
+<h3 id="c4ddev-version"><code>c4ddev.__version__</code></h3>
 
-<p>When APEX is available in a Cinema 4D installation, this command-line argument
-can be used to protect the source code of a Cinema 4D Python Plugin (<code>.pyp</code>),
-creating a <code>.pype</code> (before R15) or <code>.pypv</code> file (R15 and later). The argument
-can be specified multiple times to protected multiple files with a single
-invocation.</p>
+<p>The installed version of C4DDev.</p>
 
-<p>The <a href="https://niklasrosenstein.github.io/c4ddev/cli/#c4ddev-source-protector"><code>c4ddev source-protector</code></a>
-command can be used to protect source files from the Command-line conveniently.</p>
+<h3 id="c4ddev-has-cpp-extensions"><code>c4ddev.has_cpp_extensions</code></h3>
 
-<pre><code>$ c4ddev source-protector myplugin.pyp
-...
-[apex / INFO]: Calling Source Protector for 'myplugin.pyp'.
-</code></pre>
+<p><code>True</code> if the C4DDev C++ extensions are installed, otherwise <code>False</code>. Note
+that if the C++ extensions are <strong>not</strong> installed and you try to import
+<code>c4ddev</code> from a Cinema 4D plugin, importing <code>c4ddev</code> could fail if your plugin
+is executed before the C4DDev Python entrypoint.</p>
 
-<p>Alternatively, you can run Cinema 4D directly via the command-line or use
-the <a href="https://niklasrosenstein.github.io/c4ddev/cli/#c4ddev-run"><code>c4ddev run</code></a> command.</p>
+<h2 id="functions">Functions</h2>
 
-<pre><code>$ /Applications/Cinema 4D R16/plugins/myplugin $ &quot;..\..\CINEMA 4D.exe&quot; -nogui -apex-protect-source myplugin.pyp
-</code></pre>
+<h3 id="c4ddev-require"><code>c4ddev.require()</code></h3>
 
-<h2 id="message-extensions">Message Extensions</h2>
+<p>This is the Node.Py <code>require</code> object from the C4DDev <code>main.py</code> entry point
+which allows you to load components of the <code>c4ddev</code> and <code>c4dtools</code> libraries.</p>
 
-<p>APEX installs a SceneHook that takes special messages which are usually only
-sent to nodes in a document and redirects them as a global plugin message.
-Currently, the following messages sent to that scene hook are supported:</p>
+<h3 id="c4ddev-cast-node-pycobject-c4d-gelistnode"><code>c4ddev.cast_node(pycobject) -&gt; c4d.GeListNode</code></h3>
 
-<ul>
-<li><code>MSG_DOCUMENTINFO</code></li>
-<li><code>MSG_MULTI_RENDERNOTIFICATION</code></li>
-</ul>
-
-<p>There&rsquo;s a little bit of effort involved in receiving these in Python, though. The
-data sent will by a <code>PyCObject</code> and you have to use APEX to read the data from these
-objects.</p>
-
-<pre><code class="language-python">import c4d.apex
-
-def PluginMessage(msg, data):
-  if msg == c4d.MSG_MULTI_RENDERNOTIFICATION:
-    data = c4d.apex.RenderNotificationData(data)
-    print data
-  elif msg == c4d.MSG_DOCUMENTINFO:
-    data = c4d.apex.DocumentInfoData(data)
-    print data
-  return True
-</code></pre>
-
-<h3 id="c4d-apex-documentinfodata-pycobject-dict"><code>c4d.apex.DocumentInfoData(pycobject) -&gt; dict</code></h3>
-
-<blockquote>
-<p>Pass the <code>PyCObject</code> received on <code>MSG_DOCUMENTINFO</code> to this function to get a
-dictionary of the structures data. <strong>Important</strong>: This will result in undefined
-behaviour (likely a crash) if you pass a wrong PyCObject!</p>
-</blockquote>
-
-<h3 id="c4d-apex-rendernotificationdata-pycobject-dict"><code>c4d.apex.RenderNotificationData(pycobject) -&gt; dict</code></h3>
-
-<blockquote>
-<p>Pass the <code>PyCObject</code> received on <code>MSG_MULTI_RENDERNOTIFICATION</code> this this function
-to get a dictionary of the structures data. <strong>Important</strong>: This will result in
-undefined behaviour (likely a crash) if you pass a wrong PyCObject!</p>
-</blockquote>
-
-<h2 id="python-api-extensions">Python API Extensions</h2>
-
-<h3 id="c4d-apex-cast-node-pycobject-c4d-gelistnode"><code>c4d.apex.cast_node(pycobject) -&gt; c4d.GeListNode</code></h3>
-
-<blockquote>
 <p>Given a <code>PyCObject</code> from which you know it is a Cinema 4D <code>GeListNode</code> instance,
 you can use this function to get a real Python object out of it. <strong>Important</strong>:
 This will result in undefined behaviour (likely a crash) if you pass a wrong PyCObject!</p>
-</blockquote>
 
-<h3 id="c4d-apex-fileselect-put-path"><code>c4d.apex.fileselect_put(path)</code></h3>
+<h3 id="c4ddev-fileselect-put-path"><code>c4ddev.fileselect_put(path)</code></h3>
 
-<blockquote>
 <p>This extension allows you to prevent file selection dialogs from popping up
 and make them return a specific value. This is <em>very</em> useful if you want to
 streamline Cinema 4D commands that usually do open a file selection dialog.</p>
 
 <pre><code class="language-python">import c4d
-c4d.apex.fileselect_put('/Users/me/Desktop')
+import c4ddev
+
+c4ddev.fileselect_put('/Users/me/Desktop')
 print(c4d.storage.LoadDialog())
 # Doesn't open a dialog and prints /Users/me/Desktop
 </code></pre>
-</blockquote>
 
-<h3 id="c4d-apex-fileselect-pop"><code>c4d.apex.fileselect_pop()</code></h3>
+<h3 id="c4ddev-fileselect-pop"><code>c4ddev.fileselect_pop()</code></h3>
 
-<blockquote>
 <p>Pop an element from the elements added to the FileSelect Hook queue with
 <code>fileselect_put()</code>.</p>
-</blockquote>
 
-<h3 id="c4d-apex-fileselect-size"><code>c4d.apex.fileselect_size()</code></h3>
+<h3 id="c4ddev-fileselect-size"><code>c4ddev.fileselect_size()</code></h3>
 
-<blockquote>
 <p>Returns the number of elemenets in the queue added to the FileSelect Hook
 with <code>fileselect_put()</code>.</p>
-</blockquote>
 
-<h3 id="c4d-apex-handlemousedrag-area-msg-type-data-flags"><code>c4d.apex.handlemousedrag(area, msg, type, data, flags)</code></h3>
+<h3 id="c4ddev-handlemousedrag-area-msg-type-data-flags"><code>c4ddev.handlemousedrag(area, msg, type, data, flags)</code></h3>
 
-<blockquote>
 <p>This function calls <code>GeUserArea::HandleMouseDrag()</code> on the <em>area</em> object,
 which is missing in the Py4D API. Currently supported values for <em>type</em>
 are:</p>
@@ -550,7 +493,71 @@ are:</p>
 
 <p>The type of <em>data</em> is specified in the parentheses above. <em>msg</em> must be
 a <code>c4d.BaseContainer</code>, ideally the one passed from <code>GeUserArea.InputEvent()</code>.</p>
-</blockquote>
+
+<h3 id="c4ddev-documentinfodata-pycobject-dict"><code>c4ddev.DocumentInfoData(pycobject) -&gt; dict</code></h3>
+
+<p>Pass the <code>PyCObject</code> received on <code>MSG_DOCUMENTINFO</code> to this function to get a
+dictionary of the structures data. <strong>Important</strong>: This will result in undefined
+behaviour (likely a crash) if you pass a wrong PyCObject!</p>
+
+<h3 id="c4ddev-rendernotificationdata-pycobject-dict"><code>c4ddev.RenderNotificationData(pycobject) -&gt; dict</code></h3>
+
+<p>Pass the <code>PyCObject</code> received on <code>MSG_MULTI_RENDERNOTIFICATION</code> this this function
+to get a dictionary of the structures data. <strong>Important</strong>: This will result in
+undefined behaviour (likely a crash) if you pass a wrong PyCObject!</p>
+
+<h2 id="plugin-messages">Plugin Messages</h2>
+
+<p>The C4DDev C++ component installs a SceneHook that takes special messages
+which are usually only sent to nodes in a document and redirects them as a
+global plugin message. Currently, the following messages sent to that scene
+hook are supported:</p>
+
+<ul>
+<li><code>MSG_DOCUMENTINFO</code></li>
+<li><code>MSG_MULTI_RENDERNOTIFICATION</code></li>
+</ul>
+
+<p>There&rsquo;s a little bit of effort involved in receiving these in Python, though. The
+data sent will by a <code>PyCObject</code> and you have to use C4DDev to read the data from these
+objects.</p>
+
+<pre><code class="language-python">import c4d
+import c4ddev
+
+def PluginMessage(msg, data):
+  if msg == c4d.MSG_MULTI_RENDERNOTIFICATION:
+    data = c4ddev.RenderNotificationData(data)
+    print data
+  elif msg == c4d.MSG_DOCUMENTINFO:
+    data = c4ddev.DocumentInfoData(data)
+    print data
+  return True
+</code></pre>
+
+<h2 id="command-line">Command-line</h2>
+
+<h3 id="c4ddev-protect-source-filename"><code>-c4ddev-protect-source &lt;filename&gt;</code></h3>
+
+<p>When the C4DDev C++ extensions are available in a Cinema 4D installation,
+this command-line argument can be used to protect the source code of a
+Cinema 4D Python Plugin (<code>.pyp</code>), creating a <code>.pype</code> (before R15) or <code>.pypv</code>
+file (R15 and later). The argument can be specified multiple times to protected
+multiple files with a single invocation.</p>
+
+<p>The <a href="https://niklasrosenstein.github.io/c4ddev/cli/#c4ddev-source-protector"><code>c4ddev source-protector</code></a>
+command can be used to protect source files from the Command-line conveniently.</p>
+
+<pre><code>$ c4ddev source-protector myplugin.pyp
+...
+[c4ddev / INFO]: Calling Source Protector for 'myplugin.pyp'.
+</code></pre>
+
+<p>Alternatively, you can run Cinema 4D directly via the command-line or use
+the <a href="https://niklasrosenstein.github.io/c4ddev/cli/#c4ddev-run"><code>c4ddev run</code></a> command.</p>
+
+<pre><code>$ /Applications/Cinema 4D R16/plugins/myplugin $ &quot;..\..\CINEMA 4D.exe&quot; -nogui -c4ddev-protect-source myplugin.pyp
+</code></pre>
 
 
 			<aside class="copyright" role="note">
@@ -569,18 +576,34 @@ a <code>c4d.BaseContainer</code>, ideally the one passed from <code>GeUserArea.I
 <nav class="pagination" aria-label="Footer">
   <div class="previous">
   
+      <a href="https://niklasrosenstein.github.io/c4ddev/plugins/" title="Plugins">
+        <span class="direction">
+          Previous
+        </span>
+        <div class="page">
+          <div class="button button-previous" role="button" aria-label="Previous">
+            <i class="icon icon-back"></i>
+          </div>
+          <div class="stretch">
+            <div class="title">
+              Plugins
+            </div>
+          </div>
+        </div>
+      </a>
+  
   </div>
 
   <div class="next">
   
-      <a href="https://niklasrosenstein.github.io/c4ddev/c&#43;&#43;/" title="C&#43;&#43; Resource">
+      <a href="https://niklasrosenstein.github.io/c4ddev/py4d-imports-howto/" title="Py4D Imports: How-To">
         <span class="direction">
           Next
         </span>
         <div class="page">
           <div class="stretch">
             <div class="title">
-              C&#43;&#43; Resource
+              Py4D Imports: How-To
             </div>
           </div>
           <div class="button button-next" role="button" aria-label="Next">

@@ -12,18 +12,6 @@
     
     
     <item>
-      <title>APEX</title>
-      <link>https://niklasrosenstein.github.io/c4ddev/apex/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://niklasrosenstein.github.io/c4ddev/apex/</guid>
-      <description>APEX stands for &amp;ldquo;Cinema 4D API Extensions&amp;rdquo;. It is a C++ plugin that provides additions to the Python for Cinema 4D API but also for the C++ SDK. It was originally a side-project, but is now merged into the C4DDev codebase.
-Note
-The C++ component of C4DDev must be installed, otherwise the API extensions will not be available. Pre-compiled binaries are available in the GitHub Releases of C4DDev.
- C4D Command-line -apex-protect-source &amp;lt;filename&amp;gt; When APEX is available in a Cinema 4D installation, this command-line argument can be used to protect the source code of a Cinema 4D Python Plugin (.</description>
-    </item>
-    
-    <item>
       <title>C&#43;&#43; Resource</title>
       <link>https://niklasrosenstein.github.io/c4ddev/c&#43;&#43;/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -60,7 +48,7 @@ aabb = require(&#39;c4ddev/lib/c4dtools/misc/aabb&#39;) gui = require(&#39;c4dde
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://niklasrosenstein.github.io/c4ddev/changelog/</guid>
-      <description>v0.1.5  merge https://github.com/NiklasRosenstein/c4d-apex into C4DDev merge https://github.com/NiklasRosenstein/py-c4dtools into C4DDev  v0.1.4  merge https://github.com/NiklasRosenstein/c4d-deprecated-ide into C4DDev update docs add c4ddev run command rename c4ddev pip-get command to c4ddev get-pip fix c4ddev/scripting/localimport and add python/ to PYTHONPATH inside the context  PyObject
+      <description>v0.1.5 (development)  merge https://github.com/NiklasRosenstein/c4d-apex into C4DDev and rename everything from c4d.apex to c4ddev merge https://github.com/NiklasRosenstein/py-c4dtools into C4DDev  v0.1.4  merge https://github.com/NiklasRosenstein/c4d-deprecated-ide into C4DDev update docs add c4ddev run command rename c4ddev pip-get command to c4ddev get-pip fix c4ddev/scripting/localimport and add python/ to PYTHONPATH inside the context  PyObject
  renamed from DrawHelper extended to allow overriding of other ObjectData methods  PyShader
  changed interface to match the method names in ShaderData add &amp;ldquo;Open Editor&amp;rdquo; button Python code is now also evaluated in Material preview  ResourcePackage</description>
     </item>
@@ -86,6 +74,19 @@ c4ddev Usage: c4ddev [OPTIONS] COMMAND [ARGS]... Options: --help Show this messa
 PyObject An alternative to the Cinema 4D standard Python Generator object that allows you to implement a number of other ObjectData methods.
 PyShader This simple Cinema 4D plugin allows you to write shaders on-the-fly or prototype for a native shader plugin.
 Unicode Escape Tool String resources require special characters to be escaped with unicode escape sequences in the format of \UXXXX.</description>
+    </item>
+    
+    <item>
+      <title>Py4D API Extensions</title>
+      <link>https://niklasrosenstein.github.io/c4ddev/apiext/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://niklasrosenstein.github.io/c4ddev/apiext/</guid>
+      <description>The C4DDev Py4D API Extensions are a C++ plugin that provide additional functions that can be used from Python.
+Note
+The C++ component of C4DDev must be installed, otherwise the API extensions will not be available. Pre-compiled binaries are available in the GitHub Releases of C4DDev.
+ Members c4ddev.__version__ The installed version of C4DDev.
+c4ddev.has_cpp_extensions True if the C4DDev C++ extensions are installed, otherwise False. Note that if the C++ extensions are not installed and you try to import c4ddev from a Cinema 4D plugin, importing c4ddev could fail if your plugin is executed before the C4DDev Python entrypoint.</description>
     </item>
     
     <item>

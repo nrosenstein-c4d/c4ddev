@@ -2,10 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://niklasrosenstein.github.io/c4ddev/apex/</loc>
-  </url>
-  
-  <url>
     <loc>https://niklasrosenstein.github.io/c4ddev/c&#43;&#43;/</loc>
   </url>
   
@@ -37,6 +33,10 @@
   
   <url>
     <loc>https://niklasrosenstein.github.io/c4ddev/plugins/</loc>
+  </url>
+  
+  <url>
+    <loc>https://niklasrosenstein.github.io/c4ddev/apiext/</loc>
   </url>
   
   <url>
