@@ -23,7 +23,9 @@ Entry-point for when the C4DDev plugin is loaded by Cinema 4D.
 
 import os
 import c4d
+import json
 import sys
+import types
 
 require.context.path.append(os.path.join(__directory__, 'lib'))
 require('c4ddev/__res__', exports=False).namespace.exports = __res__
@@ -58,5 +60,17 @@ def PluginMessage(msg_type, data):
 
   return True
 
+try:
+  import c4ddev
+except ImportError as exc:
+  print('[c4ddev WARNING]: c4ddev C++ extensions are not installed')
+  sys.modules['c4ddev'] = types.ModuleType('c4ddev')
+  import c4ddev
+  c4ddev.has_cpp_extensions = False
+else:
+  c4ddev.has_cpp_extensions = True
+with open(os.path.join(__directory__, 'package.json')) as fp:
+  c4ddev.__version__ = json.load(fp)['version']
+c4ddev.require = require
+
 extensions = load_extensions()
-sys.modules['c4ddev'] = module.namespace

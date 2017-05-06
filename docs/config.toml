@@ -87,8 +87,8 @@ theme = "hugo-material-docs"
 	weight = 90
 
 [[menu.main]]
-	name   = "APEX"
-	url    = "apex/"
+	name   = "Py4D API Extensions"
+	url    = "apiext/"
 	weight = 100
 
 [[menu.main]]

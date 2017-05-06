@@ -5,49 +5,40 @@
 
 #include <c4d.h>
 #include <lib_py.h>
-#include <nr/apex/lib.h>
+#include <c4ddev/c4ddev.hpp>
 
 extern Bool InitPython();
-extern Bool RegisterApexSceneHook();
+extern Bool RegisterMessageSceneHook();
 extern Bool RegisterFileSelectHook();
 
-namespace nr {
-namespace apex {
+namespace c4ddev {
   Lib lib;
 }
-}
 
-/// ***************************************************************************
-/// ***************************************************************************
-Bool PluginStart()
-{
-  // Register the APEX library.
-  static Int32 const id = nr::apex::LIBRARY_ID;
+
+Bool PluginStart() {
+  static Int32 const id = c4ddev::LIBRARY_ID;
   static Int32 const version = 0;
-  static Int32 const size = sizeof(nr::apex::lib);
-  ClearMem(&nr::apex::lib, size);
-  if (!InstallLibrary(id, &nr::apex::lib, version, size)) {
-    GePrint("APEX]: Cinema 4D Library could not be installed.");
+  static Int32 const size = sizeof(c4ddev::lib);
+  ClearMem(&c4ddev::lib, size);
+  if (!InstallLibrary(id, &c4ddev::lib, version, size)) {
+    GePrint("C4DDev API Extensions could not be installed.");
     return false;
   }
 
   if (!RegisterFileSelectHook()) return false;
-  if (!RegisterApexSceneHook()) return false;
-  GePrint("APEX]: Cinema 4D API EXtensions installed.");
-  GePrint("Copyright (C) 2015  Niklas Rosenstein");
+  if (!RegisterMessageSceneHook()) return false;
+  GePrint("C4DDev API EXtensions installed.");
+  GePrint("Copyright (c) 2015  Niklas Rosenstein");
   return true;
 }
 
-/// ***************************************************************************
-/// ***************************************************************************
-void PluginEnd()
-{
+
+void PluginEnd() {
 }
 
-/// ***************************************************************************
-/// ***************************************************************************
-Bool PluginMessage(Int32 msg, void* p_data)
-{
+
+Bool PluginMessage(Int32 msg, void* p_data) {
   switch (msg) {
     case C4DPL_PYINITTYPES: {
       InitPython();

@@ -6,18 +6,20 @@
 
 #include <c4d.h>
 #include <lib_py.h>
-#include <nr/apex/python_ext.h>
-#include <nr/apex/file_select_hook.h>
+#include <c4ddev/python.hpp>
+#include <c4ddev/fileselectqueue.hpp>
 
-using namespace nr::apex::python_ext;
-namespace file_select_hook = nr::apex::file_select_hook;
+using c4ddev::PyAutoDecref;
+using c4ddev::PyGeListNode_New;
+using c4ddev::PyString_FromString;
+namespace FileSelectQueue = c4ddev::FileSelectQueue;
 
 /// A small helper to define a Python method.
 #define METHODDEF(name, argstype) {#name, py_##name, argstype, name##_docstring}
 
 /// Docstrings for the module.
 static char module_docstring[] =
-  "Cinema 4D API extensions module. https://github.com/nr-plugins/apex.";
+  "Cinema 4D C4DDev API extensions. https://github.com/NiklasRosenstein/c4ddev";
 static char cast_node_docstring[] =
   "cast_node(pycobject) -> c4d.GeListNode\n\n"
   "Convert a PyCObject pointing to a Cinema 4D C++ GeListNode to a Python\n"
@@ -65,30 +67,26 @@ static PyMethodDef module_methods[] = {
   {nullptr, nullptr, 0, nullptr},
 };
 
-/// --------------------------------------------------------------------------
-/// --------------------------------------------------------------------------
-Bool InitPython()
-{
+
+Bool InitPython() {
   GePythonGIL gil;
 
-  AutoDecref<PyObject> c4d = PyImport_ImportModule("c4d");
+  PyAutoDecref<PyObject> c4d = PyImport_ImportModule("c4d");
   if (!c4d) {
-    GePrint("[apex / ERROR]: Could not import c4d module.");
+    GePrint("[c4ddev / ERROR]: Could not import c4d module.");
     return false;
   }
-  PyObject* mod = Py_InitModule3("c4d.apex", module_methods, module_docstring);
+  PyObject* mod = Py_InitModule3("c4ddev", module_methods, module_docstring);
   if (!mod) {
-    GePrint("[apex / ERROR]: Could not create c4d.apex module.");
+    GePrint("[c4ddev / ERROR]: Could not create c4ddev module.");
     return false;
   }
-  PyObject_SetAttrString(c4d, "apex", mod);
+  PyObject_SetAttrString(c4d, "c4ddev", mod);
   return true;
 }
 
-/// --------------------------------------------------------------------------
-/// --------------------------------------------------------------------------
-static PyObject* py_cast_node(PyObject* self, PyObject* args)
-{
+
+static PyObject* py_cast_node(PyObject* self, PyObject* args) {
   GePythonGIL gil;
   PyObject* obj = nullptr;
   if (!PyArg_ParseTuple(args, "O", &obj)) return nullptr;
@@ -100,10 +98,8 @@ static PyObject* py_cast_node(PyObject* self, PyObject* args)
   return PyGeListNode_New(node, false);
 }
 
-/// --------------------------------------------------------------------------
-/// --------------------------------------------------------------------------
-static PyObject* py_RenderNotificationData(PyObject* self, PyObject* args)
-{
+
+static PyObject* py_RenderNotificationData(PyObject* self, PyObject* args) {
   GePythonGIL gil;
   PyObject* obj = nullptr;
   if (!PyArg_ParseTuple(args, "O", &obj)) return nullptr;
@@ -113,7 +109,7 @@ static PyObject* py_RenderNotificationData(PyObject* self, PyObject* args)
   }
 
   auto const* data = (RenderNotificationData*) PyCObject_AsVoidPtr(obj);
-  AutoDecref<PyObject> res = PyDict_New();
+  PyAutoDecref<PyObject> res = PyDict_New();
   if (!res) return nullptr;
 
   obj = PyGeListNode_New(data->doc, false);
@@ -133,10 +129,8 @@ static PyObject* py_RenderNotificationData(PyObject* self, PyObject* args)
   return res.Release();
 }
 
-/// --------------------------------------------------------------------------
-/// --------------------------------------------------------------------------
-static PyObject* py_DocumentInfoData(PyObject* self, PyObject* args)
-{
+
+static PyObject* py_DocumentInfoData(PyObject* self, PyObject* args) {
   GePythonGIL gil;
   PyObject* obj = nullptr;
   if (!PyArg_ParseTuple(args, "O", &obj)) return nullptr;
@@ -146,7 +140,7 @@ static PyObject* py_DocumentInfoData(PyObject* self, PyObject* args)
   }
 
   auto const* data = (DocumentInfoData*) PyCObject_AsVoidPtr(obj);
-  AutoDecref<PyObject> res = PyDict_New();
+  PyAutoDecref<PyObject> res = PyDict_New();
   if (!res) return nullptr;
 
   obj = PyInt_FromLong(data->type);
@@ -167,14 +161,12 @@ static PyObject* py_DocumentInfoData(PyObject* self, PyObject* args)
   return res.Release();
 }
 
-/// --------------------------------------------------------------------------
-/// --------------------------------------------------------------------------
-static PyObject* py_fileselect_put(PyObject* self, PyObject* args)
-{
+
+static PyObject* py_fileselect_put(PyObject* self, PyObject* args) {
   GePythonGIL gil;
   const char* str = nullptr;
   if (!PyArg_ParseTuple(args, "s", &str)) return nullptr;
-  if (!file_select_hook::Put(str)) {
+  if (!FileSelectQueue::Put(str)) {
     PyErr_SetString(PyExc_MemoryError, "Failed to put string on stack.");
     return nullptr;
   }
@@ -182,38 +174,32 @@ static PyObject* py_fileselect_put(PyObject* self, PyObject* args)
   return Py_None;
 }
 
-/// --------------------------------------------------------------------------
-/// --------------------------------------------------------------------------
-static PyObject* py_fileselect_pop(PyObject* self, PyObject* args)
-{
+
+static PyObject* py_fileselect_pop(PyObject* self, PyObject* args) {
   GePythonGIL gil;
   if (!PyArg_ParseTuple(args, "")) return nullptr;
-  if (file_select_hook::Size() <= 0) {
+  if (FileSelectQueue::Size() <= 0) {
     PyErr_SetString(PyExc_ValueError, "FileSelect Stack is empty.");
     return nullptr;
   }
   Filename fn;
-  if (!file_select_hook::Pop(fn)) {
+  if (!FileSelectQueue::Pop(fn)) {
     PyErr_SetString(PyExc_MemoryError, "Failed to pop string from stack.");
     return nullptr;
   }
   return PyString_FromString(fn.GetString());
 }
 
-/// --------------------------------------------------------------------------
-/// --------------------------------------------------------------------------
-static PyObject* py_fileselect_size(PyObject* self, PyObject* args)
-{
+
+static PyObject* py_fileselect_size(PyObject* self, PyObject* args) {
   GePythonGIL gil;
   if (!PyArg_ParseTuple(args, "")) return nullptr;
-  return PyInt_FromLong(file_select_hook::Size());
+  return PyInt_FromLong(FileSelectQueue::Size());
 }
 
 
-/// --------------------------------------------------------------------------
-/// --------------------------------------------------------------------------
-PyObject* py_handlemousedrag(PyObject* self, PyObject* args)
-{
+
+PyObject* py_handlemousedrag(PyObject* self, PyObject* args) {
   PyObject* py_area = nullptr;
   PyObject* py_msg = nullptr;
   int type = 0;
@@ -222,10 +208,10 @@ PyObject* py_handlemousedrag(PyObject* self, PyObject* args)
   if (!PyArg_ParseTuple(args, "OOiOi", &py_area, &py_msg, &type,
       &py_data, &flags)) return nullptr;
 
-  GeUserArea* area = nr::apex::python_ext::PyGeUserArea_Get(py_area);
+  GeUserArea* area = c4ddev::PyGeUserArea_Get(py_area);
   if (!area) return nullptr;
   BaseContainer msg;
-  if (!nr::apex::python_ext::PyBaseContainer_Get(py_msg, &msg)) return nullptr;
+  if (!c4ddev::PyBaseContainer_Get(py_msg, &msg)) return nullptr;
 
   Bool result = false;
   switch (type) {
@@ -234,7 +220,7 @@ PyObject* py_handlemousedrag(PyObject* self, PyObject* args)
     case DRAGTYPE_FILENAME_SCENE:
     case DRAGTYPE_FILENAME_OTHER: {
       String s;
-      if (!nr::apex::python_ext::PyString_AsString(py_data, &s)) return nullptr;
+      if (!c4ddev::PyString_AsString(py_data, &s)) return nullptr;
       Filename f(s);
       result = area->HandleMouseDrag(msg, type, &f, flags);
       break;
@@ -250,7 +236,7 @@ PyObject* py_handlemousedrag(PyObject* self, PyObject* args)
       PyObject* item = nullptr;
       Bool error = false;
       while ((item = PyIter_Next(it)) && !error) {
-        GeListNode* node = nr::apex::python_ext::PyGetListNode_Get(item);
+        GeListNode* node = c4ddev::PyGetListNode_Get(item);
         Py_DECREF(item);
         if (node) array->Append(node);
         else error = true;

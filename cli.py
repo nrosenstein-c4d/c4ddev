@@ -288,14 +288,14 @@ def run(exe, args):
 @click.argument('filenames', metavar='FILENAME [FILENAME [...]]', nargs=-1)
 def source_protector(ctx, filenames):
   """
-  Protect .pyp files (requires APEX).
+  Protect .pyp files (C++ extensions must installed).
   """
 
   if not filenames:
     ctx.fail('no input files')
   args = ['--', '-nogui']
   for fname in filenames:
-    args.append('-apex-protect-source')
+    args.append('-c4ddev-protect-source')
     args.append(os.path.abspath(fname))
   return run(args)
 
