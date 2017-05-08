@@ -18,21 +18,22 @@
   },
   "dist": {
     "exclude_files": [
-      "Makefile",
-      "Craftfile",
-      "build/*",
-      "craftr/*",
-      ".pubfile",
-      "loader.pyp",
-      "docs/*",
-      "plugins/*",
-      "res/*",
-      "src/*",
-      "apex.pyp",
       "*.cdl64",
       "*.exp",
       "*.lib",
-      "*.dylib"
+      "*.dylib",
+      "build/*",
+      "craftr/*",
+      "docs/*",
+      "extras/*",
+      "plugins/*",
+      "res/*",
+      "src/*",
+      ".pubfile",
+      "Craftfile",
+      "Makefile",
+      "c4ddev.pyp",
+      "loader.pyp"
     ]
   }
 }
