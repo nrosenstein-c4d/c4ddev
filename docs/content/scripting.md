@@ -38,6 +38,9 @@ listening for scripts to be executed in Cinema 4D. In the `extras/` directory
 of C4DDev, you can find a plugin for Sublime Text that allows you to send a
 script to Cinema 4D.
 
+The default host and port is `localhost:2900` and the default password is
+`alpine`.
+
 ![](../plugins/sublimescript.png)
 
 {{< warning title="Caution" >}}
