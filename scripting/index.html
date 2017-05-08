@@ -412,10 +412,17 @@
 		<div class="wrapper">
 			<h1>Scripting </h1>
 
-			<p>The <strong>C4DDev</strong> API provides some utilities that are especially useful for
-scripting and prototyping in Cinema 4D. All contents of the <code>c4ddev</code> library
-must be loaded with the <code>c4ddev.require()</code> function (which is the <code>require()</code>
-function from the <code>c4ddev/main</code> module, exported by Node.py).</p>
+			
+
+<p>The <strong>C4DDev</strong> API provides some utilities that are especially useful for
+scripting and prototyping in Cinema 4D.</p>
+
+<h2 id="per-project-libraries">Per-Project libraries</h2>
+
+<p>This is extremely useful when using third party libraries in scripts or
+Python Objects/Tags. You can keep the dependencies together with your
+Cinema 4D scene file and only make sure that <strong>C4DDev</strong> is installed if
+you move the scene around.</p>
 
 <pre><code class="language-python">from c4ddev import require
 localimport = require('c4ddev/scripting/localimport')
@@ -429,12 +436,32 @@ def main():
   # TODO: Some clever example
 </code></pre>
 
-<p>This is extremely useful when using third party libraries in scripts or
-Python Objects/Tags. You can keep the dependencies together with your
-Cinema 4D scene file and only make sure that <strong>C4DDev</strong> is installed if
-you move the scene around.</p>
-
 <p>See also: <a href="https://niklasrosenstein.github.io/c4ddev/c4dtools/">C4DTools</a></p>
+
+<blockquote>
+<p><strong>TODO</strong>: Ability to create a <code>require()</code> function for the script, so you
+can not only <code>import</code> modules from the project location but also use
+<code>require()</code> for modules in the project directory.</p>
+</blockquote>
+
+<h2 id="script-server">Script Server</h2>
+
+<p>Originally the <strong>SublimeScript</strong> plugin, this allows you to turn on a socket
+listening for scripts to be executed in Cinema 4D. In the <code>extras/</code> directory
+of C4DDev, you can find a plugin for Sublime Text that allows you to send a
+script to Cinema 4D.</p>
+
+<p>The default host and port is <code>localhost:2900</code> and the default password is
+<code>alpine</code>.</p>
+
+<p><img src="../plugins/sublimescript.png" alt="" /></p>
+
+<div class="admonition warning">
+<p class="admonition-title">Caution</p>
+<p>Note that enabling the Script Server can make your computer vulnerable
+  to <strong>targeted attacks</strong>. Use only for development purpose and do not use on
+  production servers.</p>
+</div>
 
 
 			<aside class="copyright" role="note">

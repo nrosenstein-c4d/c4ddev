@@ -48,9 +48,7 @@ aabb = require(&#39;c4ddev/lib/c4dtools/misc/aabb&#39;) gui = require(&#39;c4dde
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://niklasrosenstein.github.io/c4ddev/changelog/</guid>
-      <description>v0.1.5 (development)  merge https://github.com/NiklasRosenstein/c4d-apex into C4DDev and rename everything from c4d.apex to c4ddev merge https://github.com/NiklasRosenstein/py-c4dtools into C4DDev  v0.1.4  merge https://github.com/NiklasRosenstein/c4d-deprecated-ide into C4DDev update docs add c4ddev run command rename c4ddev pip-get command to c4ddev get-pip fix c4ddev/scripting/localimport and add python/ to PYTHONPATH inside the context  PyObject
- renamed from DrawHelper extended to allow overriding of other ObjectData methods  PyShader
- changed interface to match the method names in ShaderData add &amp;ldquo;Open Editor&amp;rdquo; button Python code is now also evaluated in Material preview  ResourcePackage</description>
+      <description>v0.1.5 (development)  merge https://github.com/NiklasRosenstein/c4d-apex into C4DDev and rename everything from c4d.apex to c4ddev merge https://github.com/NiklasRosenstein/py-c4dtools into C4DDev merge https://github.com/NiklasRosenstein/c4d-sublime-script into C4DDev Rename SublimeScript to Scripting Server The Scripting Server must be enabled explicitly from the C4DDev plugin menu  v0.1.4  merge https://github.com/NiklasRosenstein/c4d-deprecated-ide into C4DDev update docs add c4ddev run command rename c4ddev pip-get command to c4ddev get-pip fix c4ddev/scripting/localimport and add python/ to PYTHONPATH inside the context  PyObject</description>
     </item>
     
     <item>
@@ -125,7 +123,8 @@ Example # Must be the first statement in a .rpkg file. The (XXX) part is optiona
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://niklasrosenstein.github.io/c4ddev/scripting/</guid>
-      <description>The C4DDev API provides some utilities that are especially useful for scripting and prototyping in Cinema 4D. All contents of the c4ddev library must be loaded with the c4ddev.require() function (which is the require() function from the c4ddev/main module, exported by Node.py).
+      <description>The C4DDev API provides some utilities that are especially useful for scripting and prototyping in Cinema 4D.
+Per-Project libraries This is extremely useful when using third party libraries in scripts or Python Objects/Tags. You can keep the dependencies together with your Cinema 4D scene file and only make sure that C4DDev is installed if you move the scene around.
 from c4ddev import require localimport = require(&#39;c4ddev/scripting/localimport&#39;) # This is a version of localimport that is tuned to work from inside any # scripting context in Cinema 4D (Tag, Object, XPresso Node).</description>
     </item>
     
