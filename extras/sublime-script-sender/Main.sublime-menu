@@ -1,0 +1,11 @@
+[
+{
+    "id": "tools",
+    "children":
+    [
+        {"caption": "-"},
+        { "command": "send_python_code", "caption": "Send Python Code" },
+        { "command": "set_python_code_destination", "caption": "Set Python Code destination ..." }
+    ]
+}
+]

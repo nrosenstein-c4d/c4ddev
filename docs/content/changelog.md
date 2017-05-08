@@ -9,6 +9,7 @@ title = "Changelog"
 - merge https://github.com/NiklasRosenstein/c4d-apex into C4DDev and
   rename everything from `c4d.apex` to `c4ddev`
 - merge https://github.com/NiklasRosenstein/py-c4dtools into C4DDev
+- merge https://github.com/NiklasRosenstein/c4d-sublime-script into C4DDev
 
 ## v0.1.4
 
