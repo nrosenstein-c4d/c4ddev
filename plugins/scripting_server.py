@@ -112,136 +112,6 @@ class SocketFile(object):
     def close(self):
         return self._socket.close()
 
-exec("""
-#__author__='Niklas Rosenstein <rosensteinniklas@gmail.com>'
-#__version__='1.4.7'
-import glob,os,pkgutil,sys,traceback,zipfile
-class _localimport(object):
- _py3k=sys.version_info[0]>=3
- _string_types=(str,)if _py3k else(basestring,)
- def __init__(self,path,parent_dir=os.path.dirname(__file__)):
-  super(_localimport,self).__init__()
-  self.path=[]
-  if isinstance(path,self._string_types):
-   path=[path]
-  for path_name in path:
-   if not os.path.isabs(path_name):
-    path_name=os.path.join(parent_dir,path_name)
-   self.path.append(path_name)
-   self.path.extend(glob.glob(os.path.join(path_name,'*.egg')))
-  self.meta_path=[]
-  self.modules={}
-  self.in_context=False
- def __enter__(self):
-  try:import pkg_resources;nsdict=pkg_resources._namespace_packages.copy()
-  except ImportError:nsdict=None
-  self.state={'nsdict':nsdict,'nspaths':{},'path':sys.path[:],'meta_path':sys.meta_path[:],'disables':{},'pkgutil.extend_path':pkgutil.extend_path,}
-  sys.path[:]=self.path+sys.path
-  sys.meta_path[:]=self.meta_path+sys.meta_path
-  pkgutil.extend_path=self._extend_path
-  for key,mod in self.modules.items():
-   try:self.state['disables'][key]=sys.modules.pop(key)
-   except KeyError:pass
-   sys.modules[key]=mod
-  for path_name in self.path:
-   for fn in glob.glob(os.path.join(path_name,'*.pth')):
-    self._eval_pth(fn,path_name)
-  for key,mod in sys.modules.items():
-   if hasattr(mod,'__path__'):
-    self.state['nspaths'][key]=mod.__path__[:]
-    mod.__path__=pkgutil.extend_path(mod.__path__,mod.__name__)
-  self.in_context=True
-  return self
- def __exit__(self,*__):
-  if not self.in_context:
-   raise RuntimeError('context not entered')
-  local_paths=[]
-  for path in sys.path:
-   if path not in self.state['path']:
-    local_paths.append(path)
-  for key,path in self.state['nspaths'].items():
-   sys.modules[key].__path__=path
-  for meta in sys.meta_path:
-   if meta is not self and meta not in self.state['meta_path']:
-    if meta not in self.meta_path:
-     self.meta_path.append(meta)
-  modules=sys.modules.copy()
-  for key,mod in modules.items():
-   force_pop=False
-   filename=getattr(mod,'__file__',None)
-   if not filename and key not in sys.builtin_module_names:
-    parent=key.rsplit('.',1)[0]
-    if parent in modules:
-     filename=getattr(modules[parent],'__file__',None)
-    else:
-     force_pop=True
-   if force_pop or(filename and self._is_local(filename,local_paths)):
-    self.modules[key]=sys.modules.pop(key)
-  sys.modules.update(self.state['disables'])
-  sys.path[:]=self.state['path']
-  sys.meta_path[:]=self.state['meta_path']
-  pkgutil.extend_path=self.state['pkgutil.extend_path']
-  try:
-   import pkg_resources
-   pkg_resources._namespace_packages.clear()
-   pkg_resources._namespace_packages.update(self.state['nsdict'])
-  except ImportError:pass
-  self.in_context=False
-  del self.state
- def _is_local(self,filename,pathlist):
-  filename=os.path.abspath(filename)
-  for path_name in pathlist:
-   path_name=os.path.abspath(path_name)
-   if self._is_subpath(filename,path_name):
-    return True
-  return False
- def _eval_pth(self,filename,sitedir):
-  if not os.path.isfile(filename):
-   return
-  with open(filename,'r')as fp:
-   for index,line in enumerate(fp):
-    if line.startswith('import'):
-     line_fn='{0}#{1}'.format(filename,index+1)
-     try:
-      exec compile(line,line_fn,'exec')
-     except BaseException:
-      traceback.print_exc()
-    else:
-     index=line.find('#')
-     if index>0:line=line[:index]
-     line=line.strip()
-     if not os.path.isabs(line):
-      line=os.path.join(os.path.dirname(filename),line)
-     line=os.path.normpath(line)
-     if line and line not in sys.path:
-      sys.path.insert(0,line)
- def _extend_path(self,pth,name):
-  def zip_isdir(z,name):
-   name=name.rstrip('/')+'/'
-   return any(x.startswith(name)for x in z.namelist())
-  pth=list(pth)
-  for path in sys.path:
-   if path.endswith('.egg')and zipfile.is_zipfile(path):
-    try:
-     egg=zipfile.ZipFile(path,'r')
-     if zip_isdir(egg,name):
-      pth.append(os.path.join(path,name))
-    except(zipfile.BadZipFile,zipfile.LargeZipFile):
-     pass
-   else:
-    path=os.path.join(path,name)
-    if os.path.isdir(path)and path not in pth:
-     pth.append(path)
-  return pth
- @staticmethod
- def _is_subpath(path,ask_dir):
-  try:
-   relpath=os.path.relpath(path,ask_dir)
-  except ValueError:
-   return False
-  return relpath==os.curdir or not relpath.startswith(os.pardir)
-""")
-
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #                    Request Handling and Server thread
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -272,9 +142,8 @@ class SourceObject(object):
 
         scope['__file__'] = self.filename
         dirname = os.path.dirname(self.filename)
-        with _localimport(dirname):
-            code = compile(self.source, self.filename, 'exec')
-            exec code in scope
+        code = compile(self.source, self.filename, 'exec')
+        exec code in scope
 
 def parse_headers(fp):
     """
@@ -426,27 +295,49 @@ class ServerThread(threading.Thread):
 
 import c4d, collections, traceback
 
-class CodeExecuterMessageHandler(c4d.plugins.MessageData):
+class Server(c4d.plugins.MessageData):
 
     PLUGIN_ID = 1033731
     PLUGIN_NAME = "C4DDev Scripting Server"
 
-    def __init__(self, host, port, password):
-        super(CodeExecuterMessageHandler, self).__init__()
+    def __init__(self, host='localhost', port=2900, password='alpine'):
+        super(Server, self).__init__()
         self.queue = collections.deque()
         self.queue_lock = threading.Lock()
-        self.thread = ServerThread(self.queue, self.queue_lock, host, port, password)
+        self.host = host
+        self.port = port
+        self.password = password
+        self.thread = None
 
-        print "Binding C4DDev Scripting Server to {0}:{1} ...".format(host, port)
+    def register(self):
+        return c4d.plugins.RegisterMessagePlugin(
+            self.PLUGIN_ID, self.PLUGIN_NAME, 0, self)
+
+    @property
+    def running(self):
+        if self.thread:
+            return self.thread.is_alive()
+        return False
+
+    def start(self):
+        if self.running:
+            raise RuntimeError("already running")
+        print "Binding C4DDev Scripting Server to {0}:{1} ...".format(self.host, self.port)
+        self.thread = ServerThread(self.queue, self.queue_lock, self.host,
+                self.port, self.password)
         try:
             self.thread.start()
         except socket.error as exc:
             print "Failed to bind to {0}:{1}".format(host, port)
             self.thread = None
 
-    def register(self):
-        return c4d.plugins.RegisterMessagePlugin(
-            self.PLUGIN_ID, self.PLUGIN_NAME, 0, self)
+    def stop(self):
+        if not self.running:
+            raise RuntimeError("not running")
+        print "Shutting down C4DDev Scripting Server thread ..."
+        self.thread.running = False
+        self.thread.join()
+        self.thread = None
 
     def get_scope(self):
         doc = c4d.documents.GetActiveDocument()
@@ -455,11 +346,8 @@ class CodeExecuterMessageHandler(c4d.plugins.MessageData):
         return {'__name__': '__main__', 'doc': doc, 'op': op, 'mat': mat}
 
     def on_shutdown(self):
-        if self.thread:
-            print "Shutting down C4DDev Scripting Server thread ..."
-            self.thread.running = False
-            self.thread.join()
-            self.thread = None
+        if self.thread and self.running:
+            self.stop()
 
     def GetTimer(self):
         if self.thread:
@@ -481,18 +369,38 @@ class CodeExecuterMessageHandler(c4d.plugins.MessageData):
                 traceback.print_exc()
         return True
 
+class ServerToggle(c4d.plugins.CommandData):
+
+    def __init__(self, server):
+        super(ServerToggle, self).__init__()
+        self.server = server
+
+    def register(self):
+        info = 0
+        icon = None
+        help = "Enables/disables the C4DDev Scripting Server"
+        c4d.plugins.RegisterCommandPlugin(
+            1039246, "Scripting Server", info, icon, help, self)
+
+    def Execute(self, doc):
+        if self.server.running:
+            self.server.stop()
+        else:
+            self.server.start()
+        return True
+
+    def GetState(self, doc):
+        flags = c4d.CMD_ENABLED
+        if self.server.running:
+            flags |= c4d.CMD_VALUE
+        return flags
+
+server = Server()
+server.register()
+ServerToggle(server).register()
+
 def PluginMessage(kind, data):
     if kind in [c4d.C4DPL_ENDACTIVITY, c4d.C4DPL_RELOADPYTHONPLUGINS]:
-        for plugin in plugins:
-            method = getattr(plugin, 'on_shutdown', None)
-            if callable(method):
-                try:
-                    method()
-                except Exception as exc:
-                    traceback.print_exc()
+        if server.running:
+            server.stop()
     return True
-
-plugins = []
-handler = CodeExecuterMessageHandler('localhost', 2900, 'alpine')
-handler.register()
-plugins.append(handler)
