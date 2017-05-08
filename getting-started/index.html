@@ -9,18 +9,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=10" />
-    <title>Python Resources - C4DDev</title>
+    <title>Getting Started - C4DDev</title>
     <meta name="generator" content="Hugo 0.20.1" />
 
     
     <meta name="description" content="The C4DDev project documentation/">
     
-    <link rel="canonical" href="https://niklasrosenstein.github.io/c4ddev/python/">
+    <link rel="canonical" href="https://niklasrosenstein.github.io/c4ddev/getting-started/">
     
     <meta name="author" content="Niklas Rosenstein">
     
 
-    <meta property="og:url" content="https://niklasrosenstein.github.io/c4ddev/python/">
+    <meta property="og:url" content="https://niklasrosenstein.github.io/c4ddev/getting-started/">
     <meta property="og:title" content="C4DDev">
     <meta property="og:image" content="https://niklasrosenstein.github.io/c4ddev/images/logo.png">
     <meta name="apple-mobile-web-app-title" content="C4DDev">
@@ -97,7 +97,7 @@
     </div>
     <div class="stretch">
       <div class="title">
-        Python Resources
+        Getting Started
       </div>
     </div>
 
@@ -198,9 +198,48 @@
 
 
 
-<a  title="Changelog" href="/c4ddev/changelog/">
+<a class="current" title="Getting Started" href="/c4ddev/getting-started/">
 	
-	Changelog
+	Getting Started
+</a>
+
+
+<ul id="scrollspy">
+</ul>
+
+
+  
+</li>
+
+
+
+<li>
+  
+    
+
+
+
+<a  title="Python &amp; C&#43;&#43; Resources" href="/c4ddev/resources/">
+	
+	Python &amp; C&#43;&#43; Resources
+</a>
+
+
+
+  
+</li>
+
+
+
+<li>
+  
+    
+
+
+
+<a  title="Cinema 4D Plugins" href="/c4ddev/plugins/">
+	
+	Cinema 4D Plugins
 </a>
 
 
@@ -219,6 +258,60 @@
 <a  title="Scripting" href="/c4ddev/scripting/">
 	
 	Scripting
+</a>
+
+
+
+  
+</li>
+
+
+
+<li>
+  
+    
+
+
+
+<a  title="C4DTools" href="/c4ddev/c4dtools/">
+	
+	C4DTools
+</a>
+
+
+
+  
+</li>
+
+
+
+<li>
+  
+    
+
+
+
+<a  title="Py4D Imports: How-To" href="/c4ddev/py4d-imports-howto/">
+	
+	Py4D Imports: How-To
+</a>
+
+
+
+  
+</li>
+
+
+
+<li>
+  
+    
+
+
+
+<a  title="Py4D API Extensions" href="/c4ddev/apiext/">
+	
+	Py4D API Extensions
 </a>
 
 
@@ -270,102 +363,9 @@
 
 
 
-<a  title="Plugins" href="/c4ddev/plugins/">
+<a  title="Changelog" href="/c4ddev/changelog/">
 	
-	Plugins
-</a>
-
-
-
-  
-</li>
-
-
-
-<li>
-  
-    
-
-
-
-<a  title="Py4D Imports: How-To" href="/c4ddev/py4d-imports-howto/">
-	
-	Py4D Imports: How-To
-</a>
-
-
-
-  
-</li>
-
-
-
-<li>
-  
-    
-
-
-
-<a class="current" title="Python Resources" href="/c4ddev/python/">
-	
-	Python Resources
-</a>
-
-
-<ul id="scrollspy">
-</ul>
-
-
-  
-</li>
-
-
-
-<li>
-  
-    
-
-
-
-<a  title="C&#43;&#43; Resources" href="/c4ddev/c&#43;&#43;/">
-	
-	C&#43;&#43; Resources
-</a>
-
-
-
-  
-</li>
-
-
-
-<li>
-  
-    
-
-
-
-<a  title="C4DTools" href="/c4ddev/c4dtools/">
-	
-	C4DTools
-</a>
-
-
-
-  
-</li>
-
-
-
-<li>
-  
-    
-
-
-
-<a  title="Py4D API Extensions" href="/c4ddev/apiext/">
-	
-	Py4D API Extensions
+	Changelog
 </a>
 
 
@@ -410,27 +410,81 @@
 
 	<article class="article">
 		<div class="wrapper">
-			<h1>Python Resources </h1>
+			<h1>Getting Started </h1>
 
 			
 
-<p>This page links to useful Python resources.</p>
+<h2 id="installing-c4ddev">Installing C4DDev</h2>
 
-<h2 id="snippets">Snippets</h2>
+<p>There are multiple components of C4DDev can be installed separately. To
+install the Cinema 4D plugins, you should go to the <a href="https://github.com/NiklasRosenstein/c4ddev/releases">GitHub Releases</a> page
+and download the appropriate release for your Cinema 4D version and platform.
+This download will contain the full C4DDev Python and prebuilt binaries of
+the C++ components.</p>
 
-<ul>
-<li><a href="https://gist.github.com/NiklasRosenstein/632e39a9b4dda391fe54">TreeViewCustomGui Example</a></li>
-<li><a href="https://gist.github.com/NiklasRosenstein/fa9c9f72fa819dc001e4"><code>copy_preset_texture()</code></a></li>
-</ul>
+<p>You install the C4DDev plugin the same as you would do with any other plugin.
+Simply extract the archive into the Cinema 4D plugins directory. For
+development, I generally recommend working in the Cinema 4D&rsquo;s application
+plugin directory, <strong>not</strong> in the user preferences plugin directory.</p>
 
-<h2 id="scripts">Scripts</h2>
+<pre><code>Cinema 4D R18/
+  plugins/
+    c4ddev/
+      ...
+</code></pre>
 
-<ul>
-<li><a href="https://gist.github.com/NiklasRosenstein/a7a406269276d2e0fccc">Cinema 4D Plugin Skeleton</a>
-&ndash; Skeleton to kick off Cinema 4D Python plugins from.</li>
-<li><a href="https://gist.github.com/NiklasRosenstein/14fe4a9162e90ff90151">Set as Startup Scene</a>
-&ndash;  Script to set the current scene as the startup scene.</li>
-</ul>
+<h2 id="installing-c4ddev-cli">Installing C4DDev CLI</h2>
+
+<p>You need <a href="https://python.org/">Python 2 or 3</a> installed on your system and the <a href="https://pypi.python.org/pypi/pip">Pip</a>
+package manager. If you don&rsquo;t have Pip installed in your Python installation,
+download <a href="https://bootstrap.pypa.io/get-pip.py">get-pip.py</a> and run it. Then install <a href="https://github.com/nodepy/nodepy">Node.py</a>. If you are own macOS,
+you might need to prepend the work <code>sudo</code> before the command.</p>
+
+<pre><code>$ pip install node.py
+</code></pre>
+
+<p>After this step is complete, you can install the C4DDev Command-line tools
+by running</p>
+
+<pre><code>$ ppym install --global c4ddev
+</code></pre>
+
+<p>Depending on your System and installation of Python, the Command-line Tools
+will have been installed to either <code>~/.local/bin</code> or somewhere in
+<code>~/AppData/Local/Programs/Python</code>. You should make sure that this path is
+in your <code>PATH</code> environment variable. Now run the following and see if it
+works.</p>
+
+<pre><code>$ c4ddev
+Usage: c4ddev [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  build-loader      Generate a Cinema 4D Python plugin that uses...
+  get-pip           Installs Pip into the Cinema 4D Python...
+  pip               Invokes Pip in the current Cinema 4D Python...
+  pypkg             Reads a JSON configuration file, by default...
+  rpkg              Converts a resource package file to...
+  run               Starts C4D.
+  source-protector  Protect .pyp files (requires APEX).
+  symbols           Extracts resource symbols.
+</code></pre>
+
+<h2 id="beginner-s-guide-python">Beginner&rsquo;s Guide: Python</h2>
+
+<div class="admonition note">
+<p class="admonition-title">Todo</p>
+<p></p>
+</div>
+
+<h2 id="beginner-s-guide-c">Beginner&rsquo;s Guide: C++</h2>
+
+<div class="admonition note">
+<p class="admonition-title">Todo</p>
+<p></p>
+</div>
 
 
 			<aside class="copyright" role="note">
@@ -449,7 +503,7 @@
 <nav class="pagination" aria-label="Footer">
   <div class="previous">
   
-      <a href="https://niklasrosenstein.github.io/c4ddev/py4d-imports-howto/" title="Py4D Imports: How-To">
+      <a href="https://niklasrosenstein.github.io/c4ddev/cli/" title="Command-line Tools">
         <span class="direction">
           Previous
         </span>
@@ -459,7 +513,7 @@
           </div>
           <div class="stretch">
             <div class="title">
-              Py4D Imports: How-To
+              Command-line Tools
             </div>
           </div>
         </div>
@@ -469,14 +523,14 @@
 
   <div class="next">
   
-      <a href="https://niklasrosenstein.github.io/c4ddev/resource-packages/" title="Resource Packages">
+      <a href="https://niklasrosenstein.github.io/c4ddev/plugins/" title="Plugins">
         <span class="direction">
           Next
         </span>
         <div class="page">
           <div class="stretch">
             <div class="title">
-              Resource Packages
+              Plugins
             </div>
           </div>
           <div class="button button-next" role="button" aria-label="Next">

@@ -2,10 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://niklasrosenstein.github.io/c4ddev/c&#43;&#43;/</loc>
-  </url>
-  
-  <url>
     <loc>https://niklasrosenstein.github.io/c4ddev/</loc>
     <priority>0</priority>
   </url>
@@ -32,6 +28,10 @@
   </url>
   
   <url>
+    <loc>https://niklasrosenstein.github.io/c4ddev/getting-started/</loc>
+  </url>
+  
+  <url>
     <loc>https://niklasrosenstein.github.io/c4ddev/plugins/</loc>
   </url>
   
@@ -44,7 +44,7 @@
   </url>
   
   <url>
-    <loc>https://niklasrosenstein.github.io/c4ddev/python/</loc>
+    <loc>https://niklasrosenstein.github.io/c4ddev/resources/</loc>
   </url>
   
   <url>
