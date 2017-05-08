@@ -48,28 +48,28 @@ googleAnalytics = "UA-72538751-5"
 	weight = 10
 
 [[menu.main]]
-	name   = "Changelog"
-	url    = "changelog/"
+	name   = "Getting Started"
+	url    = "getting-started/"
 	weight = 20
+
+[[menu.main]]
+	name   = "Python & C++ Resources"
+	url    = "resources/"
+	weight = 30
+
+[[menu.main]]
+	name   = "Cinema 4D Plugins"
+	url    = "plugins/"
+	weight = 40
 
 [[menu.main]]
 	name   = "Scripting"
 	url    = "scripting/"
-	weight = 30
-
-[[menu.main]]
-	name   = "Command-line Tools"
-	url    = "cli/"
-	weight = 40
-
-[[menu.main]]
-	name   = "Resource Packages"
-	url    = "resource-packages/"
 	weight = 50
 
 [[menu.main]]
-	name   = "Plugins"
-	url    = "plugins/"
+	name   = "C4DTools"
+	url    = "c4dtools/"
 	weight = 60
 
 [[menu.main]]
@@ -78,24 +78,24 @@ googleAnalytics = "UA-72538751-5"
 	weight = 70
 
 [[menu.main]]
-	name   = "Python Resources"
-	url    = "python/"
+	name   = "Py4D API Extensions"
+	url    = "apiext/"
 	weight = 80
 
 [[menu.main]]
-	name   = "C++ Resources"
-	url    = "c++/"
+	name   = "Command-line Tools"
+	url    = "cli/"
 	weight = 90
 
 [[menu.main]]
-	name   = "Py4D API Extensions"
-	url    = "apiext/"
+	name   = "Resource Packages"
+	url    = "resource-packages/"
 	weight = 100
 
 [[menu.main]]
-	name   = "C4DTools"
-	url    = "c4dtools/"
-	weight = 100
+	name   = "Changelog"
+	url    = "changelog/"
+	weight = 200
 
 [blackfriday]
 	smartypants	= true
