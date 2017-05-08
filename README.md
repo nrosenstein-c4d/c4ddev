@@ -1,3 +1,5 @@
+<img src="logo.png" align="right">
+
 # C4DDev
 
 C4DDev is a project that provides powerful tools and knowledge to Cinema 4D
