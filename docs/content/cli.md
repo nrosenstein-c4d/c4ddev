@@ -7,7 +7,7 @@ title = "Command-line Tools"
 To install the command-line tools, you need [Node.Py][].
 
     $ pip install node.py
-    $ ppym install --global c4ddev
+    $ nodepy-pm install --global c4ddev
 
 *(Note: You can also install the command-line tools locally for your project
 by omitting the `--global` option and adding `nodepy_modules/.bin` to your

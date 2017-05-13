@@ -6,9 +6,9 @@ title = "C4DTools"
 
 The **C4DTools** is a Python library that can be used by other plugins that
 use the [Node.Py runtime]. To use C4DTools from a Python plugin, you have to
-install C4DDev locally with PPYM.
+install C4DDev locally with **nodepy-pm**.
 
-    $ ppym instal c4ddev --save
+    $ nodepy-pm instal c4ddev --save
     $ ls nodepy_modules/
     c4ddev
 

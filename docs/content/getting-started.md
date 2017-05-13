@@ -35,7 +35,7 @@ you might need to prepend the work `sudo` before the command.
 After this step is complete, you can install the C4DDev Command-line tools
 by running
 
-    $ ppym install --global c4ddev
+    $ nodepy-pm install --global c4ddev
 
 Depending on your System and installation of Python, the Command-line Tools
 will have been installed to either `~/.local/bin` or somewhere in

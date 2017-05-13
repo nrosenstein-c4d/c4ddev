@@ -35,13 +35,12 @@ command.
 
 The generated `loader.pyp` contains the [Node.Py] runtime and its dependencies
 and will load `myentrypoint.py` when the plugin is loaded. This file will then
-have full access to the Node.Py runtime and can make use of the [PPYM] package
-manager.
+have full access to the Node.Py runtime and can make use of the **nodepy-pm**
+package manager.
 
   [Node.Py]: https://github.com/nodepy/nodepy
-  [PPYM]: https://ppym.org
 
-    $ ppym pip-install numpy
+    $ nodepy-pm install py/numpy
     $ tree
     | loader.pyp
     | myentrypoint.py

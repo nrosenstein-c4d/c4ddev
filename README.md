@@ -44,14 +44,13 @@ with localimport(doc):
 To install the command-line tools, you need [Node.Py][].
 
     $ pip install node.py
-    $ ppym install --global c4ddev
+    $ nodepy-pm install --global @NiklasRosenstein/c4ddev
 
 *(Note: You can also install the command-line tools locally for your project
 by omitting the `--global` option and adding `nodepy_modules/.bin` to your
 `PATH`)*
 
   [Node.Py]: https://github.com/nodepy/nodepy
-  [PPYM]: https://ppym.org/
 
 To install the Cinema 4D plugin, download the [latest release][releases]
 and unpack it into your Cinema 4D plugins folder.
@@ -59,6 +58,7 @@ and unpack it into your Cinema 4D plugins folder.
   [releases]: https://github.com/NiklasRosenstein/c4ddev/releases
 
 ## License
+
 ```
 The MIT License (MIT)
 
