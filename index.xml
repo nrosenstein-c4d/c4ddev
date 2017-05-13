@@ -28,8 +28,8 @@ License The MIT License (MIT) Copyright (c) 2014 Niklas Rosenstein Permission is
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://niklasrosenstein.github.io/c4ddev/c4dtools/</guid>
-      <description>The C4DTools is a Python library that can be used by other plugins that use the Node.Py runtime. To use C4DTools from a Python plugin, you have to install C4DDev locally with PPYM.
-$ ppym instal c4ddev --save $ ls nodepy_modules/ c4ddev  Then you can require the desired components of C4DTools in your plugin.
+      <description>The C4DTools is a Python library that can be used by other plugins that use the Node.Py runtime. To use C4DTools from a Python plugin, you have to install C4DDev locally with nodepy-pm.
+$ nodepy-pm instal c4ddev --save $ ls nodepy_modules/ c4ddev  Then you can require the desired components of C4DTools in your plugin.
 aabb = require(&#39;c4ddev/lib/c4dtools/misc/aabb&#39;) gui = require(&#39;c4ddev/lib/c4dtools/gui&#39;) c4dmath = require(&#39;c4ddev/lib/c4dtools/math&#39;)  Note that from the C4D Script Manager, Python Objects, Tags and Nodes, the path to require the library components is different:</description>
     </item>
     
@@ -49,7 +49,7 @@ aabb = require(&#39;c4ddev/lib/c4dtools/misc/aabb&#39;) gui = require(&#39;c4dde
       
       <guid>https://niklasrosenstein.github.io/c4ddev/cli/</guid>
       <description>Installation To install the command-line tools, you need Node.Py.
-$ pip install node.py $ ppym install --global c4ddev  (Note: You can also install the command-line tools locally for your project by omitting the --global option and adding nodepy_modules/.bin to your PATH)
+$ pip install node.py $ nodepy-pm install --global c4ddev  (Note: You can also install the command-line tools locally for your project by omitting the --global option and adding nodepy_modules/.bin to your PATH)
 c4ddev Usage: c4ddev [OPTIONS] COMMAND [ARGS]... Options: --help Show this message and exit. Commands: build-loader Generate a Cinema 4D Python plugin that uses... get-pip Installs Pip into the Cinema 4D Python.</description>
     </item>
     

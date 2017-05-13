@@ -138,7 +138,7 @@
         </div>
       
       <div class="name">
-        <strong>C4DDev <span class="version">0.1.4</span></strong>
+        <strong>C4DDev <span class="version">0.1.5</span></strong>
         
           <br>
           NiklasRosenstein/c4ddev
@@ -448,10 +448,10 @@ command.</p>
 
 <p>The generated <code>loader.pyp</code> contains the <a href="https://github.com/nodepy/nodepy">Node.Py</a> runtime and its dependencies
 and will load <code>myentrypoint.py</code> when the plugin is loaded. This file will then
-have full access to the Node.Py runtime and can make use of the <a href="https://ppym.org">PPYM</a> package
-manager.</p>
+have full access to the Node.Py runtime and can make use of the <strong>nodepy-pm</strong>
+package manager.</p>
 
-<pre><code>$ ppym pip-install numpy
+<pre><code>$ nodepy-pm install py/numpy
 $ tree
 | loader.pyp
 | myentrypoint.py
