@@ -1,8 +1,10 @@
 {
-  "name": "c4ddev",
+  "name": "@NiklasRosenstein/c4ddev",
   "version": "0.1.4",
   "author": "Niklas Rosenstein <rosensteinniklas@gmail.com>",
   "license": "MIT",
+  "description": "swiss army knife for Cinema 4D plugin development",
+  "repository": "https://github.com/NiklasRosenstein/c4ddev/",
   "scripts": {
     "build-loader": "cli build-loader -c -o c4ddev-loader.pyp"
   },

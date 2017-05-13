@@ -1,3 +1,0 @@
-versionPatterns:
-  "package.json": "  \"version\": \"$VERSION\""
-  "docs/config.toml": "	version = \"$VERSION\""
