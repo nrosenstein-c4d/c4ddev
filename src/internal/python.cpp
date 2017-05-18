@@ -262,7 +262,7 @@ PyObject* py_am_RegisterMode(PyObject* self, PyObject* args) {
 PyObject* py_am_SetMode(PyObject* self, PyObject* args) {
   int mode = 0;
   int open = 0;
-  if (!PyArg_ParseTuple(args, "bb", &mode, &open)) return nullptr;
+  if (!PyArg_ParseTuple(args, "ii", &mode, &open)) return nullptr;
   ActiveObjectManager_SetMode((ACTIVEOBJECTMODE) mode, Bool(open));
   Py_INCREF(Py_None);
   return Py_None;
