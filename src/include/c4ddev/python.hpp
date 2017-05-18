@@ -52,6 +52,9 @@ namespace c4ddev {
   /// Retrieve the GeUserArea pointer from a PyObject.
   GeUserArea* PyGeUserArea_Get(PyObject* obj);
 
+  /// Retrieve the GeDialog pointer from a PyObject.
+  GeDialog* PyGeDialog_Get(PyObject* obj);
+
   /// Retrieve a BaseContainer pointer from a PyObject.
   Bool PyBaseContainer_Get(PyObject* obj, BaseContainer* dest);
 

@@ -65,21 +65,6 @@ Pop an element from the elements added to the FileSelect Hook queue with
 Returns the number of elemenets in the queue added to the FileSelect Hook
 with `fileselect_put()`.
 
-### `c4ddev.handlemousedrag(area, msg, type, data, flags)`
-
-This function calls `GeUserArea::HandleMouseDrag()` on the *area* object,
-which is missing in the Py4D API. Currently supported values for *type*
-are:
-
-- `DRAGTYPE_FILES` (str)
-- `DRAGTYPE_FILENAME_IMAGE` (str)
-- `DRAGTYPE_FILENAME_SCENE` (str)
-- `DRAGTYPE_FILENAME_OTHER` (str)
-- `DRAGTYPE_ATOMARRAY` (list of c4d.GeListNode)
-
-The type of *data* is specified in the parentheses above. *msg* must be
-a `c4d.BaseContainer`, ideally the one passed from `GeUserArea.InputEvent()`.
-
 ### `c4ddev.DocumentInfoData(pycobject) -> dict`
 
 Pass the `PyCObject` received on `MSG_DOCUMENTINFO` to this function to get a
@@ -119,6 +104,50 @@ def PluginMessage(msg, data):
     print data
   return True
 ```
+
+---
+
+### `c4ddev.gui.HandleMouseDrag(area, msg, type, data, flags)`
+
+This function calls `GeUserArea::HandleMouseDrag()` on the *area* object,
+which is missing in the Py4D API. Currently supported values for *type*
+are:
+
+- `DRAGTYPE_FILES` (str)
+- `DRAGTYPE_FILENAME_IMAGE` (str)
+- `DRAGTYPE_FILENAME_SCENE` (str)
+- `DRAGTYPE_FILENAME_OTHER` (str)
+- `DRAGTYPE_ATOMARRAY` (list of c4d.GeListNode)
+
+The type of *data* is specified in the parentheses above. *msg* must be
+a `c4d.BaseContainer`, ideally the one passed from `GeUserArea.InputEvent()`.
+
+---
+
+### `c4ddev.am.RegisterMode(id, name, callback)`
+
+Registers a new mode in the Attribute Manager. The *callback* parameter
+is currently not used. Raises a `RuntimeError` when the registration failed.
+
+### `c4ddev.am.SetMode(id, open)`
+
+Sets the current attribute manager mode. Optionally opens the attribute
+manager window.
+
+### `c4ddev.am.SetObject(id, op, flags, activepage)`
+
+Sets the object *op* as the active object in the attribute manager specified
+by *id*. The *activepage* parameter is currently unused, but must be `None`
+or a `c4d.DescID` object.
+
+### `c4ddev.am.Open()`
+
+Opens the attribute manager window.
+
+### `c4ddev.am.EditObjectModal(op, title)`
+
+Opens a modal attribute manager to edit the object *op*. The window title will
+be set to *title*. Returns `True` on success, `False` on failure.
 
 ## Command-line
 

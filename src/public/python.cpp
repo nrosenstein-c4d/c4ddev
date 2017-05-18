@@ -90,6 +90,26 @@ GeUserArea* c4ddev::PyGeUserArea_Get(PyObject* obj) {
 }
 
 
+GeDialog* c4ddev::PyGeDialog_Get(PyObject* obj) {
+  struct CPyGeDialogTemplate : public PyObject {
+      GeDialog* _dlg;
+      Bool _owner;
+      PyObject* _weakreflist;
+  };
+
+  PyObject* c4d_gui = PyImport_ImportModule("c4d.gui");
+  if (!c4d_gui) return nullptr;
+  PyObject* dlg_type = PyObject_GetAttrString(c4d_gui, "GeDialog");
+  if (!dlg_type) return nullptr;
+  if (!PyObject_IsInstance(obj, dlg_type)) {
+    PyErr_SetString(PyExc_TypeError, "expected GeDialog object");
+    return nullptr;
+  }
+
+  return static_cast<CPyGeDialogTemplate*>(obj)->_dlg;
+}
+
+
 Bool c4ddev::PyBaseContainer_Get(PyObject* obj, BaseContainer* bc) {
   static PythonLibrary _lib;
   if (!bc) {

@@ -6,6 +6,7 @@
 
 #include <c4d.h>
 #include <lib_py.h>
+#include <lib_activeobjectmanager.h>
 #include <c4ddev/python.hpp>
 #include <c4ddev/fileselectqueue.hpp>
 
@@ -15,78 +16,122 @@ using c4ddev::PyString_FromString;
 namespace FileSelectQueue = c4ddev::FileSelectQueue;
 
 /// A small helper to define a Python method.
-#define METHODDEF(name, argstype) {#name, py_##name, argstype, name##_docstring}
+#define METHODDEF(prefix, name, argstype) {#name, py_##prefix##name, argstype, prefix##name##_docstring}
 
-/// Docstrings for the module.
-static char module_docstring[] =
-  "Cinema 4D C4DDev API extensions. https://github.com/NiklasRosenstein/c4ddev";
+//
+static PyObject* py_cast_node(PyObject* self, PyObject* args);
 static char cast_node_docstring[] =
   "cast_node(pycobject) -> c4d.GeListNode\n\n"
   "Convert a PyCObject pointing to a Cinema 4D C++ GeListNode to a Python\n"
   "GeListNode object. Note: Undefined behaviour if an invalid memory address\n"
   "or not-GeListNode is passed (likely to crash).";
+static PyObject* py_RenderNotificationData(PyObject* self, PyObject* args);
 static char RenderNotificationData_docstring[] =
   "RenderNotificationData(pycobject) -> dict";
+static PyObject* py_DocumentInfoData(PyObject* self, PyObject* args);
 static char DocumentInfoData_docstring[] =
   "DocumentInfoData(pycobject) -> dict";
+static PyObject* py_fileselect_put(PyObject* self, PyObject* args);
 static char fileselect_put_docstring[] =
   "fileselect_put(filename)\n\n"
   "Put a filename on the queue that will be retrieve automatically on\n"
   "the next call to Filename::FileSelect(). This allows you to work around\n"
   "file selection dialogs and even automate commands that usually require\n"
   "user interaction.";
+static PyObject* py_fileselect_pop(PyObject* self, PyObject* args);
 static char fileselect_pop_docstring[] =
   "fileselect_pop() -> str\n\n"
   "Pop a filename from the queue (the one that would also be retrieved\n"
   "by the next Filename::FileSelect() call) and return it.";
+static PyObject* py_fileselect_size(PyObject* self, PyObject* args);
 static char fileselect_size_docstring[] =
   "fileselect_size() -> int\n\n"
   "Returns the size of the FileSelect queue.";
-static char handlemousedrag_docstring[] =
-  "handlemousedrag(area, msg, type, data, flags) -> Bool\n\n"
-  "Calls GeUserArea::HandleMouseDrag().";
-
-/// Method forward declaration.
-static PyObject* py_cast_node(PyObject* self, PyObject* args);
-static PyObject* py_RenderNotificationData(PyObject* self, PyObject* args);
-static PyObject* py_DocumentInfoData(PyObject* self, PyObject* args);
-static PyObject* py_fileselect_put(PyObject* self, PyObject* args);
-static PyObject* py_fileselect_pop(PyObject* self, PyObject* args);
-static PyObject* py_fileselect_size(PyObject* self, PyObject* args);
-static PyObject* py_handlemousedrag(PyObject* self, PyObject* args);
-
-/// Method definition for the Python module.
-static PyMethodDef module_methods[] = {
-  METHODDEF(cast_node, METH_VARARGS),
-  METHODDEF(RenderNotificationData, METH_VARARGS),
-  METHODDEF(DocumentInfoData, METH_VARARGS),
-  METHODDEF(fileselect_put, METH_VARARGS),
-  METHODDEF(fileselect_pop, METH_VARARGS),
-  METHODDEF(fileselect_size, METH_VARARGS),
-  METHODDEF(handlemousedrag, METH_VARARGS),
+static PyMethodDef c4ddev_methods[] = {
+  METHODDEF(, cast_node, METH_VARARGS),
+  METHODDEF(, RenderNotificationData, METH_VARARGS),
+  METHODDEF(, DocumentInfoData, METH_VARARGS),
+  METHODDEF(, fileselect_put, METH_VARARGS),
+  METHODDEF(, fileselect_pop, METH_VARARGS),
+  METHODDEF(, fileselect_size, METH_VARARGS),
   {nullptr, nullptr, 0, nullptr},
 };
+static char c4ddev_docstring[] =
+  "Cinema 4D C4DDev API extensions. https://github.com/NiklasRosenstein/c4ddev";
+
+//
+static PyObject* py_am_RegisterMode(PyObject* self, PyObject* args);
+static char am_RegisterMode_docstring[] =
+  "RegisterMode(id, name, callback)\n\n"
+  "Register a new mode in the Attribute Manager. The callback parameter\n"
+  "is currently unused and for future extension.";
+
+static PyObject* py_am_SetMode(PyObject* self, PyObject* args);
+static char am_SetMode_docstring[] =
+  "SetMode(id, open)\n\n"
+  "Set the attribute manager mode.";
+
+static PyObject* py_am_SetObject(PyObject* self, PyObject* args);
+static char am_SetObject_docstring[] =
+  "SetObject(id, op, flags, activepage)\n\n"
+  "Sets the active object in the attribute manager for the specified\n"
+  "attribute manager ID. The #activepage parameter is currently unused.";
+
+static PyObject* py_am_Open(PyObject* self, PyObject* args);
+static char am_Open_docstring[] =
+  "Open()\n\n"
+  "Opens the attribute manager.";
+
+static PyObject* py_am_EditObjectModal(PyObject* self, PyObject* args);
+static char am_EditObjectModal_docstring[] =
+  "EditObjectModal(op, title) -> bool\n\n"
+  "Shows a modal attribute manager for the specified object.";
+static PyMethodDef c4ddev_am_methods[] = {
+  METHODDEF(am_, RegisterMode, METH_VARARGS),
+  METHODDEF(am_, SetMode, METH_VARARGS),
+  METHODDEF(am_, SetObject, METH_VARARGS),
+  METHODDEF(am_, Open, METH_VARARGS),
+  METHODDEF(am_, EditObjectModal, METH_VARARGS),
+  {nullptr, nullptr, 0, nullptr},
+};
+static char c4ddev_am_docstring[] =
+  "Wrappers for <lib_activeobjectmanager.h>";
+
+//
+static PyObject* py_gui_HandleMouseDrag(PyObject* self, PyObject* args);
+static char gui_HandleMouseDrag_docstring[] =
+  "handlemousedrag(area, msg, type, data, flags) -> Bool\n\n"
+  "Calls GeUserArea::HandleMouseDrag().";
+static PyMethodDef c4ddev_gui_methods[] = {
+  METHODDEF(gui_, HandleMouseDrag, METH_VARARGS),
+  {nullptr, nullptr, 0, nullptr},
+};
+static char c4ddev_gui_docstring[] =
+  "Wrappers for the Cinema 4D GUI layer.";
 
 
 Bool InitPython() {
   GePythonGIL gil;
 
-  PyAutoDecref<PyObject> c4d = PyImport_ImportModule("c4d");
-  if (!c4d) {
-    GePrint("[c4ddev / ERROR]: Could not import c4d module.");
-    return false;
-  }
-  PyObject* mod = Py_InitModule3("c4ddev", module_methods, module_docstring);
-  if (!mod) {
+  PyObject* c4ddev = Py_InitModule3("c4ddev", c4ddev_methods, c4ddev_docstring);
+  if (!c4ddev) {
     GePrint("[c4ddev / ERROR]: Could not create c4ddev module.");
     return false;
   }
-  PyObject_SetAttrString(c4d, "c4ddev", mod);
+
+  PyObject* am = Py_InitModule3("c4ddev.am", c4ddev_am_methods, c4ddev_am_docstring);
+  if (am) PyObject_SetAttrString(c4ddev, "am", am);
+  else GePrint("[c4ddev / ERROR]: Could not create c4ddev.am module.");
+
+  PyObject* gui = Py_InitModule3("c4ddev.gui", c4ddev_gui_methods, c4ddev_gui_docstring);
+  if (gui) PyObject_SetAttrString(c4ddev, "gui", am);
+  else GePrint("[c4ddev / ERROR]: Could not create c4ddev.gui module.");
+
   return true;
 }
 
 
-static PyObject* py_cast_node(PyObject* self, PyObject* args) {
+PyObject* py_cast_node(PyObject* self, PyObject* args) {
   GePythonGIL gil;
   PyObject* obj = nullptr;
   if (!PyArg_ParseTuple(args, "O", &obj)) return nullptr;
@@ -99,7 +144,7 @@ static PyObject* py_cast_node(PyObject* self, PyObject* args) {
 }
 
 
-static PyObject* py_RenderNotificationData(PyObject* self, PyObject* args) {
+PyObject* py_RenderNotificationData(PyObject* self, PyObject* args) {
   GePythonGIL gil;
   PyObject* obj = nullptr;
   if (!PyArg_ParseTuple(args, "O", &obj)) return nullptr;
@@ -130,7 +175,7 @@ static PyObject* py_RenderNotificationData(PyObject* self, PyObject* args) {
 }
 
 
-static PyObject* py_DocumentInfoData(PyObject* self, PyObject* args) {
+PyObject* py_DocumentInfoData(PyObject* self, PyObject* args) {
   GePythonGIL gil;
   PyObject* obj = nullptr;
   if (!PyArg_ParseTuple(args, "O", &obj)) return nullptr;
@@ -162,7 +207,7 @@ static PyObject* py_DocumentInfoData(PyObject* self, PyObject* args) {
 }
 
 
-static PyObject* py_fileselect_put(PyObject* self, PyObject* args) {
+PyObject* py_fileselect_put(PyObject* self, PyObject* args) {
   GePythonGIL gil;
   const char* str = nullptr;
   if (!PyArg_ParseTuple(args, "s", &str)) return nullptr;
@@ -175,7 +220,7 @@ static PyObject* py_fileselect_put(PyObject* self, PyObject* args) {
 }
 
 
-static PyObject* py_fileselect_pop(PyObject* self, PyObject* args) {
+PyObject* py_fileselect_pop(PyObject* self, PyObject* args) {
   GePythonGIL gil;
   if (!PyArg_ParseTuple(args, "")) return nullptr;
   if (FileSelectQueue::Size() <= 0) {
@@ -191,15 +236,76 @@ static PyObject* py_fileselect_pop(PyObject* self, PyObject* args) {
 }
 
 
-static PyObject* py_fileselect_size(PyObject* self, PyObject* args) {
+PyObject* py_fileselect_size(PyObject* self, PyObject* args) {
   GePythonGIL gil;
   if (!PyArg_ParseTuple(args, "")) return nullptr;
   return PyInt_FromLong(FileSelectQueue::Size());
 }
 
 
+PyObject* py_am_RegisterMode(PyObject* self, PyObject* args) {
+  int id = 0;
+  const char* text = nullptr;
+  PyObject* callback = nullptr;
+  if (!PyArg_ParseTuple(args, "isO", &id, &text, &callback)) return nullptr;
+  // TODO: Handle callback.
+  Bool res = ActiveObjectManager_RegisterMode((ACTIVEOBJECTMODE) id, String(text), nullptr);
+  if (!res) {
+    PyErr_SetString(PyExc_RuntimeError, "ActiveObjectManager_RegisterMode() returned false");
+    return nullptr;
+  }
+  Py_INCREF(Py_None);
+  return Py_None;
+}
 
-PyObject* py_handlemousedrag(PyObject* self, PyObject* args) {
+
+PyObject* py_am_SetMode(PyObject* self, PyObject* args) {
+  int mode = 0;
+  int open = 0;
+  if (!PyArg_ParseTuple(args, "bb", &mode, &open)) return nullptr;
+  ActiveObjectManager_SetMode((ACTIVEOBJECTMODE) mode, Bool(open));
+  Py_INCREF(Py_None);
+  return Py_None;
+}
+
+
+PyObject* py_am_SetObject(PyObject* self, PyObject* args) {
+  int mode = 0;
+  PyObject* pyop = nullptr;
+  int flags = 0;
+  PyObject* pydescid = nullptr;  // TODO
+  if (!PyArg_ParseTuple(args, "iOiO", &mode, &pyop, &flags, &pydescid)) return nullptr;
+
+  GeListNode* node = c4ddev::PyGetListNode_Get(pyop);
+  if (!node) return nullptr;
+
+  DescID activepage = {}; // TODO: Read DescID
+  ActiveObjectManager_SetObject((ACTIVEOBJECTMODE) mode, node, flags, activepage);
+  Py_INCREF(Py_None);
+  return Py_None;
+}
+
+
+PyObject* py_am_Open(PyObject* self, PyObject* args) {
+  if (!PyArg_ParseTuple(args, "")) return nullptr;
+  ActiveObjectManager_Open();
+  Py_INCREF(Py_None);
+  return Py_None;
+}
+
+
+PyObject* py_am_EditObjectModal(PyObject* self, PyObject* args) {
+  PyObject* pyop = nullptr;
+  const char* title = nullptr;
+  if (!PyArg_ParseTuple(args, "Os", &pyop, &title)) return nullptr;
+  GeListNode* node = c4ddev::PyGetListNode_Get(pyop);
+  if (!node) return nullptr;
+  Bool res = EditObjectModal(node, String(title));
+  return PyBool_FromLong(res);
+}
+
+
+PyObject* py_gui_HandleMouseDrag(PyObject* self, PyObject* args) {
   PyObject* py_area = nullptr;
   PyObject* py_msg = nullptr;
   int type = 0;
