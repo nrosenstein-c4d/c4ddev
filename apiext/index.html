@@ -477,23 +477,6 @@ print(c4d.storage.LoadDialog())
 <p>Returns the number of elemenets in the queue added to the FileSelect Hook
 with <code>fileselect_put()</code>.</p>
 
-<h3 id="c4ddev-handlemousedrag-area-msg-type-data-flags"><code>c4ddev.handlemousedrag(area, msg, type, data, flags)</code></h3>
-
-<p>This function calls <code>GeUserArea::HandleMouseDrag()</code> on the <em>area</em> object,
-which is missing in the Py4D API. Currently supported values for <em>type</em>
-are:</p>
-
-<ul>
-<li><code>DRAGTYPE_FILES</code> (str)</li>
-<li><code>DRAGTYPE_FILENAME_IMAGE</code> (str)</li>
-<li><code>DRAGTYPE_FILENAME_SCENE</code> (str)</li>
-<li><code>DRAGTYPE_FILENAME_OTHER</code> (str)</li>
-<li><code>DRAGTYPE_ATOMARRAY</code> (list of c4d.GeListNode)</li>
-</ul>
-
-<p>The type of <em>data</em> is specified in the parentheses above. <em>msg</em> must be
-a <code>c4d.BaseContainer</code>, ideally the one passed from <code>GeUserArea.InputEvent()</code>.</p>
-
 <h3 id="c4ddev-documentinfodata-pycobject-dict"><code>c4ddev.DocumentInfoData(pycobject) -&gt; dict</code></h3>
 
 <p>Pass the <code>PyCObject</code> received on <code>MSG_DOCUMENTINFO</code> to this function to get a
@@ -534,6 +517,52 @@ def PluginMessage(msg, data):
     print data
   return True
 </code></pre>
+
+<hr />
+
+<h3 id="c4ddev-gui-handlemousedrag-area-msg-type-data-flags"><code>c4ddev.gui.HandleMouseDrag(area, msg, type, data, flags)</code></h3>
+
+<p>This function calls <code>GeUserArea::HandleMouseDrag()</code> on the <em>area</em> object,
+which is missing in the Py4D API. Currently supported values for <em>type</em>
+are:</p>
+
+<ul>
+<li><code>DRAGTYPE_FILES</code> (str)</li>
+<li><code>DRAGTYPE_FILENAME_IMAGE</code> (str)</li>
+<li><code>DRAGTYPE_FILENAME_SCENE</code> (str)</li>
+<li><code>DRAGTYPE_FILENAME_OTHER</code> (str)</li>
+<li><code>DRAGTYPE_ATOMARRAY</code> (list of c4d.GeListNode)</li>
+</ul>
+
+<p>The type of <em>data</em> is specified in the parentheses above. <em>msg</em> must be
+a <code>c4d.BaseContainer</code>, ideally the one passed from <code>GeUserArea.InputEvent()</code>.</p>
+
+<hr />
+
+<h3 id="c4ddev-am-registermode-id-name-callback"><code>c4ddev.am.RegisterMode(id, name, callback)</code></h3>
+
+<p>Registers a new mode in the Attribute Manager. The <em>callback</em> parameter
+is currently not used. Raises a <code>RuntimeError</code> when the registration failed.</p>
+
+<h3 id="c4ddev-am-setmode-id-open"><code>c4ddev.am.SetMode(id, open)</code></h3>
+
+<p>Sets the current attribute manager mode. Optionally opens the attribute
+manager window.</p>
+
+<h3 id="c4ddev-am-setobject-id-op-flags-activepage"><code>c4ddev.am.SetObject(id, op, flags, activepage)</code></h3>
+
+<p>Sets the object <em>op</em> as the active object in the attribute manager specified
+by <em>id</em>. The <em>activepage</em> parameter is currently unused, but must be <code>None</code>
+or a <code>c4d.DescID</code> object.</p>
+
+<h3 id="c4ddev-am-open"><code>c4ddev.am.Open()</code></h3>
+
+<p>Opens the attribute manager window.</p>
+
+<h3 id="c4ddev-am-editobjectmodal-op-title"><code>c4ddev.am.EditObjectModal(op, title)</code></h3>
+
+<p>Opens a modal attribute manager to edit the object <em>op</em>. The window title will
+be set to <em>title</em>. Returns <code>True</code> on success, <code>False</code> on failure.</p>
 
 <h2 id="command-line">Command-line</h2>
 
