@@ -102,12 +102,22 @@ static PyObject* py_gui_HandleMouseDrag(PyObject* self, PyObject* args);
 static char gui_HandleMouseDrag_docstring[] =
   "handlemousedrag(area, msg, type, data, flags) -> Bool\n\n"
   "Calls GeUserArea::HandleMouseDrag().";
-static PyMethodDef c4ddev_gui_methods[] = {
-  METHODDEF(gui_, HandleMouseDrag, METH_VARARGS),
-  {nullptr, nullptr, 0, nullptr},
-};
 static char c4ddev_gui_docstring[] =
   "Wrappers for the Cinema 4D GUI layer.";
+static PyObject* py_gui_GetUserAreaHandle(PyObject* self, PyObject* args);
+static char gui_GetUserAreaHandle_docstring[] =
+  "GetUserAreaHandle(ua) -> PyCObject\n\n"
+  "Returns the C++ pointer address of the specified GeUserArea.";
+static PyObject* py_gui_GetDialogHandle(PyObject* self, PyObject* args);
+static char gui_GetDialogHandle_docstring[] =
+  "GetDialogHandle(dlg) -> PyCObject\n\n"
+  "Returns the C++ pointer address of the specified GeDialog.";
+static PyMethodDef c4ddev_gui_methods[] = {
+  METHODDEF(gui_, HandleMouseDrag, METH_VARARGS),
+  METHODDEF(gui_, GetUserAreaHandle, METH_VARARGS),
+  METHODDEF(gui_, GetDialogHandle, METH_VARARGS),
+  {nullptr, nullptr, 0, nullptr},
+};
 
 
 Bool InitPython() {
@@ -124,7 +134,7 @@ Bool InitPython() {
   else GePrint("[c4ddev / ERROR]: Could not create c4ddev.am module.");
 
   PyObject* gui = Py_InitModule3("c4ddev.gui", c4ddev_gui_methods, c4ddev_gui_docstring);
-  if (gui) PyObject_SetAttrString(c4ddev, "gui", am);
+  if (gui) PyObject_SetAttrString(c4ddev, "gui", gui);
   else GePrint("[c4ddev / ERROR]: Could not create c4ddev.gui module.");
 
   return true;
@@ -363,4 +373,22 @@ PyObject* py_gui_HandleMouseDrag(PyObject* self, PyObject* args) {
   PyObject* pyresult = result ? Py_True : Py_False;
   Py_INCREF(pyresult);
   return pyresult;
+}
+
+
+PyObject* py_gui_GetUserAreaHandle(PyObject* self, PyObject* args) {
+  PyObject* pyobj = nullptr;
+  if (!PyArg_ParseTuple(args, "O", &pyobj)) return nullptr;
+  GeUserArea* area = c4ddev::PyGeUserArea_Get(pyobj);
+  if (!area) return nullptr;
+  return PyCObject_FromVoidPtr(area, nullptr);
+}
+
+
+PyObject* py_gui_GetDialogHandle(PyObject* self, PyObject* args) {
+  PyObject* pyobj = nullptr;
+  if (!PyArg_ParseTuple(args, "O", &pyobj)) return nullptr;
+  GeDialog* dlg = c4ddev::PyGeDialog_Get(pyobj);
+  if (!dlg) return nullptr;
+  return PyCObject_FromVoidPtr(dlg, nullptr);
 }

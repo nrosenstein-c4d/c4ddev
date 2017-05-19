@@ -91,6 +91,7 @@ GeUserArea* c4ddev::PyGeUserArea_Get(PyObject* obj) {
 
 
 GeDialog* c4ddev::PyGeDialog_Get(PyObject* obj) {
+  // TODO: This strucutre definition is incorrect.
   struct CPyGeDialogTemplate : public PyObject {
       GeDialog* _dlg;
       Bool _owner;
