@@ -19,14 +19,17 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-if require.main != module:
-  raise RuntimeError('should not be require()d')
+from __future__ import print_function
+from six.moves import input
+from getpass import getpass
 
+import bs4
 import click
 import json
 import nodepy
 import os
 import re
+import requests
 import subprocess
 import sys
 import textwrap
@@ -284,8 +287,8 @@ def run(exe, args):
 
 
 @main.command('source-protector')
-@click.pass_context
 @click.argument('filenames', metavar='FILENAME [FILENAME [...]]', nargs=-1)
+@click.pass_context
 def source_protector(ctx, filenames):
   """
   Protect .pyp files (C++ extensions must installed).
@@ -300,4 +303,59 @@ def source_protector(ctx, filenames):
   return run(args)
 
 
-main()
+@main.command('get-pluginid')
+@click.argument('titles', nargs=-1)
+@click.option('-u', '--username')
+@click.option('-p', '--password')
+@click.pass_context
+def get_pluginid(ctx, titles, username, password):
+  """
+  Get one or more plugin IDs from the plugincafe. If the username and/or
+  password are not specified on the command-line, they will be queried
+  during execution.
+  """
+
+  if not titles:
+    print(ctx.get_help())
+    return
+  if not username:
+    username = input("PluginCafe Username: ").strip()
+    if not username: return
+  if not password:
+    password = getpass("PluginCafe Password: ")
+    if not password: return
+
+  session = requests.Session()
+  response = session.post(
+    url = 'http://www.plugincafe.com/forum/login_user.asp',
+    data = {'password': password, 'login': username, 'NS': 1})
+
+  def gettext(node):
+    return re.sub('\s+', ' ', ' '.join(node.find_all(text=True))).strip()
+
+  doc = bs4.BeautifulSoup(response.text, 'html.parser')
+  err = doc.find('table', class_='errorTable')
+  if err:
+    msg = err.find_all('td')[-1]
+    ctx.fail(gettext(msg))
+  if 'successful login' not in response.text.lower():
+    print(response.text)
+    ctx.fail('Login failed, unknown error occured. Response HTML above.')
+
+  for title in titles:
+    title = title.strip()
+    if len(title) < 3 or len(title) > 100:
+      ctx.fail('title must be at least 3 characters and at max 100 characters')
+    response = session.post(
+      url = 'http://www.plugincafe.com/forum/developer.asp',
+      data = {'pname': title, 'formaction': 'Get PluginID'}
+    )
+    match = re.search('your\s+plugin\s+number\s+for.*?is:\s*(\d+)', response.text, re.I)
+    if not match:
+      sys.stdout.buffer.write(response.text.encode('utf8'))
+      ctx.fail('Plugin ID for "{}" could not be retrieved. Response HTML above.'.format(title))
+    print('{}: {}'.format(title, match.group(1)))
+
+
+if require.main == module:
+  main()

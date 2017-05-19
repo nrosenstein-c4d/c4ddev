@@ -15,6 +15,7 @@
     "nodepy-standalone-builder": "~0.0.1"
   },
   "python-dependencies": {
+    "bs4": "",
     "click": ">=6.7",
     "nr": ">=1.4.3"
   },
