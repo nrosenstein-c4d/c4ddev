@@ -303,21 +303,24 @@ def source_protector(ctx, filenames):
   return run(args)
 
 
-@main.command('get-pluginid')
+@main.command()
 @click.argument('titles', nargs=-1)
 @click.option('-u', '--username')
 @click.option('-p', '--password')
+@click.option('-l', '--list', is_flag=True, help='List all registered plugin IDs.')
 @click.pass_context
-def get_pluginid(ctx, titles, username, password):
+def pluginid(ctx, titles, username, password, list):
   """
   Get one or more plugin IDs from the plugincafe. If the username and/or
   password are not specified on the command-line, they will be queried
   during execution.
   """
 
-  if not titles:
+  if not titles and not list:
     print(ctx.get_help())
     return
+  if list and titles:
+    ctx.fail('-l,--list can not be used with retrieving new plugin IDs.')
   if not username:
     username = input("PluginCafe Username: ").strip()
     if not username: return
@@ -326,13 +329,14 @@ def get_pluginid(ctx, titles, username, password):
     if not password: return
 
   session = requests.Session()
-  response = session.post(
-    url = 'http://www.plugincafe.com/forum/login_user.asp',
-    data = {'password': password, 'login': username, 'NS': 1})
 
   def gettext(node):
     return re.sub('\s+', ' ', ' '.join(node.find_all(text=True))).strip()
 
+  # Login.
+  response = session.post(
+    url = 'http://www.plugincafe.com/forum/login_user.asp',
+    data = {'password': password, 'login': username, 'NS': 1})
   doc = bs4.BeautifulSoup(response.text, 'html.parser')
   err = doc.find('table', class_='errorTable')
   if err:
@@ -342,6 +346,20 @@ def get_pluginid(ctx, titles, username, password):
     print(response.text)
     ctx.fail('Login failed, unknown error occured. Response HTML above.')
 
+  if list:
+    response = session.get('http://www.plugincafe.com/forum/developer.asp')
+    doc = bs4.BeautifulSoup(response.text, 'html.parser')
+    # Find the div that contains the Plugin ID table.
+    node = doc.find(text=re.compile('Plugin IDS Assigned To:'))
+    while node.name != 'div':
+      node = node.parent
+    # Print all plugin IDs there are.
+    for row in node.find_all('table')[2].find_all('tr'):
+      cells = row.find_all('td')
+      print(gettext(cells[0]), gettext(cells[1]))
+    return
+
+  # Retrieve new plugin IDs.
   for title in titles:
     title = title.strip()
     if len(title) < 3 or len(title) > 100:

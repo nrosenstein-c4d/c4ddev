@@ -58,25 +58,6 @@ nodepy = require.context.binding('nodepy')
 localimport = require.context.binding('localimport')
 ```
 
-## `c4ddev get-pluginid`
-
-    Usage: c4ddev get-pluginid [OPTIONS] [TITLES]...
-
-      Get one or more plugin IDs from the plugincafe. If the username and/or
-      password are not specified on the command-line, they will be queried
-      during execution.
-
-    Options:
-      -u, --username TEXT
-      -p, --password TEXT
-      --help               Show this message and exit.
-
-__Example__:
-
-    $ c4ddev get-pluginid -u nux95 MyPluginId
-    PluginCafe Password:
-    MyPluginId: 1039296
-
 ## `c4ddev get-pip`
 
     Usage: c4ddev get-pip [OPTIONS]
@@ -99,6 +80,29 @@ __Example__:
     Options:
       --c4d DIRECTORY
       --help           Show this message and exit.
+
+## `c4ddev pluginid`
+
+    Usage: c4ddev pluginid [OPTIONS] [TITLES]...
+
+      Get one or more plugin IDs from the plugincafe. If the username and/or
+      password are not specified on the command-line, they will be queried
+      during execution.
+
+    Options:
+      -u, --username TEXT
+      -p, --password TEXT
+      -l, --list           List all registered plugin IDs.
+      --help               Show this message and exit.
+
+__Example__:
+
+    $ c4ddev pluginid -u nux95 MyPluginId
+    PluginCafe Password:
+    MyPluginId: 1039296
+    $ c4ddev pluginid -u nux95 --list | wc
+    PluginCafe Password:
+        536    1180   15994
 
 ## `c4ddev pypkg`
 
