@@ -494,6 +494,31 @@ Options:
   --help           Show this message and exit.
 </code></pre>
 
+<h2 id="c4ddev-pluginid"><code>c4ddev pluginid</code></h2>
+
+<pre><code>Usage: c4ddev pluginid [OPTIONS] [TITLES]...
+
+  Get one or more plugin IDs from the plugincafe. If the username and/or
+  password are not specified on the command-line, they will be queried
+  during execution.
+
+Options:
+  -u, --username TEXT
+  -p, --password TEXT
+  -l, --list           List all registered plugin IDs.
+  --help               Show this message and exit.
+</code></pre>
+
+<p><strong>Example</strong>:</p>
+
+<pre><code>$ c4ddev pluginid -u nux95 MyPluginId
+PluginCafe Password:
+MyPluginId: 1039296
+$ c4ddev pluginid -u nux95 --list | wc
+PluginCafe Password:
+    536    1180   15994
+</code></pre>
+
 <h2 id="c4ddev-pypkg"><code>c4ddev pypkg</code></h2>
 
 <pre><code>Usage: c4ddev pypkg [OPTIONS] [CONFIG]
