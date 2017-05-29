@@ -12,7 +12,7 @@
     "c4ddev": "cli"
   },
   "dependencies": {
-    "nodepy-standalone-builder": "~0.0.1"
+    "@nodepy/standalone-builder": "~0.0.5"
   },
   "python-dependencies": {
     "bs4": "",

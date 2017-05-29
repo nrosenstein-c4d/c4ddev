@@ -171,16 +171,17 @@ def pypkg(config):
 
 
 @main.command("build-loader")
+@click.option('--blob/--no-blob', is_flag=True, default=True)
 @click.option('-e', '--entry-point', default='entrypoint', metavar='ENTRYPOINT')
 @click.option('-c', '--compress', is_flag=True)
 @click.option('-m', '--minify', is_flag=True)
 @click.option('-o', '--output', metavar='FILENAME')
-def build_loader(entry_point, compress, minify, output):
+def build_loader(blob, entry_point, compress, minify, output):
   """
   Generate a Cinema 4D Python plugin that uses Node.py to load an entrypoint.
   """
 
-  build_standalone = require('nodepy-standalone-builder').build
+  build_standalone = require('@nodepy/standalone-builder').build
 
   template = textwrap.dedent('''
   # Cinema 4D Python Plugin Loader
@@ -208,7 +209,7 @@ def build_loader(entry_point, compress, minify, output):
     version=version,
     nodepy_version=nodepy.__version__,
     nodepy_standalone_blob = build_standalone(
-        compress=compress, minify=minify, fullblob=True),
+        compress=compress, minify=minify, fullblob=True, blob=blob),
     entry_point=str(entry_point))
 
   if output:
