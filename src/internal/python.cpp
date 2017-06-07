@@ -20,9 +20,9 @@ namespace FileSelectQueue = c4ddev::FileSelectQueue;
 #define METHODDEF(prefix, name, argstype) {#name, py_##prefix##name, argstype, prefix##name##_docstring}
 
 //
-static PyObject* py_cast_node(PyObject* self, PyObject* args);
-static char cast_node_docstring[] =
-  "cast_node(pycobject) -> c4d.GeListNode\n\n"
+static PyObject* py_GeListNodeFromAddress(PyObject* self, PyObject* args);
+static char GeListNodeFromAddress_docstring[] =
+  "GeListNodeFromAddress(pycobject) -> c4d.GeListNode\n\n"
   "Convert a PyCObject pointing to a Cinema 4D C++ GeListNode to a Python\n"
   "GeListNode object. Note: Undefined behaviour if an invalid memory address\n"
   "or not-GeListNode is passed (likely to crash).";
@@ -32,29 +32,39 @@ static char RenderNotificationData_docstring[] =
 static PyObject* py_DocumentInfoData(PyObject* self, PyObject* args);
 static char DocumentInfoData_docstring[] =
   "DocumentInfoData(pycobject) -> dict";
-static PyObject* py_fileselect_put(PyObject* self, PyObject* args);
-static char fileselect_put_docstring[] =
-  "fileselect_put(filename)\n\n"
+static PyObject* py_FileSelectPut(PyObject* self, PyObject* args);
+static char FileSelectPut_docstring[] =
+  "FileSelectPut(filename)\n\n"
   "Put a filename on the queue that will be retrieve automatically on\n"
   "the next call to Filename::FileSelect(). This allows you to work around\n"
   "file selection dialogs and even automate commands that usually require\n"
   "user interaction.";
-static PyObject* py_fileselect_pop(PyObject* self, PyObject* args);
-static char fileselect_pop_docstring[] =
-  "fileselect_pop() -> str\n\n"
+static PyObject* py_FileSelectPop(PyObject* self, PyObject* args);
+static char FileSelectPop_docstring[] =
+  "FileSelectPop() -> str\n\n"
   "Pop a filename from the queue (the one that would also be retrieved\n"
   "by the next Filename::FileSelect() call) and return it.";
-static PyObject* py_fileselect_size(PyObject* self, PyObject* args);
-static char fileselect_size_docstring[] =
-  "fileselect_size() -> int\n\n"
+static PyObject* py_FileSelectQueueSize(PyObject* self, PyObject* args);
+static char FileSelectQueueSize_docstring[] =
+  "FileSelectQueueSize() -> int\n\n"
   "Returns the size of the FileSelect queue.";
+static PyObject* py_GetUserAreaHandle(PyObject* self, PyObject* args);
+static char GetUserAreaHandle_docstring[] =
+  "GetUserAreaHandle(ua) -> PyCObject\n\n"
+  "Returns the C++ pointer address of the specified GeUserArea.";
+static PyObject* py_GetClipMapHandle(PyObject* self, PyObject* args);
+static char GetClipMapHandle_docstring[] =
+  "GetClipMapHandle(dlg) -> PyCObject\n\n"
+  "Returns the C++ pointer address of the specified GeClipMap.";
 static PyMethodDef c4ddev_methods[] = {
-  METHODDEF(, cast_node, METH_VARARGS),
+  METHODDEF(, GeListNodeFromAddress, METH_VARARGS),
   METHODDEF(, RenderNotificationData, METH_VARARGS),
   METHODDEF(, DocumentInfoData, METH_VARARGS),
-  METHODDEF(, fileselect_put, METH_VARARGS),
-  METHODDEF(, fileselect_pop, METH_VARARGS),
-  METHODDEF(, fileselect_size, METH_VARARGS),
+  METHODDEF(, FileSelectPut, METH_VARARGS),
+  METHODDEF(, FileSelectPop, METH_VARARGS),
+  METHODDEF(, FileSelectQueueSize, METH_VARARGS),
+  METHODDEF(, GetUserAreaHandle, METH_VARARGS),
+  METHODDEF(, GetClipMapHandle, METH_VARARGS),
   {nullptr, nullptr, 0, nullptr},
 };
 static char c4ddev_docstring[] =
@@ -105,18 +115,8 @@ static char gui_HandleMouseDrag_docstring[] =
   "Calls GeUserArea::HandleMouseDrag().";
 static char c4ddev_gui_docstring[] =
   "Wrappers for the Cinema 4D GUI layer.";
-static PyObject* py_gui_GetUserAreaHandle(PyObject* self, PyObject* args);
-static char gui_GetUserAreaHandle_docstring[] =
-  "GetUserAreaHandle(ua) -> PyCObject\n\n"
-  "Returns the C++ pointer address of the specified GeUserArea.";
-static PyObject* py_gui_GetClipMapHandle(PyObject* self, PyObject* args);
-static char gui_GetClipMapHandle_docstring[] =
-  "GetClipMapHandle(dlg) -> PyCObject\n\n"
-  "Returns the C++ pointer address of the specified GeClipMap.";
 static PyMethodDef c4ddev_gui_methods[] = {
   METHODDEF(gui_, HandleMouseDrag, METH_VARARGS),
-  METHODDEF(gui_, GetUserAreaHandle, METH_VARARGS),
-  METHODDEF(gui_, GetClipMapHandle, METH_VARARGS),
   {nullptr, nullptr, 0, nullptr},
 };
 
@@ -142,7 +142,7 @@ Bool InitPython() {
 }
 
 
-PyObject* py_cast_node(PyObject* self, PyObject* args) {
+PyObject* py_GeListNodeFromAddress(PyObject* self, PyObject* args) {
   GePythonGIL gil;
   PyObject* obj = nullptr;
   if (!PyArg_ParseTuple(args, "O", &obj)) return nullptr;
@@ -218,7 +218,7 @@ PyObject* py_DocumentInfoData(PyObject* self, PyObject* args) {
 }
 
 
-PyObject* py_fileselect_put(PyObject* self, PyObject* args) {
+PyObject* py_FileSelectPut(PyObject* self, PyObject* args) {
   GePythonGIL gil;
   const char* str = nullptr;
   if (!PyArg_ParseTuple(args, "s", &str)) return nullptr;
@@ -231,7 +231,7 @@ PyObject* py_fileselect_put(PyObject* self, PyObject* args) {
 }
 
 
-PyObject* py_fileselect_pop(PyObject* self, PyObject* args) {
+PyObject* py_FileSelectPop(PyObject* self, PyObject* args) {
   GePythonGIL gil;
   if (!PyArg_ParseTuple(args, "")) return nullptr;
   if (FileSelectQueue::Size() <= 0) {
@@ -247,7 +247,7 @@ PyObject* py_fileselect_pop(PyObject* self, PyObject* args) {
 }
 
 
-PyObject* py_fileselect_size(PyObject* self, PyObject* args) {
+PyObject* py_FileSelectQueueSize(PyObject* self, PyObject* args) {
   GePythonGIL gil;
   if (!PyArg_ParseTuple(args, "")) return nullptr;
   return PyInt_FromLong(FileSelectQueue::Size());
@@ -377,7 +377,7 @@ PyObject* py_gui_HandleMouseDrag(PyObject* self, PyObject* args) {
 }
 
 
-PyObject* py_gui_GetUserAreaHandle(PyObject* self, PyObject* args) {
+PyObject* py_GetUserAreaHandle(PyObject* self, PyObject* args) {
   PyObject* pyobj = nullptr;
   if (!PyArg_ParseTuple(args, "O", &pyobj)) return nullptr;
   GeUserArea* area = c4ddev::PyGeUserArea_Get(pyobj);
@@ -386,7 +386,7 @@ PyObject* py_gui_GetUserAreaHandle(PyObject* self, PyObject* args) {
 }
 
 
-PyObject* py_gui_GetClipMapHandle(PyObject* self, PyObject* args) {
+PyObject* py_GetClipMapHandle(PyObject* self, PyObject* args) {
   PyObject* pyobj = nullptr;
   if (!PyArg_ParseTuple(args, "O", &pyobj)) return nullptr;
   GeClipMap* map = c4ddev::PyGeClipMap_Get(pyobj);

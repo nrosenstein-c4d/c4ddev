@@ -34,13 +34,13 @@ is executed before the C4DDev Python entrypoint.
 This is the Node.Py `require` object from the C4DDev `main.py` entry point
 which allows you to load components of the `c4ddev` and `c4dtools` libraries.
 
-### `c4ddev.cast_node(pycobject) -> c4d.GeListNode`
+### `c4ddev.GeListNodeFromAddress(pycobject) -> c4d.GeListNode`
 
 Given a `PyCObject` from which you know it is a Cinema 4D `GeListNode` instance,
 you can use this function to get a real Python object out of it. __Important__:
 This will result in undefined behaviour (likely a crash) if you pass a wrong PyCObject!
 
-### `c4ddev.fileselect_put(path)`
+### `c4ddev.FileSelectPut(path)`
 
 This extension allows you to prevent file selection dialogs from popping up
 and make them return a specific value. This is *very* useful if you want to
@@ -50,20 +50,20 @@ streamline Cinema 4D commands that usually do open a file selection dialog.
 import c4d
 import c4ddev
 
-c4ddev.fileselect_put('/Users/me/Desktop')
+c4ddev.FileSelectPut('/Users/me/Desktop')
 print(c4d.storage.LoadDialog())
 # Doesn't open a dialog and prints /Users/me/Desktop
 ```
 
-### `c4ddev.fileselect_pop()`
+### `c4ddev.FileSelectPop()`
 
 Pop an element from the elements added to the FileSelect Hook queue with
-`fileselect_put()`.
+`FileSelectPut()`.
 
-### `c4ddev.fileselect_size()`
+### `c4ddev.FileSelectQueueSize()`
 
 Returns the number of elemenets in the queue added to the FileSelect Hook
-with `fileselect_put()`.
+with `FileSelectPut()`.
 
 ### `c4ddev.DocumentInfoData(pycobject) -> dict`
 
@@ -76,6 +76,10 @@ behaviour (likely a crash) if you pass a wrong PyCObject!
 Pass the `PyCObject` received on `MSG_MULTI_RENDERNOTIFICATION` this this function
 to get a dictionary of the structures data. __Important__: This will result in
 undefined behaviour (likely a crash) if you pass a wrong PyCObject!
+
+### `c4ddev.GetUserAreaHandle() -> PyCObject`
+
+### `c4ddev.GetClipMapHandle() -> PyCObject`
 
 ## Plugin Messages
 

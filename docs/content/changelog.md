@@ -9,6 +9,10 @@ title = "Changelog"
 - add `c4ddev pluginid` command
 - fix `c4ddev build-loader` command and add `--blob,--no-blob` options
 - move `c4ddev.handlemousedrag()` to `c4ddev.gui.HandleMouseDrag()`
+- rename `c4ddev.fileselect_~()` to `c4ddev.FileSelect~()`
+- rename `c4ddev.cast_node()` to `c4ddev.GeListNodeFromAddress()`
+- add `c4ddev.GetUserAreaHandle()`
+- add `c4ddev.GetClipMapHandle()`
 - add `c4ddev.am` module
 
 ## v0.1.5
