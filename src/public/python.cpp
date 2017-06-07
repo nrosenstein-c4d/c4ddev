@@ -71,7 +71,7 @@ Bool c4ddev::PyString_AsString(PyObject* obj, String* dest) {
 
 
 GeUserArea* c4ddev::PyGeUserArea_Get(PyObject* obj) {
-  struct CPyGeUserAreaTemplate : public PyObject {
+  struct CPyGeUserArea : public PyObject {
       GeUserArea* _area;
       Bool _owner;
       PyObject* _weakreflist;
@@ -82,32 +82,30 @@ GeUserArea* c4ddev::PyGeUserArea_Get(PyObject* obj) {
   PyObject* ua_type = PyObject_GetAttrString(c4d_gui, "GeUserArea");
   if (!ua_type) return nullptr;
   if (!PyObject_IsInstance(obj, ua_type)) {
-    PyErr_SetString(PyExc_TypeError, "expected GeUserArea object");
+    PyErr_SetString(PyExc_TypeError, "expected c4d.gui.GeUserArea object");
     return nullptr;
   }
 
-  return static_cast<CPyGeUserAreaTemplate*>(obj)->_area;
+  return static_cast<CPyGeUserArea*>(obj)->_area;
 }
 
 
-GeDialog* c4ddev::PyGeDialog_Get(PyObject* obj) {
-  // TODO: This strucutre definition is incorrect.
-  struct CPyGeDialogTemplate : public PyObject {
-      GeDialog* _dlg;
-      Bool _owner;
-      PyObject* _weakreflist;
+GeClipMap* c4ddev::PyGeClipMap_Get(PyObject* obj) {
+  struct CPyGeClipMap : public PyObject {
+      GeClipMap* _map;
+      // Possibly other members we don't know about ...
   };
 
-  PyObject* c4d_gui = PyImport_ImportModule("c4d.gui");
-  if (!c4d_gui) return nullptr;
-  PyObject* dlg_type = PyObject_GetAttrString(c4d_gui, "GeDialog");
-  if (!dlg_type) return nullptr;
-  if (!PyObject_IsInstance(obj, dlg_type)) {
-    PyErr_SetString(PyExc_TypeError, "expected GeDialog object");
+  PyObject* c4d_bitmaps = PyImport_ImportModule("c4d.bitmaps");
+  if (!c4d_bitmaps) return nullptr;
+  PyObject* map_type = PyObject_GetAttrString(c4d_bitmaps, "GeClipMap");
+  if (!map_type) return nullptr;
+  if (!PyObject_IsInstance(obj, map_type)) {
+    PyErr_SetString(PyExc_TypeError, "expected c4d.bitmaps.GeClipMap object");
     return nullptr;
   }
 
-  return static_cast<CPyGeDialogTemplate*>(obj)->_dlg;
+  return static_cast<CPyGeClipMap*>(obj)->_map;
 }
 
 

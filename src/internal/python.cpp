@@ -6,6 +6,7 @@
 
 #include <c4d.h>
 #include <lib_py.h>
+#include <lib_clipmap.h>
 #include <lib_activeobjectmanager.h>
 #include <c4ddev/python.hpp>
 #include <c4ddev/fileselectqueue.hpp>
@@ -108,14 +109,14 @@ static PyObject* py_gui_GetUserAreaHandle(PyObject* self, PyObject* args);
 static char gui_GetUserAreaHandle_docstring[] =
   "GetUserAreaHandle(ua) -> PyCObject\n\n"
   "Returns the C++ pointer address of the specified GeUserArea.";
-static PyObject* py_gui_GetDialogHandle(PyObject* self, PyObject* args);
-static char gui_GetDialogHandle_docstring[] =
-  "GetDialogHandle(dlg) -> PyCObject\n\n"
-  "Returns the C++ pointer address of the specified GeDialog.";
+static PyObject* py_gui_GetClipMapHandle(PyObject* self, PyObject* args);
+static char gui_GetClipMapHandle_docstring[] =
+  "GetClipMapHandle(dlg) -> PyCObject\n\n"
+  "Returns the C++ pointer address of the specified GeClipMap.";
 static PyMethodDef c4ddev_gui_methods[] = {
   METHODDEF(gui_, HandleMouseDrag, METH_VARARGS),
   METHODDEF(gui_, GetUserAreaHandle, METH_VARARGS),
-  METHODDEF(gui_, GetDialogHandle, METH_VARARGS),
+  METHODDEF(gui_, GetClipMapHandle, METH_VARARGS),
   {nullptr, nullptr, 0, nullptr},
 };
 
@@ -385,10 +386,10 @@ PyObject* py_gui_GetUserAreaHandle(PyObject* self, PyObject* args) {
 }
 
 
-PyObject* py_gui_GetDialogHandle(PyObject* self, PyObject* args) {
+PyObject* py_gui_GetClipMapHandle(PyObject* self, PyObject* args) {
   PyObject* pyobj = nullptr;
   if (!PyArg_ParseTuple(args, "O", &pyobj)) return nullptr;
-  GeDialog* dlg = c4ddev::PyGeDialog_Get(pyobj);
-  if (!dlg) return nullptr;
-  return PyCObject_FromVoidPtr(dlg, nullptr);
+  GeClipMap* map = c4ddev::PyGeClipMap_Get(pyobj);
+  if (!map) return nullptr;
+  return PyCObject_FromVoidPtr(map, nullptr);
 }
