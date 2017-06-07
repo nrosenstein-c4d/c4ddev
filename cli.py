@@ -21,6 +21,7 @@
 
 from __future__ import print_function
 from six.moves import input
+from six.moves.configparser import SafeConfigParser
 from getpass import getpass
 
 import bs4
@@ -82,6 +83,21 @@ def get_c4d_python(c4d_dir):
   # TODO: Make sure that 'python' is the right executable name on Mac OS.
   binname = 'python.exe' if os.name == 'nt' else 'python'
   return os.path.join(c4d_dir, 'resource/modules/python', name, binname)
+
+
+cfg_filename = os.path.expanduser('~/.c4ddev.cfg')
+
+def load_cfg():
+  cfg = SafeConfigParser()
+  if os.path.isfile(cfg_filename):
+    cfg.read([cfg_filename])
+  return cfg
+
+
+def save_cfg(cfg):
+  with open(cfg_filename, 'w') as fp:
+    cfg.write(fp)
+  os.chmod(cfg_filename, int('600', 8))
 
 
 @click.group()
@@ -309,8 +325,9 @@ def source_protector(ctx, filenames):
 @click.option('-u', '--username')
 @click.option('-p', '--password')
 @click.option('-l', '--list', is_flag=True, help='List all registered plugin IDs.')
+@click.option('--save', is_flag=True, help='Save the username and password in ~/.c4ddev.cfg file.')
 @click.pass_context
-def pluginid(ctx, titles, username, password, list):
+def pluginid(ctx, titles, username, password, list, save):
   """
   Get one or more plugin IDs from the plugincafe. If the username and/or
   password are not specified on the command-line, they will be queried
@@ -322,12 +339,27 @@ def pluginid(ctx, titles, username, password, list):
     return
   if list and titles:
     ctx.fail('-l,--list can not be used with retrieving new plugin IDs.')
+
+  cfg = load_cfg()
   if not username:
-    username = input("PluginCafe Username: ").strip()
-    if not username: return
+    if cfg.has_option('plugincafe', 'username'):
+      username = cfg.get('plugincafe', 'username')
+    else:
+      username = input("PluginCafe Username: ").strip()
+      if not username: return
   if not password:
-    password = getpass("PluginCafe Password: ")
-    if not password: return
+    if cfg.has_option('plugincafe', 'password'):
+      password = cfg.get('plugincafe', 'password')
+    else:
+      password = getpass("PluginCafe Password: ")
+      if not password: return
+
+  if save:
+    if not cfg.has_section('plugincafe'):
+      cfg.add_section('plugincafe')
+    cfg.set('plugincafe', 'username', username)
+    cfg.set('plugincafe', 'password', password)
+    save_cfg(cfg)
 
   session = requests.Session()
 

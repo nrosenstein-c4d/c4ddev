@@ -4,7 +4,14 @@ title = "Changelog"
 
   [Node.py]: https://github.com/nodepy/nodepy
 
-## v0.1.5 (development)
+## v0.1.6 (development)
+
+- add `c4ddev pluginid` command
+- fix `c4ddev build-loader` command and add `--blob,--no-blob` options
+- move `c4ddev.handlemousedrag()` to `c4ddev.gui.HandleMouseDrag()`
+- add `c4ddev.am` module
+
+## v0.1.5
 
 - merge https://github.com/NiklasRosenstein/c4d-apex into C4DDev and
   rename everything from `c4d.apex` to `c4ddev`
