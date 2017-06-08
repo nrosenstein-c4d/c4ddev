@@ -425,14 +425,15 @@ PyObject* py_BlitClipMap(PyObject* self, PyObject* args) {
     }
   }
 
+  GeClipMap*  dstClipMap = nullptr;
   BaseBitmap* dst = nullptr;
   BaseBitmap* src = nullptr;
 
   // Retrieve the source and destination bitmaps.
   if (PyObject_IsInstance(pydst, c4ddev::Py4D_GeClipMap)) {
-    GeClipMap* dstmap = c4ddev::PyGeClipMap_Get(pydst);
-    if (!dstmap) return nullptr;
-    dst = dstmap->GetBitmap();
+    dstClipMap = c4ddev::PyGeClipMap_Get(pydst);
+    if (!dstClipMap) return nullptr;
+    dst = dstClipMap->GetBitmap();
   }
   else if (PyObject_IsInstance(pydst, c4ddev::Py4D_BaseBitmap)) {
     dst = c4ddev::PyBaseBitmap_Get(pydst);
@@ -462,7 +463,12 @@ PyObject* py_BlitClipMap(PyObject* self, PyObject* args) {
     return nullptr;
   }
 
-  c4ddev::BlitBitmap(dst, src, dx, dy, dw, dh, sx, sy, sw, sh, (c4ddev::BLIT_MODE) mode);
+  if (dstClipMap) {
+    c4ddev::BlitBitmap(dstClipMap, src, dx, dy, dw, dh, sx, sy, sw, sh, (c4ddev::BLIT_MODE) mode);
+  }
+  else {
+    c4ddev::BlitBitmap(dst, src, dx, dy, dw, dh, sx, sy, sw, sh, (c4ddev::BLIT_MODE) mode);
+  }
   Py_INCREF(Py_None);
   return Py_None;
 }
