@@ -8,6 +8,31 @@
 #include <c4ddev/python.hpp>
 
 
+PyObject* c4ddev::Py4D_BaseBitmap = nullptr;
+PyObject* c4ddev::Py4D_GeClipMap = nullptr;
+PyObject* c4ddev::Py4D_GeUserArea = nullptr;
+PyObject* c4ddev::Py4D_GeDialog = nullptr;
+PyObject* c4ddev::Py4D_GeListNode = nullptr;
+
+
+void c4ddev::PyTypesInit() {
+  PyObject* mod = PyImport_ImportModule("c4d");
+  if (mod) {
+    Py4D_GeListNode = PyObject_GetAttrString(mod, "GeListNode");
+  }
+  mod = PyImport_ImportModule("c4d.bitmaps");
+  if (mod) {
+    Py4D_BaseBitmap = PyObject_GetAttrString(mod, "BaseBitmap");
+    Py4D_GeClipMap = PyObject_GetAttrString(mod, "GeClipMap");
+  }
+  mod = PyImport_ImportModule("c4d.gui");
+  if (mod) {
+    Py4D_GeUserArea = PyObject_GetAttrString(mod, "GeUserArea");
+    Py4D_GeDialog = PyObject_GetAttrString(mod, "GeDialog");
+  }
+}
+
+
 PyObject* c4ddev::PyGeListNode_New(GeListNode* node, Bool owner)
 {
   PythonLibrary lib;
@@ -76,16 +101,10 @@ GeUserArea* c4ddev::PyGeUserArea_Get(PyObject* obj) {
       Bool _owner;
       PyObject* _weakreflist;
   };
-
-  PyObject* c4d_gui = PyImport_ImportModule("c4d.gui");
-  if (!c4d_gui) return nullptr;
-  PyObject* ua_type = PyObject_GetAttrString(c4d_gui, "GeUserArea");
-  if (!ua_type) return nullptr;
-  if (!PyObject_IsInstance(obj, ua_type)) {
+  if (!PyObject_IsInstance(obj, Py4D_GeUserArea)) {
     PyErr_SetString(PyExc_TypeError, "expected c4d.gui.GeUserArea object");
     return nullptr;
   }
-
   return static_cast<CPyGeUserArea*>(obj)->_area;
 }
 
@@ -95,17 +114,28 @@ GeClipMap* c4ddev::PyGeClipMap_Get(PyObject* obj) {
       GeClipMap* _map;
       // Possibly other members we don't know about ...
   };
-
-  PyObject* c4d_bitmaps = PyImport_ImportModule("c4d.bitmaps");
-  if (!c4d_bitmaps) return nullptr;
-  PyObject* map_type = PyObject_GetAttrString(c4d_bitmaps, "GeClipMap");
-  if (!map_type) return nullptr;
-  if (!PyObject_IsInstance(obj, map_type)) {
+  if (!PyObject_IsInstance(obj, Py4D_GeClipMap)) {
     PyErr_SetString(PyExc_TypeError, "expected c4d.bitmaps.GeClipMap object");
     return nullptr;
   }
-
   return static_cast<CPyGeClipMap*>(obj)->_map;
+}
+
+
+BaseBitmap* c4ddev::PyBaseBitmap_Get(PyObject* obj) {
+  PyErr_SetString(PyExc_RuntimeError, "PyBaseBitmap_Get() does not work yet.");
+  return nullptr;
+  #if 0
+  struct CPyBaseBitmap : public PyObject {
+    // FIXME: Correct structure def?
+      BaseBitmap* _bmp;
+  };
+  if (!PyObject_IsInstance(obj, Py4D_BaseBitmap)) {
+    PyErr_SetString(PyExc_TypeError, "expected c4d.bitmaps.BaseBitmap object");
+    return nullptr;
+  }
+  return static_cast<CPyBaseBitmap*>(obj)->_bmp;
+  #endif
 }
 
 

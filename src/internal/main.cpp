@@ -6,6 +6,7 @@
 #include <c4d.h>
 #include <lib_py.h>
 #include <c4ddev/c4ddev.hpp>
+#include <c4ddev/python.hpp>
 
 extern Bool InitPython();
 extern Bool RegisterMessageSceneHook();
@@ -41,6 +42,7 @@ void PluginEnd() {
 Bool PluginMessage(Int32 msg, void* p_data) {
   switch (msg) {
     case C4DPL_PYINITTYPES: {
+      c4ddev::PyTypesInit();
       InitPython();
       break;
     }

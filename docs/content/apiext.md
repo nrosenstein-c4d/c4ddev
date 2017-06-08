@@ -81,6 +81,42 @@ undefined behaviour (likely a crash) if you pass a wrong PyCObject!
 
 ### `c4ddev.GetClipMapHandle() -> PyCObject`
 
+### `c4ddev.BlitClipMap(dst, src, dx, dy, dw, dh, sx, sy, sw, sh, mode)`
+
+This function implements the missing functionality of the `GeClipMap` to copy
+another bitmap into another, with the ability to copy only parts and in a
+different scale and aspect ratio (like `GeUserArea.DrawBitmap()`).
+
+Parameters | Description
+-----------|------------
+__dst__ | The destination `GeClipMap`
+__src__ | The source `GeClipMap`
+__dx__ | The destination X coordinate.
+__dy__ | The destination Y coordinate.
+__dw__ | The destination width.
+__dh__ | The destination height.
+__sx__ | The destination X coordinate.
+__sy__ | The destination X coordinate.
+__sw__ | The destination X coordinate.
+__sh__ | The destination X coordinate.
+__mode__ | One of `c4ddev.BLIT_NN`, `BLIT_BILINEAR` or `BLIT_BICUBIC`
+
+{{< note title="Limitation" >}}
+  Currently this function can only accept two `GeClipMap` objects as we
+  haven't figured out how to retrieve the actual C pointer to a `BaseBitmap`
+  from a Python `c4d.bitmaps.BaseBitmap` object. You can convert a bitmap
+  to a `GeClipMap` using the following code:
+
+  ```
+  map = c4d.bitmaps.GeClipMap()
+  map.InitWithBitmap(bmp, bmp.GetInternalChannel())
+  ```
+
+  However, keep in mind that this process is relatively slow as it creates
+  a new copy of the image. It is thus recommended to do this operation only
+  once after a bitmap is loaded and keep it as a `GeClipMap`.
+{{< /note >}}
+
 ## Plugin Messages
 
 The C4DDev C++ component installs a SceneHook that takes special messages

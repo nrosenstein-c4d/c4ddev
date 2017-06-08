@@ -19,6 +19,17 @@
 
 namespace c4ddev {
 
+  /// Types of the C4D API. Need to be initialized with #PyTypesInit()
+  /// from inside the C4DPL_PYINITTYPES plugin message.
+  extern PyObject* Py4D_BaseBitmap;
+  extern PyObject* Py4D_GeClipMap;
+  extern PyObject* Py4D_GeUserArea;
+  extern PyObject* Py4D_GeDialog;
+  extern PyObject* Py4D_GeListNode;
+
+  /// Initialize the Py4D types.
+  void PyTypesInit();
+
   /// Utility class to automatically decrement the reference count of
   /// an object when the wrapper is destroyed.
   template <typename T>
@@ -54,6 +65,9 @@ namespace c4ddev {
 
   /// Retrieve the GeClipMap pointer from a PyObject.
   GeClipMap* PyGeClipMap_Get(PyObject* obj);
+
+  /// Retrieve the BaseBitmap pointer from a PyObject.
+  BaseBitmap* PyBaseBitmap_Get(PyObject* obj);
 
   /// Retrieve a BaseContainer pointer from a PyObject.
   Bool PyBaseContainer_Get(PyObject* obj, BaseContainer* dest);
