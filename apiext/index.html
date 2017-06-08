@@ -447,13 +447,13 @@ is executed before the C4DDev Python entrypoint.</p>
 <p>This is the Node.Py <code>require</code> object from the C4DDev <code>main.py</code> entry point
 which allows you to load components of the <code>c4ddev</code> and <code>c4dtools</code> libraries.</p>
 
-<h3 id="c4ddev-cast-node-pycobject-c4d-gelistnode"><code>c4ddev.cast_node(pycobject) -&gt; c4d.GeListNode</code></h3>
+<h3 id="c4ddev-gelistnodefromaddress-pycobject-c4d-gelistnode"><code>c4ddev.GeListNodeFromAddress(pycobject) -&gt; c4d.GeListNode</code></h3>
 
 <p>Given a <code>PyCObject</code> from which you know it is a Cinema 4D <code>GeListNode</code> instance,
 you can use this function to get a real Python object out of it. <strong>Important</strong>:
 This will result in undefined behaviour (likely a crash) if you pass a wrong PyCObject!</p>
 
-<h3 id="c4ddev-fileselect-put-path"><code>c4ddev.fileselect_put(path)</code></h3>
+<h3 id="c4ddev-fileselectput-path"><code>c4ddev.FileSelectPut(path)</code></h3>
 
 <p>This extension allows you to prevent file selection dialogs from popping up
 and make them return a specific value. This is <em>very</em> useful if you want to
@@ -462,20 +462,20 @@ streamline Cinema 4D commands that usually do open a file selection dialog.</p>
 <pre><code class="language-python">import c4d
 import c4ddev
 
-c4ddev.fileselect_put('/Users/me/Desktop')
+c4ddev.FileSelectPut('/Users/me/Desktop')
 print(c4d.storage.LoadDialog())
 # Doesn't open a dialog and prints /Users/me/Desktop
 </code></pre>
 
-<h3 id="c4ddev-fileselect-pop"><code>c4ddev.fileselect_pop()</code></h3>
+<h3 id="c4ddev-fileselectpop"><code>c4ddev.FileSelectPop()</code></h3>
 
 <p>Pop an element from the elements added to the FileSelect Hook queue with
-<code>fileselect_put()</code>.</p>
+<code>FileSelectPut()</code>.</p>
 
-<h3 id="c4ddev-fileselect-size"><code>c4ddev.fileselect_size()</code></h3>
+<h3 id="c4ddev-fileselectqueuesize"><code>c4ddev.FileSelectQueueSize()</code></h3>
 
 <p>Returns the number of elemenets in the queue added to the FileSelect Hook
-with <code>fileselect_put()</code>.</p>
+with <code>FileSelectPut()</code>.</p>
 
 <h3 id="c4ddev-documentinfodata-pycobject-dict"><code>c4ddev.DocumentInfoData(pycobject) -&gt; dict</code></h3>
 
@@ -488,6 +488,98 @@ behaviour (likely a crash) if you pass a wrong PyCObject!</p>
 <p>Pass the <code>PyCObject</code> received on <code>MSG_MULTI_RENDERNOTIFICATION</code> this this function
 to get a dictionary of the structures data. <strong>Important</strong>: This will result in
 undefined behaviour (likely a crash) if you pass a wrong PyCObject!</p>
+
+<h3 id="c4ddev-getuserareahandle-pycobject"><code>c4ddev.GetUserAreaHandle() -&gt; PyCObject</code></h3>
+
+<h3 id="c4ddev-getclipmaphandle-pycobject"><code>c4ddev.GetClipMapHandle() -&gt; PyCObject</code></h3>
+
+<h3 id="c4ddev-blitclipmap-dst-src-dx-dy-dw-dh-sx-sy-sw-sh-mode"><code>c4ddev.BlitClipMap(dst, src, dx, dy, dw, dh, sx, sy, sw, sh, mode)</code></h3>
+
+<p>This function implements the missing functionality of the <code>GeClipMap</code> to copy
+another bitmap into another, with the ability to copy only parts and in a
+different scale and aspect ratio (like <code>GeUserArea.DrawBitmap()</code>).</p>
+
+<table>
+<thead>
+<tr>
+<th>Parameters</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><strong>dst</strong></td>
+<td>The destination <code>GeClipMap</code></td>
+</tr>
+
+<tr>
+<td><strong>src</strong></td>
+<td>The source <code>GeClipMap</code></td>
+</tr>
+
+<tr>
+<td><strong>dx</strong></td>
+<td>The destination X coordinate.</td>
+</tr>
+
+<tr>
+<td><strong>dy</strong></td>
+<td>The destination Y coordinate.</td>
+</tr>
+
+<tr>
+<td><strong>dw</strong></td>
+<td>The destination width.</td>
+</tr>
+
+<tr>
+<td><strong>dh</strong></td>
+<td>The destination height.</td>
+</tr>
+
+<tr>
+<td><strong>sx</strong></td>
+<td>The destination X coordinate.</td>
+</tr>
+
+<tr>
+<td><strong>sy</strong></td>
+<td>The destination X coordinate.</td>
+</tr>
+
+<tr>
+<td><strong>sw</strong></td>
+<td>The destination X coordinate.</td>
+</tr>
+
+<tr>
+<td><strong>sh</strong></td>
+<td>The destination X coordinate.</td>
+</tr>
+
+<tr>
+<td><strong>mode</strong></td>
+<td>One of <code>c4ddev.BLIT_NN</code>, <code>BLIT_BILINEAR</code> or <code>BLIT_BICUBIC</code></td>
+</tr>
+</tbody>
+</table>
+
+<div class="admonition note">
+<p class="admonition-title">Limitation</p>
+<p>Currently this function can only accept two <code>GeClipMap</code> objects as we
+  haven&rsquo;t figured out how to retrieve the actual C pointer to a <code>BaseBitmap</code>
+  from a Python <code>c4d.bitmaps.BaseBitmap</code> object. You can convert a bitmap
+  to a <code>GeClipMap</code> using the following code:</p>
+
+<pre><code>  map = c4d.bitmaps.GeClipMap()
+  map.InitWithBitmap(bmp, bmp.GetInternalChannel())
+</code></pre>
+
+<p>However, keep in mind that this process is relatively slow as it creates
+  a new copy of the image. It is thus recommended to do this operation only
+  once after a bitmap is loaded and keep it as a <code>GeClipMap</code>.</p>
+</div>
 
 <h2 id="plugin-messages">Plugin Messages</h2>
 

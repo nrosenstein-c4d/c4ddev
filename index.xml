@@ -39,7 +39,7 @@ aabb = require(&#39;c4ddev/lib/c4dtools/misc/aabb&#39;) gui = require(&#39;c4dde
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://niklasrosenstein.github.io/c4ddev/changelog/</guid>
-      <description>v0.1.5 (development)  merge https://github.com/NiklasRosenstein/c4d-apex into C4DDev and rename everything from c4d.apex to c4ddev merge https://github.com/NiklasRosenstein/py-c4dtools into C4DDev merge https://github.com/NiklasRosenstein/c4d-sublime-script into C4DDev Rename SublimeScript to Scripting Server The Scripting Server must be enabled explicitly from the C4DDev plugin menu  v0.1.4  merge https://github.com/NiklasRosenstein/c4d-deprecated-ide into C4DDev update docs add c4ddev run command rename c4ddev pip-get command to c4ddev get-pip fix c4ddev/scripting/localimport and add python/ to PYTHONPATH inside the context  PyObject</description>
+      <description>v0.1.6 (development)  add c4ddev pluginid command fix c4ddev build-loader command and add --blob,--no-blob options move c4ddev.handlemousedrag() to c4ddev.HandleMouseDrag() rename c4ddev.fileselect_~() to c4ddev.FileSelect~() rename c4ddev.cast_node() to c4ddev.GeListNodeFromAddress() add c4ddev.GetUserAreaHandle() add c4ddev.GetClipMapHandle() add c4ddev.BlitClipMap() add c4ddev.am module  v0.1.5  merge https://github.com/NiklasRosenstein/c4d-apex into C4DDev and rename everything from c4d.apex to c4ddev merge https://github.com/NiklasRosenstein/py-c4dtools into C4DDev merge https://github.com/NiklasRosenstein/c4d-sublime-script into C4DDev Rename SublimeScript to Scripting Server The Scripting Server must be enabled explicitly from the C4DDev plugin menu  v0.</description>
     </item>
     
     <item>
