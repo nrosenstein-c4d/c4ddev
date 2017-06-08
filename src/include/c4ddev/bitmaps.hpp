@@ -17,9 +17,9 @@ namespace c4ddev {
   // Render one bitmap onto another using one of three interpolation modes as
   // specified by the #BLIT_MODE enumeration
   // The #FuncRead function must have the following signature:
-  //     void (Int32 x, Int32 y, Float col[4])
+  //     bool (Int32 x, Int32 y, Float col[4])
   // The #FuncWrite function must have the following signature:
-  //     void (Int32 x, Int32 y, Float const col[4])
+  //     bool (Int32 x, Int32 y, Float const col[4])
   //
   template <typename FuncWrite, typename FuncRead>
   void BlitBitmap(
@@ -45,10 +45,8 @@ namespace c4ddev {
         Float x = (x1 / Float(dw)) * sw + sy;
         Int32 iy = Floor(y);
         Int32 ix = Floor(x);
-        read(ix+0, iy+1, c[0]);
-        read(ix+0, iy+0, c[1]);
-        read(ix+1, iy+0, c[2]);
-        read(ix+1, iy+1, c[3]);
+        Bool valid = read(ix+0, iy+1, c[0]) && read(ix+0, iy+0, c[1]) && read(ix+1, iy+0, c[2]) && read(ix+1, iy+1, c[3]);
+        if (!valid) continue;
 
         if (mode == 1) {
           // FIXME: Black tear-line appearing in upscaled image.
@@ -88,17 +86,25 @@ namespace c4ddev {
     BLIT_MODE mode=BLIT_NN
   ){
     // FIXME: Alpha.
+    Int32 dbw = dst->GetBw();
+    Int32 dbh = dst->GetBh();
+    Int32 sbw = src->GetBw();
+    Int32 sbh = src->GetBh();
     return BlitBitmap(
-      [dst](Int32 x, Int32 y, Float const col[4]) {
+      [dst, dbw, dbh](Int32 x, Int32 y, Float const col[4]) {
+        if (x < 0 || y < 0 || x >= dbw || y >= dbh) return false;
         dst->SetPixel(x, y, col[0], col[1], col[2]);
+        return true;
       },
-      [src](Int32 x, Int32 y, Float col[4]) {
+      [src, sbw, sbh](Int32 x, Int32 y, Float col[4]) {
+        if (x < 0 || y < 0 || x >= sbw || y >= sbh) return false;
         UInt16 r, g, b, a = 255;
         src->GetPixel(x, y, &r, &g, &b);
         col[0] = r;
         col[1] = g;
         col[2] = b;
         col[3] = a;
+        return true;
       },
       dx, dy, dw, dh, sx, sy, sw, sh, mode
     );
@@ -120,22 +126,26 @@ namespace c4ddev {
     // FIXME: Alpha.
     Int32 dbw = dst->GetBw();
     Int32 dbh = dst->GetBh();
+    Int32 sbw = src->GetBw();
+    Int32 sbh = src->GetBh();
     return BlitBitmap(
       [dst, dbw, dbh](Int32 x, Int32 y, Float const col[4]) {
-        if (x < 0 || y < 0 || x >= dbw || y >= dbh) return;
+        if (x < 0 || y < 0 || x >= dbw || y >= dbh) return false;
         dst->SetPixelRGBA(x, y, col[0], col[1], col[2], col[3]);
+        return true;
       },
-      [src](Int32 x, Int32 y, Float col[4]) {
+      [src, sbw, sbh](Int32 x, Int32 y, Float col[4]) {
+        if (x < 0 || y < 0 || x >= sbw || y >= sbh) return false;
         UInt16 r, g, b, a = 255;
         src->GetPixel(x, y, &r, &g, &b);
         col[0] = r;
         col[1] = g;
         col[2] = b;
         col[3] = a;
+        return true;
       },
       dx, dy, dw, dh, sx, sy, sw, sh, mode
     );
   }
-
 
 } // namespace c4ddev
