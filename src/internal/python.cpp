@@ -8,6 +8,7 @@
 #include <lib_py.h>
 #include <lib_clipmap.h>
 #include <lib_activeobjectmanager.h>
+#include <c4ddev/math.hpp>
 #include <c4ddev/python.hpp>
 #include <c4ddev/fileselectqueue.hpp>
 
@@ -111,12 +112,19 @@ static char c4ddev_am_docstring[] =
 //
 static PyObject* py_gui_HandleMouseDrag(PyObject* self, PyObject* args);
 static char gui_HandleMouseDrag_docstring[] =
-  "handlemousedrag(area, msg, type, data, flags) -> Bool\n\n"
+  "HandleMouseDrag(area, msg, type, data, flags) -> Bool\n\n"
   "Calls GeUserArea::HandleMouseDrag().";
 static char c4ddev_gui_docstring[] =
   "Wrappers for the Cinema 4D GUI layer.";
+static PyObject* py_gui_Blit(PyObject* self, PyObject* args);
+static char gui_Blit_docstring[] =
+  "Blit(dst, src, dx, dy, dw, dh, sx, sy, sw, sh, mode)\n\n"
+  "Blits the GeClipMap 'dst' onto the GeClipMap 'src' using bicubic interpolation.\n"
+  "The mode determines the interpolation quality: 0 for nearest neighbour, 1 for\n"
+  "bilinear interpolation, 2 for bicubic interpolation.";
 static PyMethodDef c4ddev_gui_methods[] = {
   METHODDEF(gui_, HandleMouseDrag, METH_VARARGS),
+  METHODDEF(gui_, Blit, METH_VARARGS),
   {nullptr, nullptr, 0, nullptr},
 };
 
@@ -364,7 +372,7 @@ PyObject* py_gui_HandleMouseDrag(PyObject* self, PyObject* args) {
       break;
     }
     default: {
-      String warn = "handlemousedrag() unsupported dragtype " + String::IntToString(type);
+      String warn = "c4ddev.HandleMouseDrag() unsupported dragtype " + String::IntToString(type);
       AutoGeFree<Char> cwarn(warn.GetCStringCopy());
       PyErr_Warn(PyExc_RuntimeWarning, cwarn);
       break;
@@ -374,6 +382,72 @@ PyObject* py_gui_HandleMouseDrag(PyObject* self, PyObject* args) {
   PyObject* pyresult = result ? Py_True : Py_False;
   Py_INCREF(pyresult);
   return pyresult;
+}
+
+
+PyObject* py_gui_Blit(PyObject* self, PyObject* args) {
+  using c4ddev::BilinearInterpolation;
+  PyObject* pydst = nullptr;
+  PyObject* pysrc = nullptr;
+  Int32 dx, dy, dw, dh, sx, sy, sw, sh, mode;
+  if (!PyArg_ParseTuple(args, "OOiiiiiiiii", &pydst, &pysrc, &dx, &dy, &dw, &dh,
+    &sx, &sy, &sw, &sh, &mode)) return nullptr;
+  if (mode < 0 || mode > 2) mode = 0;
+
+  GeClipMap* dstmap = c4ddev::PyGeClipMap_Get(pydst);
+  if (!dstmap) return nullptr;
+  GeClipMap* srcmap = c4ddev::PyGeClipMap_Get(pysrc);
+  if (!srcmap) return nullptr;
+
+  BaseBitmap* dst = dstmap->GetBitmap();
+  BaseBitmap* src = srcmap->GetBitmap();
+  if (!dst || !src) {
+    PyErr_SetString(PyExc_MemoryError, "No internal bitmap.");
+    return nullptr;
+  }
+
+  UInt16 r[5], g[5], b[5], a[5];
+
+  #pragma omp parallel for private(r, g, b, a)
+  for (Int32 y1 = 0; y1 < dh; ++y1) {
+    for (Int32 x1 = 0; x1 < dw; ++x1) {
+      // Map the coordinates onto the source bitmap.
+      Float y = (y1 / Float(dh)) * sh + sx;
+      Float x = (x1 / Float(dw)) * sw + sy;
+      Int32 iy = Floor(y);
+      Int32 ix = Floor(x);
+      src->GetPixel(ix+0, iy+1, r+0, g+0, b+0);
+      src->GetPixel(ix+0, iy+0, r+1, g+1, b+1);
+      src->GetPixel(ix+1, iy+0, r+2, g+2, b+2);
+      src->GetPixel(ix+1, iy+1, r+3, g+3, b+3);
+
+      if (mode == 1) {
+        // FIXME: Black tear-line appearing in upscaled image.
+        r[4] = BilinearInterpolation(r[0], r[1], r[2], r[3], ix, iy, ix+1, iy+1, x, y);
+        g[4] = BilinearInterpolation(g[0], g[1], g[2], g[3], ix, iy, ix+1, iy+1, x, y);
+        b[4] = BilinearInterpolation(b[0], b[1], b[2], b[3], ix, iy, ix+1, iy+1, x, y);
+        a[4] = BilinearInterpolation(a[0], a[1], a[2], a[3], ix, iy, ix+1, iy+1, x, y);
+      }
+      else if (mode == 2) {
+        // FIXME: Implement Bicubic interpolation.
+        //r[4] = BicubicInterpolation(r[0], r[1], r[2], r[3], ix, iy, ix+1, iy+1, x, y);
+        //g[4] = BicubicInterpolation(g[0], g[1], g[2], g[3], ix, iy, ix+1, iy+1, x, y);
+        //b[4] = BicubicInterpolation(b[0], b[1], b[2], b[3], ix, iy, ix+1, iy+1, x, y);
+        //a[4] = BicubicInterpolation(a[0], a[1], a[2], a[3], ix, iy, ix+1, iy+1, x, y);
+      }
+      else {
+        // FIXME: Proper nearest neighbour interpolation.
+        r[4] = r[0];
+        g[4] = g[0];
+        b[4] = b[0];
+        a[4] = a[0];
+      }
+      dst->SetPixel(dx+x1, dy+y1, r[4], g[4], b[4]);
+    }
+  }
+
+  Py_INCREF(Py_None);
+  return Py_None;
 }
 
 

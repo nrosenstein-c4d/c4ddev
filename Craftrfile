@@ -10,6 +10,7 @@ plugin = cxx.shared_library(
     sources = sources,
     include = [local('src/include')],
     defines = ['C4DDEV_INTERNAL'],
-    frameworks = [c4d.sdk, c4d.python]
+    frameworks = [c4d.sdk, c4d.python],
+    msvc_additional_flags = ['-openmp']
   )
 )
