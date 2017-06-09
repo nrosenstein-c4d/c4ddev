@@ -425,6 +425,8 @@ class Egg(object):
     if not self.zipped:
       dirname = os.path.dirname(outfile)
       tempdir = os.path.join(dirname, '.temp_egg_' + str(random.randint(0, 999)))
+      if not os.path.isdir(tempdir):
+        os.makedirs(tempdir)
       with zipfile.ZipFile(outfile) as fp:
         fp.extractall(tempdir)
       os.remove(outfile)
