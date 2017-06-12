@@ -11,14 +11,12 @@
 #include <c4ddev/bitmaps.hpp>
 #include <c4ddev/python.hpp>
 #include <c4ddev/fileselectqueue.hpp>
+#include "pymethoddef.hpp"
 
 using c4ddev::PyAutoDecref;
 using c4ddev::PyGeListNode_New;
 using c4ddev::PyString_FromString;
 namespace FileSelectQueue = c4ddev::FileSelectQueue;
-
-/// A small helper to define a Python method.
-#define METHODDEF(prefix, name, argstype) {#name, py_##prefix##name, argstype, prefix##name##_docstring}
 
 // BEGIN_PYTHON_FUNCTION_DEF: c4ddev
 static char c4ddev_docstring[] =
@@ -86,37 +84,6 @@ static char BlitClipMap_docstring[] =
   "bilinear interpolation, 2 for bicubic interpolation.";
 // END_PYTHON_FUNCTION_DEF: c4ddev
 
-// BEGIN_PYTHON_FUNCTION_DEF: c4ddev.am
-static char c4ddev_am_docstring[] = "ActiveObjectManager API.";
-
-static PyObject* py_am_RegisterMode(PyObject* self, PyObject* args);
-static char am_RegisterMode_docstring[] =
-  "RegisterMode(id, name, callback)\n\n"
-  "Register a new mode in the Attribute Manager. The callback parameter\n"
-  "is currently unused and for future extension.";
-
-static PyObject* py_am_SetMode(PyObject* self, PyObject* args);
-static char am_SetMode_docstring[] =
-  "SetMode(id, open)\n\n"
-  "Set the attribute manager mode.";
-
-static PyObject* py_am_SetObject(PyObject* self, PyObject* args);
-static char am_SetObject_docstring[] =
-  "SetObject(id, op, flags, activepage)\n\n"
-  "Sets the active object in the attribute manager for the specified\n"
-  "attribute manager ID. The #activepage parameter is currently unused.";
-
-static PyObject* py_am_Open(PyObject* self, PyObject* args);
-static char am_Open_docstring[] =
-  "Open()\n\n"
-  "Opens the attribute manager.";
-
-static PyObject* py_am_EditObjectModal(PyObject* self, PyObject* args);
-static char am_EditObjectModal_docstring[] =
-  "EditObjectModal(op, title) -> bool\n\n"
-  "Shows a modal attribute manager for the specified object.";
-// END_PYTHON_FUNCTION_DEF: c4ddev.am
-
 
 static PyMethodDef c4ddev_methods[] = {
   METHODDEF(, GeListNodeFromAddress, METH_VARARGS),
@@ -134,15 +101,6 @@ static PyMethodDef c4ddev_methods[] = {
   {nullptr, nullptr, 0, nullptr},
 };
 
-static PyMethodDef c4ddev_am_methods[] = {
-  METHODDEF(am_, RegisterMode, METH_VARARGS),
-  METHODDEF(am_, SetMode, METH_VARARGS),
-  METHODDEF(am_, SetObject, METH_VARARGS),
-  METHODDEF(am_, Open, METH_VARARGS),
-  METHODDEF(am_, EditObjectModal, METH_VARARGS),
-  {nullptr, nullptr, 0, nullptr},
-};
-
 
 Bool InitPython() {
   GePythonGIL gil;
@@ -157,9 +115,10 @@ Bool InitPython() {
   PyObject_SetAttrString(c4ddev, "BLIT_BILINEAR", PyLong_FromLong(c4ddev::BLIT_BILINEAR));
   PyObject_SetAttrString(c4ddev, "BLIT_BICUBIC", PyLong_FromLong(c4ddev::BLIT_BICUBIC));
 
-  PyObject* am = Py_InitModule3("c4ddev.am", c4ddev_am_methods, c4ddev_am_docstring);
-  if (am) PyObject_SetAttrString(c4ddev, "am", am);
-  else GePrint("[c4ddev / ERROR]: Could not create c4ddev.am module.");
+  extern Bool Register_c4ddev_am(PyObject*);
+  if (!Register_c4ddev_am(c4ddev)) {
+    GePrint("[c4ddev / ERROR]: Could not create c4ddev.am module.");
+  }
 
   extern Bool Register_PyAliasTrans(PyObject*);
   if (!Register_PyAliasTrans(c4ddev)) {
@@ -279,68 +238,6 @@ PyObject* py_FileSelectQueueSize(PyObject* self, PyObject* args) {
   GePythonGIL gil;
   if (!PyArg_ParseTuple(args, "")) return nullptr;
   return PyInt_FromLong(FileSelectQueue::Size());
-}
-
-
-PyObject* py_am_RegisterMode(PyObject* self, PyObject* args) {
-  int id = 0;
-  const char* text = nullptr;
-  PyObject* callback = nullptr;
-  if (!PyArg_ParseTuple(args, "isO", &id, &text, &callback)) return nullptr;
-  // TODO: Handle callback.
-  Bool res = ActiveObjectManager_RegisterMode((ACTIVEOBJECTMODE) id, String(text), nullptr);
-  if (!res) {
-    PyErr_SetString(PyExc_RuntimeError, "ActiveObjectManager_RegisterMode() returned false");
-    return nullptr;
-  }
-  Py_INCREF(Py_None);
-  return Py_None;
-}
-
-
-PyObject* py_am_SetMode(PyObject* self, PyObject* args) {
-  int mode = 0;
-  int open = 0;
-  if (!PyArg_ParseTuple(args, "ii", &mode, &open)) return nullptr;
-  ActiveObjectManager_SetMode((ACTIVEOBJECTMODE) mode, Bool(open));
-  Py_INCREF(Py_None);
-  return Py_None;
-}
-
-
-PyObject* py_am_SetObject(PyObject* self, PyObject* args) {
-  int mode = 0;
-  PyObject* pyop = nullptr;
-  int flags = 0;
-  PyObject* pydescid = nullptr;  // TODO
-  if (!PyArg_ParseTuple(args, "iOiO", &mode, &pyop, &flags, &pydescid)) return nullptr;
-
-  GeListNode* node = c4ddev::PyGeListNode_Get(pyop);
-  if (!node) return nullptr;
-
-  DescID activepage = {}; // TODO: Read DescID
-  ActiveObjectManager_SetObject((ACTIVEOBJECTMODE) mode, node, flags, activepage);
-  Py_INCREF(Py_None);
-  return Py_None;
-}
-
-
-PyObject* py_am_Open(PyObject* self, PyObject* args) {
-  if (!PyArg_ParseTuple(args, "")) return nullptr;
-  ActiveObjectManager_Open();
-  Py_INCREF(Py_None);
-  return Py_None;
-}
-
-
-PyObject* py_am_EditObjectModal(PyObject* self, PyObject* args) {
-  PyObject* pyop = nullptr;
-  const char* title = nullptr;
-  if (!PyArg_ParseTuple(args, "Os", &pyop, &title)) return nullptr;
-  GeListNode* node = c4ddev::PyGeListNode_Get(pyop);
-  if (!node) return nullptr;
-  Bool res = EditObjectModal(node, String(title));
-  return PyBool_FromLong(res);
 }
 
 
