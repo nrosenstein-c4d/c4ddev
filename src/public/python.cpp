@@ -58,7 +58,7 @@ PyObject* c4ddev::PyGeListNode_New(GeListNode* node, Bool owner)
 }
 
 
-GeListNode* c4ddev::PyGetListNode_Get(PyObject* obj) {
+GeListNode* c4ddev::PyGeListNode_Get(PyObject* obj) {
   static PythonLibrary _lib;
   GeListNode* dest = nullptr;
   if (!_lib.GetGeListNode(nullptr, reinterpret_cast<_PyObject*>(obj), dest)) {

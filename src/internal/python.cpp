@@ -161,6 +161,11 @@ Bool InitPython() {
   if (am) PyObject_SetAttrString(c4ddev, "am", am);
   else GePrint("[c4ddev / ERROR]: Could not create c4ddev.am module.");
 
+  extern Bool Register_PyAliasTrans(PyObject*);
+  if (!Register_PyAliasTrans(c4ddev)) {
+    GePrint("[c4ddev / ERROR]: c4ddev.AliasTrans class could not be registered.");
+  }
+
   return true;
 }
 
@@ -310,7 +315,7 @@ PyObject* py_am_SetObject(PyObject* self, PyObject* args) {
   PyObject* pydescid = nullptr;  // TODO
   if (!PyArg_ParseTuple(args, "iOiO", &mode, &pyop, &flags, &pydescid)) return nullptr;
 
-  GeListNode* node = c4ddev::PyGetListNode_Get(pyop);
+  GeListNode* node = c4ddev::PyGeListNode_Get(pyop);
   if (!node) return nullptr;
 
   DescID activepage = {}; // TODO: Read DescID
@@ -332,7 +337,7 @@ PyObject* py_am_EditObjectModal(PyObject* self, PyObject* args) {
   PyObject* pyop = nullptr;
   const char* title = nullptr;
   if (!PyArg_ParseTuple(args, "Os", &pyop, &title)) return nullptr;
-  GeListNode* node = c4ddev::PyGetListNode_Get(pyop);
+  GeListNode* node = c4ddev::PyGeListNode_Get(pyop);
   if (!node) return nullptr;
   Bool res = EditObjectModal(node, String(title));
   return PyBool_FromLong(res);
@@ -376,7 +381,7 @@ PyObject* py_HandleMouseDrag(PyObject* self, PyObject* args) {
       PyObject* item = nullptr;
       Bool error = false;
       while ((item = PyIter_Next(it)) && !error) {
-        GeListNode* node = c4ddev::PyGetListNode_Get(item);
+        GeListNode* node = c4ddev::PyGeListNode_Get(item);
         Py_DECREF(item);
         if (node) array->Append(node);
         else error = true;

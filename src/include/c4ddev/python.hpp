@@ -51,7 +51,7 @@ namespace c4ddev {
   PyObject* PyGeListNode_New(GeListNode* node, Bool owner);
 
   /// Returns a GeListNode from a Python Object.
-  GeListNode* PyGetListNode_Get(PyObject* obj);
+  GeListNode* PyGeListNode_Get(PyObject* obj);
 
   /// Convert a Cinema 4D String to a Python String.
   PyObject* PyString_FromString(
