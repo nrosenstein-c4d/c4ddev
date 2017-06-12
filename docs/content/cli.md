@@ -25,6 +25,7 @@ by omitting the `--global` option and adding `nodepy_modules/.bin` to your
     Commands:
       build-loader      Generate a Cinema 4D Python plugin that uses...
       get-pip           Installs Pip into the Cinema 4D Python...
+      init              Create template source and description files...
       pip               Invokes Pip in the current Cinema 4D Python...
       pypkg             Reads a JSON configuration file, by default...
       rpkg              Converts a resource package file to...
@@ -57,6 +58,30 @@ runtime. Access to the underlying module objects can be retrieved using
 nodepy = require.context.binding('nodepy')
 localimport = require.context.binding('localimport')
 ```
+
+## `c4ddev init`
+
+    Usage: c4ddev init [OPTIONS] DESCRIPTION_NAME ...
+
+      Create template source and description files for one or more Cinema 4D
+      plugins.
+
+    Options:
+      -O, --object TEXT
+      -T, --tag TEXT
+      -X, --shader TEXT
+      -Gv, --xnode TEXT
+      -M, --material TEXT
+      --main               Generate a main.cpp template.
+      -R, --rpkg           Create .rpkg files instead of description header and
+                          stringtable files.
+      --src TEXT           Source code directory. If not specified, defaults to
+                          src/ or source/, depending on which exists.
+      -P, --pluginid       Grab plugin IDs from the PluginCafe for the plugins
+                          that are being created.
+      --overwrite
+      --help               Show this message and exit.
+
 
 ## `c4ddev get-pip`
 

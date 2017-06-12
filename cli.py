@@ -387,12 +387,16 @@ def pluginid(ctx, titles, username, password, list, save):
     while node.name != 'div':
       node = node.parent
     # Print all plugin IDs there are.
+    result = {}
     for row in node.find_all('table')[2].find_all('tr'):
       cells = row.find_all('td')
-      print(gettext(cells[0]), gettext(cells[1]))
-    return
+      title, pid = gettext(cells[0]), gettext(cells[1])
+      result[title] = pid
+      print('{}: {}'.format(title, pid))
+    return result
 
   # Retrieve new plugin IDs.
+  result = {}
   for title in titles:
     title = title.strip()
     if len(title) < 3 or len(title) > 100:
@@ -405,7 +409,144 @@ def pluginid(ctx, titles, username, password, list, save):
     if not match:
       sys.stdout.buffer.write(response.text.encode('utf8'))
       ctx.fail('Plugin ID for "{}" could not be retrieved. Response HTML above.'.format(title))
+    result[title] = int(match.group(1))
     print('{}: {}'.format(title, match.group(1)))
+
+  return result
+
+
+@main.command()
+@click.argument('description_names', metavar='DESCRIPTION_NAME ...', nargs=-1)
+@click.option('-O', '--object', 'object_names', multiple=True)
+@click.option('-T', '--tag', 'tag_names', multiple=True)
+@click.option('-X', '--shader', 'shader_names', multiple=True)
+@click.option('-Gv', '--xnode', 'xnode_names', multiple=True)
+@click.option('-M', '--material', 'material_names', multiple=True)
+@click.option('--main', is_flag=True, help='Generate a main.cpp template.')
+@click.option('-R', '--rpkg', is_flag=True, help='Create .rpkg files instead '
+    'of description header and stringtable files.')
+@click.option('--src', help='Source code directory. If not specified, '
+    'defaults to src/ or source/, depending on which exists.')
+@click.option('-P', '--pluginid', is_flag=True, help='Grab plugin IDs from '
+    'the PluginCafe for the plugins that are being created.')
+@click.option('--overwrite', is_flag=True)
+@click.pass_context
+def init(ctx, description_names, object_names, tag_names, shader_names,
+         xnode_names, material_names, main, rpkg, src, pluginid, overwrite):
+  """
+  Create template source and description files for one or more Cinema 4D
+  plugins.
+  """
+
+  if not src:
+    if os.path.isdir('src'):
+      src = 'src'
+    else:
+      src = 'source'
+    print('source directory:', src)
+
+  description_names = list(description_names or ())
+  object_names = list(object_names or ())
+  tag_names = list(tag_names or ())
+  shader_names = list(shader_names or ())
+  xnode_names = list(xnode_names or ())
+  material_names = list(material_names or ())
+
+  for name in description_names:
+    c = name[0].lower()
+    if c == 'o': object_names.append(name)
+    elif c == 't': tag_names.append(name)
+    elif c == 'x': shader_names.append(name)
+    elif name[:2].lower() == 'gv': xnode_names.append(name)
+    elif c == 'm': material_names.append(name)
+    else:
+      ctx.fail('Can not determined plugin type: {}'.format(name))
+
+  descriptions = [('object', x) for x in object_names] + \
+    [('tag', x) for x in tag_names] + \
+    [('shader', x) for x in shader_names] + \
+    [('xnode', x) for x in xnode_names] + \
+    [('material', x) for x in material_names]
+  description_nanes = [x[1] for x in descriptions]
+
+  if pluginid:
+    print('retrieving plugin IDs ...')
+    ids = globals()['main'](['pluginid'] + description_names, standalone_mode=False)
+    print(ids)
+  else:
+    ids = None
+
+  def mkdir(path):
+    if not os.path.isdir(path):
+      print('mkdir:', path)
+      os.makedirs(path)
+
+  def write(filename, content, allow_overwrite=True):
+    if not os.path.isfile(filename) or (overwrite and allow_overwrite):
+      print('write:', filename)
+      with open(filename, 'w') as fp:
+        fp.write(content)
+    elif allow_overwrite:
+      print('warning: file "{}" already exists'.format(filename))
+
+  mkdir(src)
+  mkdir('res')
+  mkdir('res/description')
+  write('res/c4d_symbols.h', '#pragma once\nenum {};\n', False)
+  if not rpkg:
+    mkdir('res/strings_us/description')
+
+  for kind, description in descriptions:
+    if kind == 'object':
+      base, props = 'Obase', ['ID_OBJECTPROPERTIES']
+      parent = 'ObjectData'
+    elif kind == 'tag':
+      base, props = 'Tbase', ['ID_TAGPROPERTIES']
+      parent = 'TagData'
+    elif kind == 'shader':
+      base, props = 'Xbase', ['ID_SHADERPROPERTIES']
+      parent = 'ShaderData'
+    elif kind == 'shader':
+      base, props = 'Gvbase', ['ID_GVPROPERTIES', 'ID_GVPORTS']
+      parent = 'GvOperatorData'
+    elif kind == 'material':
+      base, props = 'Mbase', ['ID_MATERIALPROPERTIES']
+      parent = 'MaterialData'
+    else:
+      assert False
+
+    content = 'CONTAINER {0} {{\n  NAME {0};\n  INCLUDE {1};\n'.format(description, base)
+    for prop in props:
+      content += '  GROUP {0} {{\n  }}\n'.format(prop)
+    content += '}\n'
+    write('res/description/{}.res'.format(description), content)
+
+    clsname = '{0}Data'.format(description)
+    content = '#include <c4d.h>\n#include "res/description/{}.h"\n\n'.format(description)
+    content += 'class {0} : public {1} {{\n'.format(clsname, parent)
+    content += 'public:\n  static NodeData* Alloc() { return NewObj(clsname); }\n'
+    content += '}}\n\nBool Register{0}() {{\n'.format(clsname)
+    content += '  return Register{0}Plugin({1}, /* TODO */);\n'.format(parent[:-4], description)
+    content += '}\n'
+    write('{0}/{1}.cpp'.format(src, description), content)
+
+    plugid = None
+    if ids:
+      plugid = ids.get(description, None)
+      if plugid is None:
+        print('warning: did not receive a Plugin ID for', description)
+    if plugid is None:
+      plugid = '/* {0} PLUGIN ID HERE */'.format(description)
+
+    if rpkg:
+      content = 'ResourcePackage({0})\n{0}: {1}\n  us: {0}\n'.format(description, plugid)
+      write('{0}/{1}.rpkg'.format(src, description), content)
+    else:
+      content = '#pragma once\nenum {{\n  {0} = {1},\n}};\n'.format(description, plugid)
+      write('res/description/{}.h'.format(description), content)
+
+      content = 'STRINGTABLE {0} {{\n  {0} "{0}";\n}}\n'.format(description)
+      write('res/strings_us/description/{}.str'.format(description), content)
 
 
 if require.main == module:

@@ -16,6 +16,7 @@ title = "Changelog"
 - add `c4ddev.BlitClipMap()`
 - add `c4ddev.am` module
 - fix `c4ddev pypkg` create directory if it doesnt exist
+- add `c4ddev init` command
 
 ## v0.1.5
 
