@@ -212,8 +212,7 @@ def build_loader(blob, entry_point, compress, minify, output):
   context.register_binding('nodepy', nodepy)
   context.register_binding('localimport', nodepy.localimport)
   with context:
-    filename = context.resolve({entry_point!r}, directory, is_main=True)
-    module = context.load_module(filename, is_main=True, exec_=False)
+    module = context.require({entry_point!r}, directory, is_main=True, exec_=False, exports=False)
     module.namespace.__res__ = __res__
     module.exec_()
 
