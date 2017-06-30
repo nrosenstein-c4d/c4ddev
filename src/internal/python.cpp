@@ -7,7 +7,6 @@
 #include <c4d.h>
 #include <lib_py.h>
 #include <lib_clipmap.h>
-#include <lib_activeobjectmanager.h>
 #include <c4ddev/bitmaps.hpp>
 #include <c4ddev/python.hpp>
 #include <c4ddev/fileselectqueue.hpp>

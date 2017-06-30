@@ -72,4 +72,7 @@ namespace c4ddev {
   /// Retrieve a BaseContainer pointer from a PyObject.
   Bool PyBaseContainer_Get(PyObject* obj, BaseContainer* dest);
 
+  /// Create a new Python object wrapping the basecontainer.
+  PyObject* PyBaseContainer_New(BaseContainer const& bc);
+
 } // namespace c4ddev

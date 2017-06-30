@@ -150,3 +150,24 @@ Bool c4ddev::PyBaseContainer_Get(PyObject* obj, BaseContainer* bc) {
   }
   return true;
 }
+
+
+PyObject* c4ddev::PyBaseContainer_New(BaseContainer const& bc) {
+  PythonLibrary lib;
+  PythonBase* base = lib.Alloc();
+  if (!base) {
+    PyErr_SetString(PyExc_MemoryError, "Couldn't allocate PythonBase");
+    return nullptr;
+  }
+
+  lib.SetContainer(base, "bc", bc);
+  _PyObject* result = lib.GetObject(base, "bc");
+  if (!result) {
+    PyErr_SetString(PyExc_MemoryError, "Couldn't create BaseContainer reference.");
+    return nullptr;
+  }
+
+  lib.IncRef(result);
+  lib.Free(base);
+  return (PyObject*) result;
+}
