@@ -4,6 +4,11 @@ title = "Changelog"
 
   [Node.py]: https://github.com/nodepy/nodepy
 
+## v0.1.7 (devtip)
+
+- `c4ddev run` now has options to start a specific C4D version
+- removed the `--exe` argument from `c4ddev run`
+
 ## v0.1.6
 
 - add `c4ddev pluginid` command

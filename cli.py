@@ -275,12 +275,53 @@ def pip(c4d, args):
 
 @main.command(context_settings={'ignore_unknown_options': True})
 @click.argument('args', nargs=-1, type=click.UNPROCESSED)
-@click.option('-e', '--exe', default='CINEMA 4D',
-    help='Name of the C4D executable to run. Defaults to "CINEMA 4D".')
-def run(exe, args):
+@click.option('--trs', is_flag=True, help='Start the TeamRender Server.')
+@click.option('--client', is_flag=True, help='Start the TeamRender Client.')
+@click.option('--bp', '--bodypaint', is_flag=True, help='Start BodyPaint.')
+@click.option('--cb', '--cinebench', is_flag=True, help='Start CineBench.')
+@click.option('--ls', '--license-server', is_flag=True, help='Start the License Server.')
+@click.option('--lite', is_flag=True, help='Start Cinema 4D Lite.')
+@click.option('--demo', is_flag=True, help='Start the Cinema 4D Demo.')
+@click.option('--student', is_flag=True, help='Start Cinema 4D Student.')
+@click.option('--cine-ae', is_flag=True, help='Start CineRenderAE.')
+@click.option('--cine-nem', is_flag=True, help='Start CineRenderNEM.')
+@click.option('--cli', is_flag=True, help='Start the Cinema 4D Commandline.')
+@click.pass_context
+def run(ctx, args, trs, client, bodypaint, cinebench, license_server, lite,
+        demo, student, cine_ae, cine_nem, cli):
   """
-  Starts C4D.
+  Starts Cinema 4D, or one of its sub-applications.
   """
+
+  if sum(map(bool, [trs, client, bodypaint, cinebench, license_server, lite,
+                    student, cine_ae, cine_nem, cli])) > 1:
+    ctx.fail('Incompatible arguments')
+
+  if trs:
+    exe = 'Cinema 4D TeamRender Server'
+  elif client:
+    exe = 'Cinema 4D TeamRender Client'
+  elif bodypaint:
+    exe = 'Bodypoint 3D'
+  elif cinebench:
+    exe = 'Cinebench'
+  elif license_server:
+    exe = 'Cinema 4D License Server'
+  elif lite:
+    exe = 'Cinema 4D Lite'
+  elif student:
+    exe = 'Cinema 4D Student'
+  elif cine_ae:
+    exe = 'CineRenderAE'
+  elif cine_nem:
+    exe = 'CineRenderNEM'
+  elif cli:
+    exe = 'Commandline'
+  else:
+    exe = 'Cinema 4D'
+
+  if demo:
+    exe += ' Demo'
 
   c4d = get_c4d_dir()
   if sys.platform.startswith('win32'):
