@@ -4,7 +4,12 @@ title = "Changelog"
 
   [Node.py]: https://github.com/nodepy/nodepy
 
-## v0.1.6 (development)
+## v0.1.7 (devtip)
+
+- `c4ddev run` now has options to start a specific C4D version
+- removed the `--exe` argument from `c4ddev run`
+
+## v0.1.6
 
 - add `c4ddev pluginid` command
 - fix `c4ddev build-loader` command and add `--blob,--no-blob` options
@@ -17,6 +22,7 @@ title = "Changelog"
 - add `c4ddev.am` module
 - fix `c4ddev pypkg` create directory if it doesnt exist
 - add `c4ddev init` command
+- add `c4ddev::PyBaseContainer_New()`
 
 ## v0.1.5
 
