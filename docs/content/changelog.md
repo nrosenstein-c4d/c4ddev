@@ -1,6 +1,6 @@
 +++
 title = "Changelog"
-ordering-priority = 0
+ordering-priority = 9
 +++
 
   [Node.py]: https://github.com/nodepy/nodepy
