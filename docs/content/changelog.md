@@ -8,6 +8,7 @@ title = "Changelog"
 
 - `c4ddev run` now has options to start a specific C4D version
 - removed the `--exe` argument from `c4ddev run`
+- add `c4ddev disable` and `c4ddev enable` commands
 
 ## v0.1.6
 

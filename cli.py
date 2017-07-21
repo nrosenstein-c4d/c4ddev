@@ -589,5 +589,79 @@ def init(ctx, description_names, object_names, tag_names, shader_names,
       write('res/strings_us/description/{}.str'.format(description), content)
 
 
+@main.command()
+@click.argument('plugin', required=False)
+@click.pass_context
+def disable(ctx, plugin):
+  """
+  Disable the Cinema 4D PLUGIN by moving it to a `plugins_disabled`
+  directory. Use the `c4ddev enable` command to reverse the process.
+  If PLUGIN is not the name of a directory in the Cinema 4D plugins
+  directory, the closest match will be used.
+
+  When no PLUGIN is specified, a list of the directories in the
+  plugins directory will be printed.
+  """
+
+  try:
+    path = get_c4d_dir()
+  except ValueError as e:
+    print('error:', e)
+    ctx.exit(1)
+
+  from_ = os.path.join(path, 'plugins')
+  to = os.path.join(path, 'plugins_disabled')
+
+  _enable_disable(ctx, from_, to, plugin)
+
+
+@main.command()
+@click.argument('plugin', required=False)
+@click.pass_context
+def enable(ctx, plugin):
+  """
+  Enable a disabled plugin.
+  """
+
+  try:
+    path = get_c4d_dir()
+  except ValueError as e:
+    print('error:', e)
+    ctx.exit(1)
+
+  from_ = os.path.join(path, 'plugins_disabled')
+  to = os.path.join(path, 'plugins')
+
+  _enable_disable(ctx, from_, to, plugin)
+
+
+def _enable_disable(ctx, from_, to, plugin):
+  if not os.path.isdir(from_):
+    print('error: directory "{}/" does not exist.', os.path.basename(from_))
+    ctx.exit(1)
+  if not plugin:
+    print('{}/'.format(os.path.basename(from_)))
+    for name in os.listdir(from_):
+      print('  -', name)
+  else:
+    choices = []
+    for name in os.listdir(from_):
+      if name.lower().startswith(plugin.lower()):
+        choices.append(name)
+    if not choices:
+      print('error: no match for "{}" in "{}/"'.format(plugin, os.path.basename(from_)))
+    elif len(choices) > 1:
+      print('error: multiple matches for "{}" in "{}/"'.format(plugin, os.path.basename(from_)))
+      for name in choices:
+        print('  -', name)
+    else:
+      if not os.path.isdir(to):
+        os.makedirs(to)
+      plugin = choices[0]
+      print('moving "{}" from "{}/" to "{}/"'.format(
+        plugin, os.path.basename(from_), os.path.basename(to)))
+      os.rename(os.path.join(from_, plugin), os.path.join(to, plugin))
+
+
 if require.main == module:
   main()
