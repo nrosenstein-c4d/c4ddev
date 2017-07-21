@@ -1,5 +1,6 @@
 +++
 title = "Getting Started"
+ordering-priority = 5
 +++
 
 ## Installing C4DDev

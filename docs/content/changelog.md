@@ -1,5 +1,6 @@
 +++
 title = "Changelog"
+ordering-priority = 0
 +++
 
   [Node.py]: https://github.com/nodepy/nodepy

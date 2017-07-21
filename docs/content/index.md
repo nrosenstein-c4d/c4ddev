@@ -1,16 +1,16 @@
 +++
-title = "C4DDev"
-type = "index"
+title = "Home"
+ordering-priority = 10
 +++
 
 The **C4DDev** project is a suite of tools and resources for Cinema 4D plugin
 developers. It aims to provide tools for rapid plugin prototyping,
 development, distribution and maintenance. These tools come in various forms:
 
-- [Cinema 4D Plugins]({{< ref "plugins.md" >}})
-- [Command-line Tools]({{< ref "cli.md" >}})
-- [Py4D API Extensions]({{< ref "apiext.md" >}})
-- How-To's and Guidelines
+- [[c4ddev/plugins]]
+- [[c4ddev/cli]]
+- [[c4ddev/api]]
+- [[c4ddev/resources]]
 
 Check out [Getting Started]({{< ref "getting-started.md" >}}) for how to get
 started with **C4DDev** and Cinema 4D plugin development.
