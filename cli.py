@@ -663,5 +663,58 @@ def _enable_disable(ctx, from_, to, plugin):
       os.rename(os.path.join(from_, plugin), os.path.join(to, plugin))
 
 
+@main.command()
+@click.argument('name')
+@click.option('-l', '--list', is_flag=True, help='Output a list of available licenses.')
+@click.option('--short/--long', default=True, help='Outputs the short or long license version (default is --short).')
+@click.option('--python', is_flag=True, help='Output the license as Python comments (#).')
+@click.option('--c', is_flag=True, help='Output the license as C comments (/* */).')
+@click.option('--java', is_flag=True, help='Output the license as Java comments (/** */)')
+@click.pass_context
+def license(ctx, name, list, short, python, c, java):
+  """
+  Output a license string, optionally formatted for a specific language.
+  """
+
+  directory = os.path.join(__directory__, 'licenses')
+  if list:
+    for name in sorted(os.listdir(directory)):
+      print(name)
+    return
+
+  directory = os.path.join(directory, name)
+  if not os.path.isdir(directory):
+    print('error: unsupported license: "{}"'.format(name), file=sys.stderr)
+    ctx.exit(1)
+
+  filename = 'LICENSE_SHORT.txt' if short else 'LICENSE.txt'
+  filename = os.path.join(directory, filename)
+  if short and not os.path.isfile(filename):
+    filename = os.path.join(directory, 'LICENSE.txt')
+
+  if python:
+    prefix = (None, '# ', '# ', None)
+  elif c:
+    prefix = (None, '/* ', ' * ', ' */')
+  elif java:
+    prefix = ('/**', ' * ', ' * ', '*/')
+  else:
+    prefix = (None, None, None, None)
+
+  with open(filename) as fp:
+    if prefix[0]:
+      print(prefix[0])
+    for index, line in enumerate(fp):
+      if index == 0 and prefix[1]:
+        print(prefix[1], end='')
+      elif index > 0 and prefix[2]:
+        print(prefix[2], end='')
+      print(line, end='')
+    if not line.endswith('\n'):
+      print()
+    if prefix[3]:
+      print(prefix[3])
+
+
 if require.main == module:
   main()
