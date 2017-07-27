@@ -353,7 +353,7 @@ def source_protector(ctx, filenames):
 
   if not filenames:
     ctx.fail('no input files')
-  args = ['--', '-nogui']
+  args = ['--cli', '--', '-nogui']
   for fname in filenames:
     args.append('-c4ddev-protect-source')
     args.append(os.path.abspath(fname))

@@ -32,6 +32,6 @@ def PluginMessage(msg, data):
       for filename in protect_files:
         filename = os.path.abspath(filename)
         print "[c4ddev INFO]: Calling Source Protector for %s" % repr(filename)
-        c4ddev.fileselect_put(filename)
+        c4ddev.FileSelectPut(filename)
         c4d.CallCommand(1023699)  # Source Protector
   return True
