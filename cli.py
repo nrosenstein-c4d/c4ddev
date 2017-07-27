@@ -637,7 +637,7 @@ def enable(ctx, plugin):
 
 def _enable_disable(ctx, from_, to, plugin):
   if not os.path.isdir(from_):
-    print('error: directory "{}/" does not exist.', os.path.basename(from_))
+    print('error: directory "{}/" does not exist.'.format(os.path.basename(from_)))
     ctx.exit(1)
   if not plugin:
     print('{}/'.format(os.path.basename(from_)))
