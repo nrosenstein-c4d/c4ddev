@@ -112,14 +112,18 @@ def main():
 @click.option('-d', '--res-dir', metavar='DIRECTORY', multiple=True,
     help='One or more resource directories to parse for symbols. If the '
     'option is not specified, `res/` will be used.')
-def symbols(format, outfile, res_dir):
+@click.option('--project-path',
+    help='Only with the FILE output format. Specifies the path relative to '
+    'the generated file which will be used as the project path.')
+def symbols(format, outfile, res_dir, project_path):
   """
   Extracts resource symbols.
   """
 
   if not res_dir:
     res_dir = ['res']
-  resource.export_symbols(format, res_dir, outfile=outfile)
+  settings = {'project_path': project_path}
+  resource.export_symbols(format, res_dir, outfile=outfile, settings=settings)
 
 
 @main.command()
