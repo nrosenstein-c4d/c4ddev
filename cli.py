@@ -112,14 +112,18 @@ def main():
 @click.option('-d', '--res-dir', metavar='DIRECTORY', multiple=True,
     help='One or more resource directories to parse for symbols. If the '
     'option is not specified, `res/` will be used.')
-def symbols(format, outfile, res_dir):
+@click.option('--project-path',
+    help='Only with the FILE output format. Specifies the path relative to '
+    'the generated file which will be used as the project path.')
+def symbols(format, outfile, res_dir, project_path):
   """
   Extracts resource symbols.
   """
 
   if not res_dir:
     res_dir = ['res']
-  resource.export_symbols(format, res_dir, outfile=outfile)
+  settings = {'project_path': project_path}
+  resource.export_symbols(format, res_dir, outfile=outfile, settings=settings)
 
 
 @main.command()
@@ -353,7 +357,7 @@ def source_protector(ctx, filenames):
 
   if not filenames:
     ctx.fail('no input files')
-  args = ['--', '-nogui']
+  args = ['--cli', '--', '-nogui']
   for fname in filenames:
     args.append('-c4ddev-protect-source')
     args.append(os.path.abspath(fname))
@@ -587,6 +591,133 @@ def init(ctx, description_names, object_names, tag_names, shader_names,
 
       content = 'STRINGTABLE {0} {{\n  {0} "{0}";\n}}\n'.format(description)
       write('res/strings_us/description/{}.str'.format(description), content)
+
+
+@main.command()
+@click.argument('plugin', required=False)
+@click.pass_context
+def disable(ctx, plugin):
+  """
+  Disable the Cinema 4D PLUGIN by moving it to a `plugins_disabled`
+  directory. Use the `c4ddev enable` command to reverse the process.
+  If PLUGIN is not the name of a directory in the Cinema 4D plugins
+  directory, the closest match will be used.
+
+  When no PLUGIN is specified, a list of the directories in the
+  plugins directory will be printed.
+  """
+
+  try:
+    path = get_c4d_dir()
+  except ValueError as e:
+    print('error:', e)
+    ctx.exit(1)
+
+  from_ = os.path.join(path, 'plugins')
+  to = os.path.join(path, 'plugins_disabled')
+
+  _enable_disable(ctx, from_, to, plugin)
+
+
+@main.command()
+@click.argument('plugin', required=False)
+@click.pass_context
+def enable(ctx, plugin):
+  """
+  Enable a disabled plugin.
+  """
+
+  try:
+    path = get_c4d_dir()
+  except ValueError as e:
+    print('error:', e)
+    ctx.exit(1)
+
+  from_ = os.path.join(path, 'plugins_disabled')
+  to = os.path.join(path, 'plugins')
+
+  _enable_disable(ctx, from_, to, plugin)
+
+
+def _enable_disable(ctx, from_, to, plugin):
+  if not os.path.isdir(from_):
+    print('error: directory "{}/" does not exist.'.format(os.path.basename(from_)))
+    ctx.exit(1)
+  if not plugin:
+    print('{}/'.format(os.path.basename(from_)))
+    for name in os.listdir(from_):
+      print('  -', name)
+  else:
+    choices = []
+    for name in os.listdir(from_):
+      if name.lower().startswith(plugin.lower()):
+        choices.append(name)
+    if not choices:
+      print('error: no match for "{}" in "{}/"'.format(plugin, os.path.basename(from_)))
+    elif len(choices) > 1:
+      print('error: multiple matches for "{}" in "{}/"'.format(plugin, os.path.basename(from_)))
+      for name in choices:
+        print('  -', name)
+    else:
+      if not os.path.isdir(to):
+        os.makedirs(to)
+      plugin = choices[0]
+      print('moving "{}" from "{}/" to "{}/"'.format(
+        plugin, os.path.basename(from_), os.path.basename(to)))
+      os.rename(os.path.join(from_, plugin), os.path.join(to, plugin))
+
+
+@main.command()
+@click.argument('name')
+@click.option('-l', '--list', is_flag=True, help='Output a list of available licenses.')
+@click.option('--short/--long', default=True, help='Outputs the short or long license version (default is --short).')
+@click.option('--python', is_flag=True, help='Output the license as Python comments (#).')
+@click.option('--c', is_flag=True, help='Output the license as C comments (/* */).')
+@click.option('--java', is_flag=True, help='Output the license as Java comments (/** */)')
+@click.pass_context
+def license(ctx, name, list, short, python, c, java):
+  """
+  Output a license string, optionally formatted for a specific language.
+  """
+
+  directory = os.path.join(__directory__, 'licenses')
+  if list:
+    for name in sorted(os.listdir(directory)):
+      print(name)
+    return
+
+  directory = os.path.join(directory, name)
+  if not os.path.isdir(directory):
+    print('error: unsupported license: "{}"'.format(name), file=sys.stderr)
+    ctx.exit(1)
+
+  filename = 'LICENSE_SHORT.txt' if short else 'LICENSE.txt'
+  filename = os.path.join(directory, filename)
+  if short and not os.path.isfile(filename):
+    filename = os.path.join(directory, 'LICENSE.txt')
+
+  if python:
+    prefix = (None, '# ', '# ', None)
+  elif c:
+    prefix = (None, '/* ', ' * ', ' */')
+  elif java:
+    prefix = ('/**', ' * ', ' * ', '*/')
+  else:
+    prefix = (None, None, None, None)
+
+  with open(filename) as fp:
+    if prefix[0]:
+      print(prefix[0])
+    for index, line in enumerate(fp):
+      if index == 0 and prefix[1]:
+        print(prefix[1], end='')
+      elif index > 0 and prefix[2]:
+        print(prefix[2], end='')
+      print(line, end='')
+    if not line.endswith('\n'):
+      print()
+    if prefix[3]:
+      print(prefix[3])
 
 
 if require.main == module:

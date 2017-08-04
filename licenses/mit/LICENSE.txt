@@ -1,26 +1,6 @@
-+++
-title = "C4DDev"
-type = "index"
-+++
-
-The **C4DDev** project is a suite of tools and resources for Cinema 4D plugin
-developers. It aims to provide tools for rapid plugin prototyping,
-development, distribution and maintenance. These tools come in various forms:
-
-- [Cinema 4D Plugins]({{< ref "plugins.md" >}})
-- [Command-line Tools]({{< ref "cli.md" >}})
-- [Py4D API Extensions]({{< ref "apiext.md" >}})
-- How-To's and Guidelines
-
-Check out [Getting Started]({{< ref "getting-started.md" >}}) for how to get
-started with **C4DDev** and Cinema 4D plugin development.
-
-## License
-
-```
 The MIT License (MIT)
 
-Copyright (c) 2014  Niklas Rosenstein
+Copyright (c) <Year> <Name>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -39,4 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-```

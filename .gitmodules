@@ -1,6 +1,3 @@
-[submodule "docs/themes/hugo-material-docs"]
-	path = docs/themes/hugo-material-docs
-	url = git@github.com:digitalcraftsman/hugo-material-docs.git
 [submodule "craftr/modules/maxon.c4d"]
 	path = craftr/modules/maxon.c4d
 	url = https://github.com/craftr-build/NiklasRosenstein.maxon.c4d.git

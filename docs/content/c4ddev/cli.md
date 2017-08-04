@@ -33,6 +33,29 @@ by omitting the `--global` option and adding `nodepy_modules/.bin` to your
       source-protector  Protect .pyp files (requires APEX).
       symbols           Extracts resource symbols.
 
+## `c4ddev disable`
+
+    Usage: c4ddev.exe disable [OPTIONS] [PLUGIN]
+
+      Disable the Cinema 4D PLUGIN by moving it to a `plugins_disabled`
+      directory. Use the `c4ddev enable` command to reverse the process. If
+      PLUGIN is not the name of a directory in the Cinema 4D plugins directory,
+      the closest match will be used.
+
+      When no PLUGIN is specified, a list of the directories in the plugins
+      directory will be printed.
+
+    Options:
+      --help  Show this message and exit.
+
+## `c4ddev enable`
+
+    Usage: c4ddev.exe enable [OPTIONS] [PLUGIN]
+
+      Enable a disabled plugin.
+
+    Options:
+      --help  Show this message and exit.
 
 ## `c4ddev build-loader`
 
@@ -82,6 +105,28 @@ localimport = require.context.binding('localimport')
       --overwrite
       --help               Show this message and exit.
 
+## `c4ddev license`
+
+  Usage: c4ddev.exe license [OPTIONS] NAME
+
+    Output a license string, optionally formatted for a specific language.
+
+  Options:
+    -l, --list        Output a list of available licenses.
+    --short / --long  Outputs the short or long license version (default is
+                      --short).
+    --python          Output the license as Python comments (#).
+    --c               Output the license as C comments (/* */).
+    --java            Output the license as Java comments (/** */)
+    --help            Show this message and exit.
+
+Currently supported license types:
+
+* apache-v2
+* gpl-v2
+* gpl-v3
+* mit
+* unlicense
 
 ## `c4ddev get-pip`
 

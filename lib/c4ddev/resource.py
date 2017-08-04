@@ -74,6 +74,7 @@ TEMPLATE_FILE = textwrap.dedent('''
     _frame = _frame.f_back
 
   project_path = os.path.dirname(_frame.f_globals['__file__'])
+  project_path = os.path.normpath(os.path.join(project_path, {{project_path}}))
   resource = _frame.f_globals['__res__']
 
   def string(name, *subst, **kwargs):
@@ -202,7 +203,7 @@ def get_resource_files(res_dir):
   return results
 
 
-def export_symbols(format, res_dir=None, outfile=None):
+def export_symbols(format, res_dir=None, outfile=None, settings=None):
   '''
   Parses the symbols of one or more resource directories
   and formats them according to *format*.
@@ -217,6 +218,8 @@ def export_symbols(format, res_dir=None, outfile=None):
   if format not in ('json', 'file', 'class'):
     raise ValueError('invalid format: {0!r}'.format(format))
 
+  if settings is None:
+    settings = {}
   if res_dir is None:
     res_dir = 'res'
 
@@ -260,24 +263,26 @@ def export_symbols(format, res_dir=None, outfile=None):
   fn = globals()['format_symbols_' + format]
   if outfile:
     with open(outfile, 'w') as fp:
-      fn(symbols, desc_symbols, fp)
+      fn(symbols, desc_symbols, fp, settings)
   else:
-    fn(symbols, desc_symbols, sys.stdout)
+    fn(symbols, desc_symbols, sys.stdout, settings)
     print()
 
 
-def format_symbols_json(symbols, desc_symbols, fp):
+def format_symbols_json(symbols, desc_symbols, fp, settings):
   all_syms = symbols.copy()
   all_syms.update(desc_symbols)
   json.dump(all_syms, fp)
 
 
-def format_symbols_file(symbols, desc_symbols, fp):
+def format_symbols_file(symbols, desc_symbols, fp, settings):
+  project_path = settings.get('project_path') or ''
   formatted = preformat_symbols(symbols, desc_symbols)
-  print(render_template(TEMPLATE_FILE, symbols=formatted), file=fp)
+  print(render_template(TEMPLATE_FILE, symbols=formatted,
+    project_path=repr(project_path)), file=fp)
 
 
-def format_symbols_class(symbols, desc_symbols, fp):
+def format_symbols_class(symbols, desc_symbols, fp, settings):
   formatted = preformat_symbols(symbols, desc_symbols)
   print(render_template(TEMPLATE_CLASS, symbols=formatted), file=fp)
 
