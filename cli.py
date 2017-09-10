@@ -290,9 +290,10 @@ def pip(c4d, args):
 @click.option('--cine-ae', is_flag=True, help='Start CineRenderAE.')
 @click.option('--cine-nem', is_flag=True, help='Start CineRenderNEM.')
 @click.option('--cli', is_flag=True, help='Start the Cinema 4D Commandline.')
+@click.option('--lldb', is_flag=True, help='Run C4D through lldb.')
 @click.pass_context
 def run(ctx, args, trs, client, bodypaint, cinebench, license_server, lite,
-        demo, student, cine_ae, cine_nem, cli):
+        demo, student, cine_ae, cine_nem, cli, lldb):
   """
   Starts Cinema 4D, or one of its sub-applications.
   """
@@ -335,13 +336,14 @@ def run(ctx, args, trs, client, bodypaint, cinebench, license_server, lite,
     cmd = [exe] + list(args)
     cmd = 'start /b /wait "parentconsole" ' + ' '.join(quote(x) for x in cmd)
   elif sys.platform.startswith('darwin'):
-    if exe.endswith('.app'):
-      name = exe = exe[:-4]
-    exe = os.path.join(c4d, exe + '.app', 'Contents', 'MacOS', name)
-    cmd = [exe] + args
+    exe = os.path.join(c4d, exe + '.app', 'Contents', 'MacOS', exe)
+    cmd = [exe] + list(args)
   else:
     print('error: unsupported platform:', sys.platform)
     sys.exit(1)
+
+  if lldb:
+    cmd = ['lldb', '--'] + cmd
 
   res = subprocess.call(cmd, shell=isinstance(cmd, str))
   sys.exit(res)
