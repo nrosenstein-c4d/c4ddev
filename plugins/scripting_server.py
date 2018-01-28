@@ -116,7 +116,7 @@ class SocketFile(object):
 #                    Request Handling and Server thread
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-import sys, codecs, socket, hashlib, threading
+import sys, os, codecs, socket, hashlib, threading
 
 class SourceObject(object):
     """
