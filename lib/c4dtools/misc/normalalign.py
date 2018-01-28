@@ -26,7 +26,10 @@ import c4d
 import math
 
 from operator import xor
-PolygonObjectInfo = require('../utils').PolygonObjectInfo
+if 'require' in globals():
+  PolygonObjectInfo = require('../utils').PolygonObjectInfo
+else:
+  from ..utils import PolygonObjectInfo
 
 
 def test_object_normals(op, info=None, logger=None):

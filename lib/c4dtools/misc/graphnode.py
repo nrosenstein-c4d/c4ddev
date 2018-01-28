@@ -22,7 +22,11 @@
 
 import c4d
 from c4d.modules import graphview as gv
-vbbmid = require('../math').vbbmid
+
+if 'require' in globals():
+  vbbmid = require('../math').vbbmid
+else:
+  from ..math import vbbmid
 
 
 class GraphNode(object):

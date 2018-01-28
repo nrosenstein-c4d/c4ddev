@@ -26,7 +26,10 @@ import abc
 import c4d
 import weakref
 
-AABB = require('./aabb').AABB
+if 'require' in globals():
+  AABB = require('./aabb').AABB
+else:
+  from .aabb import AABB
 
 
 def vector_variants(v):

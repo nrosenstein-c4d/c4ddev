@@ -24,7 +24,10 @@
 import c4d
 import warnings
 
-OrderedDict = require('./structures/ordereddict')
+if 'require' in globals():
+  OrderedDict = require('./structures/ordereddict')
+else:
+  from .structures.ordereddict import OrderedDict
 
 # General Helpers
 

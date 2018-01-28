@@ -23,8 +23,11 @@
 import c4d
 import collections
 
-UndoHandler = require('./utils').UndoHandler
-find_root = require('./utils').find_root
+if 'require' in globals():
+  UndoHandler = require('./utils').UndoHandler
+  find_root = require('./utils').find_root
+else:
+  from .utils import UndoHandler, find_root
 
 
 class Error(Exception):

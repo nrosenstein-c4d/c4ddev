@@ -25,9 +25,11 @@ aligned bounding box of an object or a set of objects. '''
 import c4d
 from c4d import Vector
 
-vmin = require('../math').vmin
-vmax = require('../math').vmax
-
+if 'require' in globals():
+  vmin = require('../math').vmin
+  vmax = require('../math').vmax
+else:
+  from ..math import vmin, vmax
 
 class AABB(object):
   ''' This class is used to compute the axis aligned bounding box of
