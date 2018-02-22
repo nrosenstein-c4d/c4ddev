@@ -22,6 +22,13 @@ The command-line tools are compatible with both Python 2 and 3.
 
 ## Features
 
+__Prototyping__
+
+* A better version of the Python Generator object which allows you to
+  implement `ObjectData.Draw()` inside Cinema 4D
+* A Python Shader that allows you to prototype Python shader plugins
+* A Python ID (very early WIP!! Contributions are welcome)
+
 __Description Resources__
 
 * A tool to generate unicode escape code sequences compatible with Cinema
