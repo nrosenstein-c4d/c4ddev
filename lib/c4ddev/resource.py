@@ -1,3 +1,4 @@
+# coding: utf8
 # Copyright (C) 2016  Niklas Rosenstein
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -22,21 +23,20 @@ Utilities for Cinema 4D resource symbols.
 """
 
 from __future__ import print_function
+from nr import strex
 
 import collections
 import codecs
 import errno
 import glob
+import json
 import os
 import re
 import string
 import sys
 import textwrap
 
-from nr.parse import strex
-
-import json
-with open(os.path.join(__directory__, '../../package.json')) as fp:
+with open(os.path.join(__file__, '../../../package.json')) as fp:
   __version__ = json.load(fp)['version']
 
 TEMPLATE_CLASS = textwrap.dedent('''
@@ -75,7 +75,7 @@ TEMPLATE_FILE = textwrap.dedent('''
 
   project_path = os.path.dirname(_frame.f_globals['__file__'])
   project_path = os.path.normpath(os.path.join(project_path, {{project_path}}))
-  resource = _frame.f_globals['__res__']
+  resource = __res__ = _frame.f_globals['__res__']
 
   def string(name, *subst, **kwargs):
     disable = kwargs.pop('disable', False)

@@ -18,17 +18,17 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+
+from weakref import ref
+from c4ddev import res
+from . import undotree, utils
+from .utils import xor
+
 import os
 import sys
 import c4d
 import time
 
-from weakref import ref
-
-res = require('c4ddev/res')
-undotree = require('./undotree')
-utils = require('./utils')
-xor = utils.xor
 
 class ScriptEditor(c4d.gui.GeDialog):
     r""" This class implements a Script Editor which can be used

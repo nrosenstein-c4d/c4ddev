@@ -19,14 +19,14 @@
 # THE SOFTWARE.
 
 from __future__ import print_function
+from c4ddev import res
+__res__ = res.__res__
+
 import c4d
 import os
 import traceback
 import types
 
-__res__ = require('c4ddev/__res__')
-utils = require('c4ddev/utils')
-res = require('c4ddev/res')
 
 class PyObjectEditor(c4d.gui.GeDialog):
     DRAWHELPER_EDITOR   = 10001
@@ -79,7 +79,7 @@ class PyObject(c4d.plugins.ObjectData):
         self.code_hash = 0
 
     def Init(self, op):
-        with open(os.path.join(utils.plugin_dir, 'res', 'PyObject.py')) as fp:
+        with open(res.path('res/PyObject.py')) as fp:
             op[res.NR_PYOBJECT_SOURCE] = fp.read()
         return True
 
@@ -124,7 +124,7 @@ class PyObject(c4d.plugins.ObjectData):
 
     @classmethod
     def Register(cls):
-        icon = utils.load_resource_bitmap('res', 'icons', 'PyDrawHelper.tif')
+        icon = res.bitmap('res', 'icons', 'PyDrawHelper.tif')
         info = c4d.OBJECT_MODIFIER | c4d.OBJECT_GENERATOR | c4d.OBJECT_INPUT |\
                c4d.OBJECT_PARTICLEMODIFIER | c4d.OBJECT_CALL_ADDEXECUTION
         c4d.plugins.RegisterObjectPlugin(

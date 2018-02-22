@@ -1,4 +1,3 @@
-#!node.py
 # Copyright (C) 2016  Niklas Rosenstein
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,11 +22,12 @@ from __future__ import print_function
 from six.moves import input
 from six.moves.configparser import SafeConfigParser
 from getpass import getpass
+from c4ddev import resource, pypkg as _pypkg
+from c4ddev import __version__ as version
 
 import bs4
 import click
 import json
-import nodepy
 import os
 import re
 import requests
@@ -44,12 +44,6 @@ try:
   from shlex import quote as _quote
 except ImportError:
   from pipes import quote as _quote
-
-with open(os.path.join(__directory__, 'package.json')) as fp:
-  version = json.load(fp)['version']
-
-resource = require('./lib/c4ddev/resource')
-_pypkg = require('./lib/c4ddev/pypkg')
 
 
 def quote(s):
@@ -190,46 +184,35 @@ def pypkg(config):
     _pypkg.purge(egg.files)
 
 
-@main.command("build-loader")
-@click.option('--blob/--no-blob', is_flag=True, default=True)
-@click.option('-e', '--entry-point', default='entrypoint', metavar='ENTRYPOINT')
-@click.option('-c', '--compress', is_flag=True)
-@click.option('-m', '--minify', is_flag=True)
+@main.command()
 @click.option('-o', '--output', metavar='FILENAME')
-def build_loader(blob, entry_point, compress, minify, output):
+def bootstrapper(output):
   """
-  Generate a Cinema 4D Python plugin that uses Node.py to load an entrypoint.
+  Generates a Cinema 4D Python Plugin file that contains the the latest
+  localimport bootstrapper code. Requires an internet connection.
   """
 
-  build_standalone = require('@nodepy/standalone-builder').build
+  url = 'https://gist.githubusercontent.com/NiklasRosenstein/f5690d8f36bbdc8e5556/raw/localimport-blob-mcw99.py'
+  localimport_code = requests.get(url).text
 
   template = textwrap.dedent('''
-  # Cinema 4D Python Plugin Loader
-  # Generated with c4ddev/scripts/build-loader.py v{version}
+    import os, sys
+    project_dir = os.path.dirname(__file__)
+    lib_archive = os.path.join(project_dir, 'lib-' + sys.version[:3].replace('.', '-') + '.egg')
+    lib_dir = os.path.join(project_dir, 'lib')
+    if os.path.join(lib_dir):  # During development
+      importer = localimport(lib_dir)
+    else:  # Release
+      importer = localimport(lib_archive)
 
-  # Node.py v{nodepy_version}
-  {nodepy_standalone_blob}
+    with importer:
+      from my_plugin import main
+      main.__res__ = __res__
+      if __name__ == '__main__':
+        main.main()
+  ''').strip()
 
-  import os
-  directory = os.path.dirname(__file__)
-  context = nodepy.Context(directory)
-  context.register_binding('nodepy', nodepy)
-  context.register_binding('localimport', nodepy.localimport)
-  with context:
-    module = context.require({entry_point!r}, directory, is_main=True, exec_=False, exports=False)
-    module.namespace.__res__ = __res__
-    module.exec_()
-
-  if hasattr(module.namespace, 'PluginMessage'):
-    PluginMessage = module.namespace.PluginMessage
-  ''').lstrip()
-
-  result = template.format(
-    version=version,
-    nodepy_version=nodepy.__version__,
-    nodepy_standalone_blob = build_standalone(
-        compress=compress, minify=minify, fullblob=True, blob=blob),
-    entry_point=str(entry_point))
+  result = localimport_code + '\n\n' + template
 
   if output:
     with open(output, 'w') as fp:
@@ -667,60 +650,3 @@ def _enable_disable(ctx, from_, to, plugin):
       print('moving "{}" from "{}/" to "{}/"'.format(
         plugin, os.path.basename(from_), os.path.basename(to)))
       os.rename(os.path.join(from_, plugin), os.path.join(to, plugin))
-
-
-@main.command()
-@click.argument('name')
-@click.option('-l', '--list', is_flag=True, help='Output a list of available licenses.')
-@click.option('--short/--long', default=True, help='Outputs the short or long license version (default is --short).')
-@click.option('--python', is_flag=True, help='Output the license as Python comments (#).')
-@click.option('--c', is_flag=True, help='Output the license as C comments (/* */).')
-@click.option('--java', is_flag=True, help='Output the license as Java comments (/** */)')
-@click.pass_context
-def license(ctx, name, list, short, python, c, java):
-  """
-  Output a license string, optionally formatted for a specific language.
-  """
-
-  directory = os.path.join(__directory__, 'licenses')
-  if list:
-    for name in sorted(os.listdir(directory)):
-      print(name)
-    return
-
-  directory = os.path.join(directory, name)
-  if not os.path.isdir(directory):
-    print('error: unsupported license: "{}"'.format(name), file=sys.stderr)
-    ctx.exit(1)
-
-  filename = 'LICENSE_SHORT.txt' if short else 'LICENSE.txt'
-  filename = os.path.join(directory, filename)
-  if short and not os.path.isfile(filename):
-    filename = os.path.join(directory, 'LICENSE.txt')
-
-  if python:
-    prefix = (None, '# ', '# ', None)
-  elif c:
-    prefix = (None, '/* ', ' * ', ' */')
-  elif java:
-    prefix = ('/**', ' * ', ' * ', '*/')
-  else:
-    prefix = (None, None, None, None)
-
-  with open(filename) as fp:
-    if prefix[0]:
-      print(prefix[0])
-    for index, line in enumerate(fp):
-      if index == 0 and prefix[1]:
-        print(prefix[1], end='')
-      elif index > 0 and prefix[2]:
-        print(prefix[2], end='')
-      print(line, end='')
-    if not line.endswith('\n'):
-      print()
-    if prefix[3]:
-      print(prefix[3])
-
-
-if require.main == module:
-  main()

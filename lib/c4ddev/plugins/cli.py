@@ -1,14 +1,6 @@
-# Copyright (C) 2015 Niklas Rosenstein
-# All rights reserved.
 
-import c4d
-import os
-import sys
-
-try:
-  import c4ddev
-except ImportError as exc:
-  c4ddev = None
+import c4d, os, sys
+import c4ddev
 
 def PluginMessage(msg, data):
   if msg == c4d.C4DPL_COMMANDLINEARGS:
@@ -24,11 +16,11 @@ def PluginMessage(msg, data):
           print "[c4ddev ERROR]: -c4ddev-protect-source missing argument."
       else:
         index += 1
-    if not c4ddev:
-      print "[c4ddev ERROR]: C4DDev C++ extensions are not installed, " \
-            "can not protect source file(s)."
-      return False
-    else:
+    if protect_files:
+      if not c4ddev.has_cpp_extensions:
+        print "[c4ddev ERROR]: C4DDev C++ extensions are not installed, " \
+              "can not protect source file(s)."
+        return False
       for filename in protect_files:
         filename = os.path.abspath(filename)
         print "[c4ddev INFO]: Calling Source Protector for %s" % repr(filename)

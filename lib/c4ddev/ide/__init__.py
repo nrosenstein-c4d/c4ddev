@@ -23,9 +23,9 @@ Contents of this package can be used to extend the plugin and to have
 access to the underlying data and functions.
 '''
 
-res = require('c4ddev/res')
-util = require('./util')
-ScriptEditor = require('./script').ScriptEditor
+from . import gui
+from .script import ScriptEditor
+from c4ddev import res
 
 import os
 import sys
@@ -123,7 +123,7 @@ class EditorWindow(c4d.gui.GeDialog):
     super(EditorWindow, self).__init__()
     self.documents = []
     self.active_document = -1
-    self.tabview = util.TabView(self)
+    self.tabview = gui.TabView(self)
     self.new_document()
 
   def _update(self):

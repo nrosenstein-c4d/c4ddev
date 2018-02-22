@@ -1,84 +1,67 @@
-<img src="logo.png" align="right">
+![](.assets/titlepic.png)
 
-# C4DDev
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-C4DDev is a project that provides powerful tools and knowledge to Cinema 4D
-C++ and Python plugin developers. Check out the [documentation][] for detailed
-information on what C4DDev can do for you. It also contains a number of
-knowledge resources.
-
-  [documentation]: https://niklasrosenstein.github.io/c4ddev/
-
-## What is C4DDev?
-
-3 things.
-
-- A command-line tool
-- A Cinema 4D plugin
-- A knowledge resource
-
-The __Command-line Tools__ allow you to extract resource symbols in Python
-syntax, prepare third-party Python modules for distribution, install and run
-Pip in Python for Cinema 4D, start C4D from the command-line easily, and more.
-
-The __Cinema 4D plugin__ provides you with useful tools such as escaping
-unicode characters for Cinema 4D description stringtables, objects and
-shaders for rapid prototyping and a small integrated development environment.
-
-Additionally, you can use C4DDev to easily load an optimized version of the
-`localimport` context manager into a script, allowing you to use additional
-Python modules in Python scripts and generators. In the below example, the
-`twitter` module can be either in the same directory as your Cinema 4D scene
-file or in a `python/` subdirectory.
-
-```python
-import c4ddev
-localimport = c4ddev.require('c4ddev/scripting/localimport')
-
-with localimport(doc):
-  import twitter
-```
+The C4DDev project aims to make the development of Cinema 4D plugins easier.
+It comes with a bunch of utilities in the form of C4D Plugins and command-line
+tools, as well as a C++ Py4D API extensions and knowledge resources.  
+Check out the [Documentation](https://niklasrosenstein.github.io/c4ddev/) for
+detailed information.
 
 ## Installation
 
-To install the command-line tools, you need [Node.Py][].
+C4DDev has two separately installable components: A Cinema 4D plugin and
+a command-line interface. To install the plugin, download the latest release
+from the [Releases Page](https://github.com/NiklasRosenstein/c4ddev/releases)
+and unpack it into the plugins directory. The command-line tools can be
+installed from [PyPI](https://pypi.python.org/pypi/c4ddev). If you want to
+make sure you always have the latest version installed, you should install
+from the Git repository's master branch instead.
 
-    $ pip install node.py
-    $ nodepy-pm install --global @NiklasRosenstein/c4ddev
+The command-line tools are compatible with both Python 2 and 3.
 
-*(Note: You can also install the command-line tools locally for your project
-by omitting the `--global` option and adding `nodepy_modules/.bin` to your
-`PATH`)*
+## Features
 
-  [Node.Py]: https://github.com/nodepy/nodepy
+__Description Resources__
 
-To install the Cinema 4D plugin, download the [latest release][releases]
-and unpack it into your Cinema 4D plugins folder.
+* A tool to generate unicode escape code sequences compatible with Cinema
+  4D STRINGTABLE files (Unicode Escape Tool Plugin)
 
-  [releases]: https://github.com/NiklasRosenstein/c4ddev/releases
+__Python Extensions__
 
-## License
+* Provides new functions to the Cinema 4D Python API implemented in C++ for
+  functionality that was not formerly accessible in Cinema 4D in the `c4ddev`
+  module (only if C++ extensions are available, which they are when installing
+  a release from the Releases page if not otherwise noted)
 
-```
-The MIT License (MIT)
+__Python Plugins__
 
-Copyright (c) 2016  Niklas Rosenstein
+  [localimport]: https://github.com/NiklasRosenstein/py-localimport
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+* A command-line tool to generate a Python plugin with the [localimport]
+  bootstrapping code &ndash; `c4ddev bootstrapper`
+* A command-line tool to generate Python code or JSON data from the resource
+  symbols of your plugin &ndash; `c4ddev symbols`
+* A command-line tool to build a byte-compiled distribution of additional
+  Python modules as `.egg` files. &ndash; `c4ddev pypkg`
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+__Python Scripting__
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
+* Makes the `c4ddev`, `c4dtools` and [`localimport`][localimport] modules
+  globally available.
+* A context-manager to import Python modules from Python Objects/Expression
+  Tags without polluting the global importer state, which also automatically
+  re-imports the modules if you modified the code. &ndash; `c4ddev.scripting.localimport()`
+
+## Building C++ Extensions
+
+  [Craftr]: https://github.com/craftr-build/craftr
+
+To build the C++ Py4D API extensions, you need a compiler and the [Craftr]
+build system installed on your system.
+
+> **To do**: Document the build process with Craftr.
+
+---
+
+<p align="center">Copyright &copy; 2018  Niklas Rosenstein</p>

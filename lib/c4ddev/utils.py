@@ -22,16 +22,7 @@ import os
 import sys
 import c4d
 import weakref
-
-plugin_dir = os.path.normpath(os.path.join(__directory__, '..', '..'))
-
-
-def load_resource_bitmap(*parts):
-  filename = os.path.join(plugin_dir, *parts)
-  bmp = c4d.bitmaps.BaseBitmap()
-  if bmp.InitWith(filename)[0] != c4d.IMAGERESULT_OK:
-    bmp = None
-  return bmp
+from . import res
 
 
 def register_command(cmd):

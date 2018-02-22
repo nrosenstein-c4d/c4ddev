@@ -25,9 +25,8 @@ of Cinema 4D.
 .. code:: python
 
   import c4d
-  import require
+  from c4ddev.scripting.localimport import localimport
 
-  localimport = require('c4ddev/scripting/localimport')
   with localimport(doc):
     import twitter
 
@@ -36,7 +35,8 @@ of Cinema 4D.
 """
 
 import os
-_localimport = require.context.binding('localimport').localimport
+import localimport as _localimport
+
 importer_cache = {}
 
 def localimport(doc):
@@ -53,9 +53,7 @@ def localimport(doc):
 
   importer = importer_cache.get(path)
   if not importer:
-    importer = _localimport(['.', './python'], path)
+    importer = _localimport.localimport(['.', './python'], path)
     importer_cache[path] = importer
 
   return importer
-
-exports = localimport

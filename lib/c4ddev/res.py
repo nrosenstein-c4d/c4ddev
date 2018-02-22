@@ -1,5 +1,5 @@
 
-# Automatically generated with c4ddev v0.1.3.
+# Automatically generated with c4ddev v0.1.6.
 
 import os
 import sys
@@ -10,7 +10,8 @@ while _frame and not '__res__' in _frame.f_globals:
   _frame = _frame.f_back
 
 project_path = os.path.dirname(_frame.f_globals['__file__'])
-resource = _frame.f_globals['__res__']
+project_path = os.path.normpath(os.path.join(project_path, ''))
+resource = __res__ = _frame.f_globals['__res__']
 
 def string(name, *subst, **kwargs):
   disable = kwargs.pop('disable', False)

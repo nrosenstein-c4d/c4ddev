@@ -1,3 +1,6 @@
 [submodule "craftr/modules/maxon.c4d"]
 	path = craftr/modules/maxon.c4d
 	url = https://github.com/craftr-build/NiklasRosenstein.maxon.c4d.git
+[submodule "lib/py-localimport"]
+	path = lib/py-localimport
+	url = git@github.com:NiklasRosenstein/py-localimport

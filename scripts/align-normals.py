@@ -3,8 +3,7 @@
 # self-intersecting.
 
 import c4d
-import c4ddev
-align = c4ddev.require('c4dtools/misc/normalalign')
+from c4dtools.misc import normalalign
 
 def main():
   if not op or not op.CheckType(c4d.Opolygon):
@@ -16,7 +15,7 @@ def main():
   doc.EndUndo()
   c4d.EventAdd()
 
-  align.align_object_normals(op)
+  normalalign.align_object_normals(op)
 
 if __name__ == '__main__':
   main()

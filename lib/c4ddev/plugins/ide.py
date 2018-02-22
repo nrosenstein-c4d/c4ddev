@@ -18,10 +18,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+from c4ddev import ide, res
+from c4ddev.ide import ScriptEditor
+
 import c4d
-res = require('c4ddev/res')
-ide = require('c4ddev/ide')
-ScriptEditor = ide.ScriptEditor
 
 
 class OpenScriptEditor(c4d.plugins.CommandData):

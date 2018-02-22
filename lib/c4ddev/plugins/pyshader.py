@@ -19,16 +19,16 @@
 # THE SOFTWARE.
 
 from __future__ import print_function
-__res__ = require('c4ddev/__res__')
+from c4ddev import res
+from zlib import adler32
+from .pyobject import PyObjectEditor
 
 import os, sys
 import c4d
 import traceback
 import types
 
-from zlib import adler32
-utils = require('c4ddev/utils')
-res = require('c4ddev/res')
+__res__ = res.__res__
 
 
 class PyShader(c4d.plugins.ShaderData):
@@ -39,7 +39,7 @@ class PyShader(c4d.plugins.ShaderData):
   PluginName = 'PyShader'
   PluginFlags = 0
   PluginDesc = 'nr_pyshader'
-  Editor = require('./pyobject').PyObjectEditor(None, title='PyShader Editor', target_id=res.NR_PYSHADER_CODE)
+  Editor = PyObjectEditor(None, title='PyShader Editor', target_id=res.NR_PYSHADER_CODE)
 
   def __init__(self):
     super(PyShader, self).__init__()
@@ -63,7 +63,7 @@ class PyShader(c4d.plugins.ShaderData):
         sh[res.NR_PYSHADER_INFO] = ''
 
   def Init(self, sh):
-    with open(os.path.join(utils.plugin_dir, 'res', 'PyShader.py')) as fp:
+    with open(res.path('res/PyShader.py')) as fp:
       sh[res.NR_PYSHADER_CODE] = fp.read()
     return True
 
