@@ -20,6 +20,10 @@ from the Git repository's master branch instead.
 
 The command-line tools are compatible with both Python 2 and 3.
 
+The Cinema 4D Plugins can be found in the Script > C4DDev menu.
+
+![](https://i.imgur.com/bz3OHnD.png)
+
 ## Features
 
 __Prototyping__
