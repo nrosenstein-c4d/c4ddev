@@ -13,23 +13,17 @@ Cinema 4D scene file and only make sure that **C4DDev** is installed if
 you move the scene around.
 
 ```python
-from c4ddev import require
-localimport = require('c4ddev/scripting/localimport')
 # This is a version of localimport that is tuned to work from inside any
 # scripting context in Cinema 4D (Tag, Object, XPresso Node).
+from c4ddev.scripting.localimport import localimport
 
 with localimport(doc):
   import twitter
 
 def main():
   # TODO: Some clever example
+  pass
 ```
-
-See also: [C4DTools]({{< ref "c4dtools.md" >}})
-
-> **TODO**: Ability to create a `require()` function for the script, so you
-> can not only `import` modules from the project location but also use
-> `require()` for modules in the project directory.
 
 ## Script Server
 

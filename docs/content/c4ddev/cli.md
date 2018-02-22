@@ -200,8 +200,7 @@ This is a real-world example configuration file.
   "output": "res/modules{target}/mylibs.egg",
   "include": [
     "devel/res.py",
-    "../vendor/python/c4dtools/c4dtools",
-    "../vendor/python/nr/nr"
+    "../vendor/py-nr/nr"
   ]
 }
 ```

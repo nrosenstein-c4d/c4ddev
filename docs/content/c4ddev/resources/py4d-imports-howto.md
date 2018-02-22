@@ -99,38 +99,43 @@ plugins source code. Below is a minified version of `localimport-v1.5`. Other
   [1]: https://gist.github.com/NiklasRosenstein/f5690d8f36bbdc8e5556
 
 ```python
-# localimport-v1.5_b64_lw=99
-exec("""import base64 as b, zlib as z; s={}; blob=b"\
-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"
-exec(z.decompress(b.b64decode(blob)), s)
-localimport=s["localimport"]; del blob, b, z, s;""")
+# localimport-v1.7.3-blob-mcw99
+import base64 as b, types as t, zlib as z; m=t.ModuleType('localimport');
+m.__file__ = __file__; blob=b'\
+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'
+exec(z.decompress(b.b64decode(blob)), vars(m)); _localimport=m;localimport=getattr(m,"localimport")
+del blob, b, t, z, m;
 ```
 
 ## Using localimport + pypkg
@@ -145,22 +150,13 @@ that directory, and otherwise load it from the Python Egg generated with
 if _debug:
   _importer = localimport(['devel'])
 else:
-  _importer = localimport('res/modules{0}/cloudui.egg'.format(sys.version[:3]))
+  _importer = localimport('res/lib-{0}.egg'.format(sys.version[:3].replace('.', '-')))
 
 with _importer:
-    _importer.disable(['res', 'c4dtools', 'cloudui', 'res', 'nr'])
-
     import res
-    import c4dtools
-    import cloudui
+    import requests
     import nr.concurrency
-
-    from c4dtools.gui import handle_file_select
-    from c4dtools.utils import load_bitmap
-    from cloudui.utils import (
-        get_frame_range, check_region, iter_rdata, calc_tile_size,
-        fit_tile_count, Point
-    )
+    from nr.c4d.utils import load_bitmap
 ```
 
 Note that in most cases, the `devel/` directory will not contain just the

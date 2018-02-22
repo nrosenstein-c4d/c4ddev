@@ -29,11 +29,6 @@ is executed before the C4DDev Python entrypoint.
 
 ## Functions
 
-### `c4ddev.require()`
-
-This is the Node.Py `require` object from the C4DDev `main.py` entry point
-which allows you to load components of the `c4ddev` and `c4dtools` libraries.
-
 ### `c4ddev.GeListNodeFromAddress(pycobject) -> c4d.GeListNode`
 
 Given a `PyCObject` from which you know it is a Cinema 4D `GeListNode` instance,

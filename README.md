@@ -61,8 +61,7 @@ __Python Plugins__
 
 __Python Scripting__
 
-* Makes the `c4ddev`, `c4dtools` and [`localimport`][localimport] modules
-  globally available.
+* Makes the `c4ddev` and [`localimport`][localimport] modules globally available.
 * A context-manager to import Python modules from Python Objects/Expression
   Tags without polluting the global importer state, which also automatically
   re-imports the modules if you modified the code. &ndash; `c4ddev.scripting.localimport()`

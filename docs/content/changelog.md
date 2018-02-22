@@ -10,6 +10,12 @@ ordering-priority = 9
 - `c4ddev run` now has options to start a specific C4D version
 - removed the `--exe` argument from `c4ddev run`
 - add `c4ddev disable` and `c4ddev enable` commands
+- remove `c4ddev build-loader`
+- remove `c4ddev license`
+- add `c4ddev bootstrapper`
+- structural update (no more Node.py stuff)
+- make `c4ddev` and `localimport` modules available globally
+- add Script > C4DDev menu
 
 ## v0.1.6
 
