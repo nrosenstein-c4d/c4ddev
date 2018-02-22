@@ -26,4 +26,5 @@ def PluginMessage(msg, data):
         print "[c4ddev INFO]: Calling Source Protector for %s" % repr(filename)
         c4ddev.FileSelectPut(filename)
         c4d.CallCommand(1023699)  # Source Protector
-  return True
+      return True
+  return False

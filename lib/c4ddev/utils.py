@@ -170,6 +170,26 @@ def is_local_module(name, mod, path):
     return False
 
 
+def find_menu_resource(*path):
+    bc = c4d.gui.GetMenuResource(path[0])
+    for menu in path[1:]:
+        found = False
+        index = 0
+        while True:
+            key = bc.GetIndexId(index)
+            if key == c4d.NOTOK: break
+            if key == c4d.MENURESOURCE_SUBMENU:
+                subbc = bc.GetIndexData(index)
+                if subbc[c4d.MENURESOURCE_SUBTITLE] == menu:
+                    found = True
+                    bc = subbc
+                    break
+            index += 1
+        if not found:
+            return None
+    return bc
+
+
 class AtomDict(object):
     ''' Dictionary-like object that is just a list of key-value pairs.
     This will allow to use unhashable objects as keys. '''

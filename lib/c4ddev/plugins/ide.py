@@ -29,7 +29,7 @@ class OpenScriptEditor(c4d.plugins.CommandData):
     PLUGIN_ID = ScriptEditor.GLOBAL_PLUGIN_ID
     PLUGIN_NAME = res.string('IDC_SCRIPT_EDITOR')
     PLUGIN_HELP = res.string('IDC_SCRIPT_EDITOR_HELP')
-    PLUGIN_INFO = 0
+    PLUGIN_INFO = c4d.PLUGINFLAG_HIDEPLUGINMENU
     PLUGIN_ICON = res.bitmap('img', 'script-editor.tif')
 
     @classmethod
@@ -52,7 +52,7 @@ class OpenEditorWindow(c4d.plugins.CommandData):
   PLUGIN_ID = 1038999
   PLUGIN_NAME = res.string('IDS_EDITOR')
   PLUGIN_HELP = res.string('IDS_EDITOR_HELP')
-  PLUGIN_INFO = 0
+  PLUGIN_INFO = c4d.PLUGINFLAG_HIDEPLUGINMENU
   PLUGIN_ICON = res.bitmap('img', 'editor.png')
 
   @classmethod

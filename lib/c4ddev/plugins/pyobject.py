@@ -126,7 +126,8 @@ class PyObject(c4d.plugins.ObjectData):
     def Register(cls):
         icon = res.bitmap('res', 'icons', 'PyDrawHelper.tif')
         info = c4d.OBJECT_MODIFIER | c4d.OBJECT_GENERATOR | c4d.OBJECT_INPUT |\
-               c4d.OBJECT_PARTICLEMODIFIER | c4d.OBJECT_CALL_ADDEXECUTION
+               c4d.OBJECT_PARTICLEMODIFIER | c4d.OBJECT_CALL_ADDEXECUTION |\
+               c4d.PLUGINFLAG_HIDEPLUGINMENU
         c4d.plugins.RegisterObjectPlugin(
             cls.PLUGIN_ID, "PyObject", cls, "nr_pyobject", info, icon)
 

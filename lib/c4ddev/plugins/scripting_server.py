@@ -376,7 +376,7 @@ class ServerToggle(c4d.plugins.CommandData):
         self.server = server
 
     def register(self):
-        info = 0
+        info = c4d.PLUGINFLAG_HIDEPLUGINMENU
         icon = None
         help = "Enables/disables the C4DDev Scripting Server"
         c4d.plugins.RegisterCommandPlugin(

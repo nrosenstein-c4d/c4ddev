@@ -24,6 +24,7 @@ Utilities for Cinema 4D resource symbols.
 
 from __future__ import print_function
 from nr import strex
+from . import __version__
 
 import collections
 import codecs
@@ -35,9 +36,6 @@ import re
 import string
 import sys
 import textwrap
-
-with open(os.path.join(__file__, '../../../package.json')) as fp:
-  __version__ = json.load(fp)['version']
 
 TEMPLATE_CLASS = textwrap.dedent('''
   exec ("""class res(object):

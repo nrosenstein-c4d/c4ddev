@@ -37,7 +37,7 @@ class PyShader(c4d.plugins.ShaderData):
 
   PluginID = 1036204
   PluginName = 'PyShader'
-  PluginFlags = 0
+  PluginFlags = c4d.PLUGINFLAG_HIDEPLUGINMENU
   PluginDesc = 'nr_pyshader'
   Editor = PyObjectEditor(None, title='PyShader Editor', target_id=res.NR_PYSHADER_CODE)
 

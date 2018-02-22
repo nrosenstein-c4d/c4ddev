@@ -27,7 +27,7 @@ __Prototyping__
 * A better version of the Python Generator object which allows you to
   implement `ObjectData.Draw()` inside Cinema 4D
 * A Python Shader that allows you to prototype Python shader plugins
-* A Python ID (very early WIP!! Contributions are welcome)
+* A Python ID (very early WIP!! Contributions are welcome   )
 
 __Description Resources__
 
@@ -51,6 +51,9 @@ __Python Plugins__
   symbols of your plugin &ndash; `c4ddev symbols`
 * A command-line tool to build a byte-compiled distribution of additional
   Python modules as `.egg` files. &ndash; `c4ddev pypkg`
+* A command-line tool to protect a Python Plugin File (`.pyp`). Note that
+  this requires C4DDev with the C++ extensions installed in the Cinema 4D
+  version that you are working with. &ndash; `c4ddev source-protector`
 
 __Python Scripting__
 

@@ -97,6 +97,7 @@ class UnicodeEscapeToolDialog(c4d.gui.GeDialog):
 class UnicodeEscapeToolCommand(c4d.plugins.CommandData):
 
     PLUGIN_ID = 1033712
+    PLUGIN_INFO = c4d.PLUGINFLAG_HIDEPLUGINMENU
     PLUGIN_NAME = "Unicode Escape Tool"
     PLUGIN_HELP = "UI to escape special characters for C4D stringtables."
 

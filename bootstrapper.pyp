@@ -42,7 +42,6 @@ import sys
 plugin_modules = []
 
 with localimport('lib') as importer:
-  print(importer.path)
   # Load all plugins.
   import c4ddev.res
   import c4ddev.plugins
