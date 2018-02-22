@@ -52,6 +52,8 @@ __Python Scripting__
 * A context-manager to import Python modules from Python Objects/Expression
   Tags without polluting the global importer state, which also automatically
   re-imports the modules if you modified the code. &ndash; `c4ddev.scripting.localimport()`
+* A "Python Scripting Server" which can receive Python scripts to execute
+  inside Cinema 4D via a Socket + a *Sublime Text* plugin (see `extras/sublime-script-sender/`)
 
 ## Building C++ Extensions
 
