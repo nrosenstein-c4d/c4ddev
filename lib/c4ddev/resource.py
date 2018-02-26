@@ -75,6 +75,8 @@ TEMPLATE_FILE = textwrap.dedent('''
   project_path = os.path.normpath(os.path.join(project_path, {{project_path}}))
   resource = __res__ = _frame.f_globals['__res__']
 
+  del _frame
+
   def string(name, *subst, **kwargs):
     disable = kwargs.pop('disable', False)
     checked = kwargs.pop('checked', False)
@@ -102,19 +104,31 @@ TEMPLATE_FILE = textwrap.dedent('''
     return (name, string(name, *subst))
 
   def path(*parts):
+    """
+    Joins the path parts with the #project_path, which is initialized with the
+    parent directory of the file that first imported this module (which is
+    usually the Python plugin file).
+    """
     path = os.path.join(*parts)
     if not os.path.isabs(path):
       path = os.path.join(project_path, path)
     return path
 
+  def localpath(*parts, **kwargs):
+    """
+    Joins the path parts with the parent directory of the Python file that
+    called this function.
+    """
+    _stackdepth = kwargs.get('_stackdepth', 0)
+    parent_dir = os.path.dirname(sys._getframe(_stackdepth+1).f_globals['__file__'])
+    return os.path.normpath(os.path.join(parent_dir, *parts))
+
   def bitmap(*parts):
     bitmap = c4d.bitmaps.BaseBitmap()
-    result, ismovie = bitmap.InitWith(file(*parts))
+    result, ismovie = bitmap.InitWith(path(*parts))
     if result != c4d.IMAGERESULT_OK:
       return None
     return bitmap
-
-  file = path  # backwards compatibility
 
   {{symbols}}'''.format(__version__))
 

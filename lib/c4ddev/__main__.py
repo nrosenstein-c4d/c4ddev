@@ -137,7 +137,8 @@ def rpkg(files, res, no_header):
 
 @main.command()
 @click.argument('config', default='.pypkg')
-def pypkg(config):
+@click.option('--init', is_flag=True, help='Create a template .pypkg file')
+def pypkg(config, init):
   """
   Reads a JSON configuration file, by default named `.pypkg`, and uses
   that information to build a Python Egg from the distributions specified in
@@ -162,6 +163,24 @@ def pypkg(config):
       },
     }
   """
+
+  if init:
+    if os.path.isfile('.pypkg'):
+      print('fatal: File ".pypkg" already exists')
+      return 1
+    with open('.pypkg', 'w') as fp:
+      fp.write(textwrap.dedent('''
+        {
+          "output": "./lib-{target}.egg",
+          "targets": {
+            "2-6": "py -2.6",
+            "2-7": "py -2.7"
+          },
+          "include": [
+          ]
+        }
+      '''))
+    return 0
 
   with open(config) as fp:
     config = json.load(fp)
