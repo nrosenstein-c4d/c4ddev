@@ -228,12 +228,17 @@ def bootstrapper(output):
       return libdir + '-' + sys.version[:3].replace('.', '-') + '.egg'
 
     path.append(get_libpath())
+    plugin_module = 'my_plugin'
 
     with localimport(path, do_eggs=False) as importer:
-      import my_plugin.res
-      my_plugin.res.project_path = project_path
-      my_plugin.res.__res__ = __res__
-      import my_plugin.main
+      # Set up the resource submodule (remove if you don't use this).
+      res = __import__(plugin_module + '.res', fromlist=[None])
+      res.project_path = project_path
+      res.__res__ = __res__
+      # Load the main plugin components.
+      main = __import__(plugin_module + '.main', fromlist=[None])
+      if hasattr(main, 'PluginMessage'):
+        PluginMessage = main.PluginMessage
   ''').strip() + '\n'
 
   result = localimport_code + '\n\n' + template
