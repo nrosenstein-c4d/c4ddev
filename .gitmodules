@@ -4,3 +4,9 @@
 [submodule "lib/py-localimport"]
 	path = lib/py-localimport
 	url = git@github.com:NiklasRosenstein/py-localimport
+[submodule "lib/py-nr"]
+	path = lib/py-nr
+	url = git@github.com:NiklasRosenstein/py-nr.git
+[submodule "lib/py-nr.c4d"]
+	path = lib/py-nr.c4d
+	url = git@github.com:NiklasRosenstein/py-nr.c4d.git

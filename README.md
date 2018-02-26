@@ -61,7 +61,12 @@ __Python Plugins__
 
 __Python Scripting__
 
-* Makes the `c4ddev` and [`localimport`][localimport] modules globally available.
+* Provides some additional Python modules
+  * `c4ddev` (module that implements this plugin)
+  * [`localimport`][localimport] (used in `c4ddev.scripting.localimport`)
+  * `nr` (mostly generic programming tools used in c4ddev)
+  * `nr.c4d` (Cinema 4D algorithms and UI tools)
+  * **To do**: Some common mathematical libraries such as Numpy
 * A context-manager to import Python modules from Python Objects/Expression
   Tags without polluting the global importer state, which also automatically
   re-imports the modules if you modified the code. &ndash; `c4ddev.scripting.localimport()`
