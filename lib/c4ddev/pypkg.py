@@ -20,6 +20,7 @@
 
 from __future__ import print_function
 
+import errno
 import glob
 import json
 import os
@@ -284,7 +285,9 @@ def bytecompile(pybin, source, outdir=None):
     if outdir is None:
       outdir = os.path.dirname(source)
     command = [pybin, __file__, 'bytecompile', source, outdir]
-    return shell_run(command)
+    code = shell_run(command)
+    if code != 0:
+      raise RuntimeError('{} exited with {}'.format(command, code))
 
   def recurse(filename, basedir):
     if os.path.isfile(filename) and filename.endswith('.py'):
@@ -315,7 +318,10 @@ def bdist_egg(pybin, package, outdir, exclude_source=True, quiet=True):
     command.append('--exclude-source-files')
   print("\nCreating Binary distribution of", os.path.relpath(package),
     "at", os.path.relpath(outdir))
-  return shell_run(command, cwd=package)
+
+  code = shell_run(command, cwd=package)
+  if code != 0:
+    raise RuntimeError('{} exited with {}'.format(command, code))
 
 
 def create_egg(pybin, source, dest, exclude_source=True):
@@ -333,11 +339,30 @@ def create_egg(pybin, source, dest, exclude_source=True):
 
   if pybin is not None:
     command = shlex.split(pybin) + [__file__, 'create_egg'] + source + [dest, str(bool(exclude_source))]
-    return shell_run(command)
+    code = shell_run(command)
+    if code != 0:
+      raise RuntimeError('{} exited with {}'.format(command, code))
+    return 0
 
   dirname = os.path.dirname(dest)
   if not os.path.exists(dirname):
     os.makedirs(dirname)
+
+  # Alternative for PyZipFile.writepy() do ignore missing files, eg.
+  # when a file can not be compiled due to a SyntaxError.
+  # TODO: Options to control behaviour (strict/loose).
+  def writepy(egg, path, basename=''):
+    if os.path.isfile(path) and path.endswith('.py'):
+      try:
+        egg.writepy(path, basename)
+      except OSError as exc:
+        if exc.errno == errno.ENOENT:
+          print('Warning:', exc)
+    elif os.path.isdir(path):
+      basename = (basename + '/' + os.path.basename(path)).lstrip('/')
+      for name in os.listdir(path):
+        name = os.path.join(path, name)
+        writepy(egg, name, basename)
 
   print("\nCreating python egg at", os.path.relpath(dest))
   egg = zipfile.PyZipFile(dest, 'w')
@@ -353,7 +378,8 @@ def create_egg(pybin, source, dest, exclude_source=True):
     print("  [+]", filename)
     if not os.path.exists(filename):
       raise IOError('does not exist: {0}'.format(filename))
-    egg.writepy(filename)
+    writepy(egg, filename)
+    #egg.writepy(filename)
     if not os.path.isdir(filename):
       continue
 
@@ -444,7 +470,10 @@ def protect_pyp(c4d_exe, filename):
 
   c4d_exe = os.path.abspath(c4d_exe)
   cwd = os.path.dirname(c4d_exe)
-  shell_run([app, '-apex-protect-source', filename, '-nogui'], cwd=cwd)
+  command = [app, '-apex-protect-source', filename, '-nogui']
+  code = shell_run(command, cwd=cwd)
+  if code != 0:
+    raise RuntimeError('{} exited with {}'.format(command, code))
 
 # =====================================================================
 #  Main - invoked by some functions in this script in new processes
