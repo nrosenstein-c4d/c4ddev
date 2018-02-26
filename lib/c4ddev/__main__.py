@@ -215,21 +215,26 @@ def bootstrapper(output):
   localimport_code = requests.get(url).text
 
   template = textwrap.dedent('''
-    import os, sys
-    project_dir = os.path.dirname(__file__)
-    lib_archive = os.path.join(project_dir, 'lib-' + sys.version[:3].replace('.', '-') + '.egg')
-    lib_dir = os.path.join(project_dir, 'lib')
-    if os.path.join(lib_dir):  # During development
-      importer = localimport(lib_dir)
-    else:  # Release
-      importer = localimport(lib_archive)
+    import os
+    import sys
 
-    with importer:
-      from my_plugin import main
-      main.__res__ = __res__
-      if __name__ == '__main__':
-        main.main()
-  ''').strip()
+    path = []
+    project_path = os.path.dirname(__file__)
+
+    def get_libpath():
+      libdir = os.path.join(project_path, 'lib')
+      if os.path.isdir(libdir):
+        return libdir
+      return libdir + '-' + sys.version[:3].replace('.', '-') + '.egg'
+
+    path.append(get_libpath())
+
+    with localimport(path, do_eggs=False) as importer:
+      import my_plugin.res
+      my_plugin.res.project_path = project_path
+      my_plugin.res.__res__ = __res__
+      import my_plugin.main
+  ''').strip() + '\n'
 
   result = localimport_code + '\n\n' + template
 
