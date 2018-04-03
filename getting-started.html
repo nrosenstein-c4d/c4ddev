@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf8">
+    <title>Getting Started</title>
+    <link href="static/style.css" rel="stylesheet">
+  </head>
+  <body>
+    
+    <div class="sidebar">
+      <div class="title">
+        <p><a href="index.html">C4DDev</a></p>
+      </div>
+      <hr/>
+      <div class="toc">
+        
+    <ul>
+      
+      <li><a class="" href="index.html">Home</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="active" href="getting-started.html">Getting Started</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" >C4DDev</a></li>
+      
+    <ul>
+      
+      <li><a class="" >API Documentation</a></li>
+      
+    <ul>
+      
+      <li><a class="" href="c4ddev/api/py4d.html">Py4D API Extensions</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+    </ul>
+    
+      
+      <li><a class="" href="c4ddev/cli.html">Command-line Tools</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" href="c4ddev/plugins.html">Plugins</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" >Resources</a></li>
+      
+    <ul>
+      
+      <li><a class="" href="c4ddev/resources/cpp.html">C++ Resources</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" href="c4ddev/resources/py4d-imports-howto.html">Py4D Imports: How-To</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" href="c4ddev/resources/python.html">Python Resources</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" href="c4ddev/resources/resource-packages.html">Resource Packages</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" href="c4ddev/resources/scripting.html">Scripting</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+    </ul>
+    
+      
+    </ul>
+    
+      
+      <li><a class="" href="build-instructions.html">Build Instructions</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" href="changelog.html">Changelog</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+    </ul>
+    
+      </div>
+      
+        <hr/>
+        <div class="author">
+          <p class="subtitle">About the author:</p>
+          
+          <a href="https://github.com/NiklasRosenstein">@NiklasRosenstein on GitHub</a>
+          
+          
+          <a href="mailto:rosensteinniklas@gmail.com">Contact via email</a>
+          
+        </div>
+      
+      <hr/>
+      <div class="statigen-notice">Built with <a href="https://github.com/NiklasRosenstein/statigen">statigen</a>.</div>
+    </div>
+    <div class="content">
+      <div class="content-inner">
+        
+          <h1>Getting Started</h1>
+        
+        <p>C4DDev can be installed in two ways: Into your Cinema 4D plugins directory
+and as a command-line tool.</p>
+<h2 id="installing-the-c4ddev-plugins">Installing the C4DDev Plugins</h2>
+<p>Head to the <a href="https://github.com/NiklasRosenstein/c4ddev/releases">GitHub Releases</a> page and download the latest release for your
+platform (Windows or macOS). Then unpack the directory into your Cinema 4D
+plugins directory.</p>
+<pre class="codehilite"><code>Cinema 4D R18/
+  plugins/
+    c4ddev/
+      ...</code></pre>
+
+
+<h2 id="installing-the-c4ddev-command-line-tools">Installing the C4DDev command-line tools</h2>
+<p>You need either Python 2 or 3 installed on your system and the <a href="https://pypi.python.org/pypi/pip">Pip</a> package
+manager. Pip comes pre-installed with Python 3 on Windows, but with Python 2
+you will need to run the <a href="https://bootstrap.pypa.io/get-pip.py">get-pip.py</a> script first. You may need to start the
+terminal with admin privileges to install Pip.</p>
+<pre class="codehilite"><code>&gt; python get-pip.py</code></pre>
+
+
+<p>After this step, you can install the command-line tools by running the
+following command (again, you may need admin privileges).</p>
+<pre class="codehilite"><code>$ pip install git+https://github.com/NiklasRosenstein/c4ddev.git</code></pre>
+
+
+<p>Now you should be able to use the <code>c4ddev</code> command-line program.</p>
+<pre class="codehilite"><code>$ c4ddev
+Usage: c4ddev [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  build-loader      Generate a Cinema 4D Python plugin that uses...
+  get-pip           Installs Pip into the Cinema 4D Python...
+  pip               Invokes Pip in the current Cinema 4D Python...
+  pypkg             Reads a JSON configuration file, by default...
+  rpkg              Converts a resource package file to...
+  run               Starts C4D.
+  source-protector  Protect .pyp files (requires APEX).
+  symbols           Extracts resource symbols.</code></pre>
+
+
+<h2 id="beginners-guide-python">Beginner&rsquo;s Guide: Python</h2>
+<div class="admonition todo">
+<p class="admonition-title">Todo</p>
+</div>
+<h2 id="beginners-guide-c">Beginner&rsquo;s Guide: C++</h2>
+<div class="admonition todo">
+<p class="admonition-title">Todo</p>
+</div>
+      </div>
+    </div>
+  </body>
+</html>

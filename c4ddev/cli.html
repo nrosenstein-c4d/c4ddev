@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf8">
+    <title>Command-line Tools</title>
+    <link href="../static/style.css" rel="stylesheet">
+  </head>
+  <body>
+    
+    <div class="sidebar">
+      <div class="title">
+        <p><a href="../index.html">C4DDev</a></p>
+      </div>
+      <hr/>
+      <div class="toc">
+        
+    <ul>
+      
+      <li><a class="" href="../index.html">Home</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" href="../getting-started.html">Getting Started</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" >C4DDev</a></li>
+      
+    <ul>
+      
+      <li><a class="" >API Documentation</a></li>
+      
+    <ul>
+      
+      <li><a class="" href="api/py4d.html">Py4D API Extensions</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+    </ul>
+    
+      
+      <li><a class="active" href="cli.html">Command-line Tools</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" href="plugins.html">Plugins</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" >Resources</a></li>
+      
+    <ul>
+      
+      <li><a class="" href="resources/cpp.html">C++ Resources</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" href="resources/py4d-imports-howto.html">Py4D Imports: How-To</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" href="resources/python.html">Python Resources</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" href="resources/resource-packages.html">Resource Packages</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" href="resources/scripting.html">Scripting</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+    </ul>
+    
+      
+    </ul>
+    
+      
+      <li><a class="" href="../build-instructions.html">Build Instructions</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" href="../changelog.html">Changelog</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+    </ul>
+    
+      </div>
+      
+        <hr/>
+        <div class="author">
+          <p class="subtitle">About the author:</p>
+          
+          <a href="https://github.com/NiklasRosenstein">@NiklasRosenstein on GitHub</a>
+          
+          
+          <a href="mailto:rosensteinniklas@gmail.com">Contact via email</a>
+          
+        </div>
+      
+      <hr/>
+      <div class="statigen-notice">Built with <a href="https://github.com/NiklasRosenstein/statigen">statigen</a>.</div>
+    </div>
+    <div class="content">
+      <div class="content-inner">
+        
+          <h1>Command-line Tools</h1>
+        
+        <h2 id="installation">Installation</h2>
+<p>To install the command-line tools, you need <a href="https://github.com/nodepy/nodepy">Node.Py</a>.</p>
+<pre class="codehilite"><code>$ pip install node.py
+$ nodepy-pm install --global c4ddev</code></pre>
+
+
+<p><em>(Note: You can also install the command-line tools locally for your project
+by omitting the <code>--global</code> option and adding <code>nodepy_modules/.bin</code> to your
+<code>PATH</code>)</em></p>
+<h2 id="c4ddev"><code>c4ddev</code></h2>
+<pre class="codehilite"><code>Usage: c4ddev [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  build-loader      Generate a Cinema 4D Python plugin that uses...
+  get-pip           Installs Pip into the Cinema 4D Python...
+  init              Create template source and description files...
+  pip               Invokes Pip in the current Cinema 4D Python...
+  pypkg             Reads a JSON configuration file, by default...
+  rpkg              Converts a resource package file to...
+  run               Starts C4D.
+  source-protector  Protect .pyp files (requires APEX).
+  symbols           Extracts resource symbols.</code></pre>
+
+
+<h2 id="c4ddev-disable"><code>c4ddev disable</code></h2>
+<pre class="codehilite"><code>Usage: c4ddev.exe disable [OPTIONS] [PLUGIN]
+
+  Disable the Cinema 4D PLUGIN by moving it to a `plugins_disabled`
+  directory. Use the `c4ddev enable` command to reverse the process. If
+  PLUGIN is not the name of a directory in the Cinema 4D plugins directory,
+  the closest match will be used.
+
+  When no PLUGIN is specified, a list of the directories in the plugins
+  directory will be printed.
+
+Options:
+  --help  Show this message and exit.</code></pre>
+
+
+<h2 id="c4ddev-enable"><code>c4ddev enable</code></h2>
+<pre class="codehilite"><code>Usage: c4ddev.exe enable [OPTIONS] [PLUGIN]
+
+  Enable a disabled plugin.
+
+Options:
+  --help  Show this message and exit.</code></pre>
+
+
+<h2 id="c4ddev-build-loader"><code>c4ddev build-loader</code></h2>
+<pre class="codehilite"><code>Usage: c4ddev build-loader [OPTIONS]
+
+  Generate a Cinema 4D Python plugin that uses Node.py to load an
+  entrypoint.
+
+Options:
+  -e, --entry-point ENTRYPOINT
+  -c, --compress
+  -m, --minify
+  -o, --output FILENAME
+  --help                        Show this message and exit.</code></pre>
+
+
+<p>Generates a Cinema 4D plugin that contains a stand-alone version of
+<a href="https://github.com/nodepy/nodepy">Node.Py</a> and loads the entrypoint specified with <code>-e,--entry-point</code>.
+The file loaded by this &ldquo;loader plugin&rdquo; has full access to the <a href="https://github.com/nodepy/nodepy">Node.Py</a>
+runtime. Access to the underlying module objects can be retrieved using
+<code>require.contenx.binding()</code>.</p>
+<pre class="codehilite"><code class="language-python">nodepy = require.context.binding('nodepy')
+localimport = require.context.binding('localimport')</code></pre>
+
+
+<h2 id="c4ddev-init"><code>c4ddev init</code></h2>
+<pre class="codehilite"><code>Usage: c4ddev init [OPTIONS] DESCRIPTION_NAME ...
+
+  Create template source and description files for one or more Cinema 4D
+  plugins.
+
+Options:
+  -O, --object TEXT
+  -T, --tag TEXT
+  -X, --shader TEXT
+  -Gv, --xnode TEXT
+  -M, --material TEXT
+  --main               Generate a main.cpp template.
+  -R, --rpkg           Create .rpkg files instead of description header and
+                      stringtable files.
+  --src TEXT           Source code directory. If not specified, defaults to
+                      src/ or source/, depending on which exists.
+  -P, --pluginid       Grab plugin IDs from the PluginCafe for the plugins
+                      that are being created.
+  --overwrite
+  --help               Show this message and exit.</code></pre>
+
+
+<h2 id="c4ddev-license"><code>c4ddev license</code></h2>
+<p>Usage: c4ddev.exe license [OPTIONS] NAME</p>
+<pre class="codehilite"><code>Output a license string, optionally formatted for a specific language.</code></pre>
+
+
+<p>Options:
+    -l, &ndash;list        Output a list of available licenses.
+    &ndash;short / &ndash;long  Outputs the short or long license version (default is
+                      &ndash;short).
+    &ndash;python          Output the license as Python comments (#).
+    &ndash;c               Output the license as C comments (/<em> </em>/).
+    &ndash;java            Output the license as Java comments (/*<em> </em>/)
+    &ndash;help            Show this message and exit.</p>
+<p>Currently supported license types:</p>
+<ul>
+<li>apache-v2</li>
+<li>gpl-v2</li>
+<li>gpl-v3</li>
+<li>mit</li>
+<li>unlicense</li>
+</ul>
+<h2 id="c4ddev-get-pip"><code>c4ddev get-pip</code></h2>
+<pre class="codehilite"><code>Usage: c4ddev get-pip [OPTIONS]
+
+  Installs Pip into the Cinema 4D Python distribution. Specify the path to
+  Cinema 4D explicitly or run this command from inside the Cinema 4D
+  application directory.
+
+Options:
+  --c4d DIRECTORY
+  --help           Show this message and exit</code></pre>
+
+
+<h2 id="c4ddev-pip"><code>c4ddev pip</code></h2>
+<pre class="codehilite"><code>Usage: c4ddev pip [OPTIONS] [ARGS]...
+
+  Invokes Pip in the current Cinema 4D Python distribution. Must be used
+  from inside the Cinema 4D applications directory or specified with --c4d.
+
+Options:
+  --c4d DIRECTORY
+  --help           Show this message and exit.</code></pre>
+
+
+<h2 id="c4ddev-pluginid"><code>c4ddev pluginid</code></h2>
+<pre class="codehilite"><code>Usage: c4ddev pluginid [OPTIONS] [TITLES]...
+
+  Get one or more plugin IDs from the plugincafe. If the username and/or
+  password are not specified on the command-line, they will be queried
+  during execution.
+
+Options:
+  -u, --username TEXT
+  -p, --password TEXT
+  -l, --list           List all registered plugin IDs.
+  --help               Show this message and exit.</code></pre>
+
+
+<p><strong>Example</strong>:</p>
+<pre class="codehilite"><code>$ c4ddev pluginid -u nux95 MyPluginId
+PluginCafe Password:
+MyPluginId: 1039296
+$ c4ddev pluginid -u nux95 --list | wc
+PluginCafe Password:
+    536    1180   15994</code></pre>
+
+
+<h2 id="c4ddev-pypkg"><code>c4ddev pypkg</code></h2>
+<pre class="codehilite"><code>Usage: c4ddev pypkg [OPTIONS] [CONFIG]
+
+Options:
+  --help  Show this message and exit.</code></pre>
+
+
+<p>The <strong>pypkg</strong> command compiles Python modules and packages into <code>.pyc</code> files
+and merges them into a Python Egg archive or directory. This is useful to
+protect your Python code and to distribute your Python plugin.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Keep in mind that you should always use <a href="cli/localimport.html"><code>localimport</code></a>
+to import any third-party Python modules from a Cinema 4D plugin in
+order to keep the global importer state clean.</p>
+</div>
+<p><strong>Example Configuration</strong> (<code>.pypkg</code>)</p>
+<p>This is a real-world example configuration file.</p>
+<pre class="codehilite"><code class="language-json">{
+  &quot;zipped&quot;: true,
+  &quot;output&quot;: &quot;res/modules{target}/mylibs.egg&quot;,
+  &quot;include&quot;: [
+    &quot;devel/res.py&quot;,
+    &quot;../vendor/py-nr/nr&quot;
+  ]
+}</code></pre>
+
+
+<h2 id="c4ddev-rpkg"><code>c4ddev rpkg</code></h2>
+<pre class="codehilite"><code>Usage: c4ddev rpkg [OPTIONS] RPKG
+
+  Converts a resource package file to description resource files.
+
+Options:
+  -r, --res DIRETORY
+  --no-header TEXT
+  --help              Show this message and exit.</code></pre>
+
+
+<p>See also: <a href="cli/resource-packages.html">Resource Packages</a></p>
+<h2 id="c4ddev-run"><code>c4ddev run</code></h2>
+<pre class="codehilite"><code>Usage: c4ddev run [OPTIONS] [ARGS]...
+
+  Starts C4D.
+
+Options:
+  -e, --exe TEXT  Name of the C4D executable to run. Defaults to &quot;CINEMA 4D&quot;.
+  --help          Show this message and exit.</code></pre>
+
+
+<p>Finds the Cinema 4D application directory from the current working directory
+and starts <code>CINEMA 4D.exe</code> or <code>CINEMA 4D.app/Contents/MacOS/CINEMA 4D</code>,
+depending on your platform. Additional arguments are passed to Cinema 4D.</p>
+<p>On Windows, Cinema 4D is started with the <code>start /b /wait "parentconsole"</code>
+command, which will cause the current terminal to inherit the output instead
+of Cinema 4D creating a separate terminal window.</p>
+<h2 id="c4ddev-source-protector"><code>c4ddev source-protector</code></h2>
+<pre class="codehilite"><code>Usage: c4ddev source-protector [OPTIONS] FILENAME [FILENAME [...]]
+
+  Protect .pyp files (requires APEX).
+
+Options:
+  --help  Show this message and exit.</code></pre>
+
+
+<p>Protects a Cinema 4D Python Plugin (<code>.pyp</code>). Requires the <strong>C4DDev</strong> C++
+parts installed. More information on the <a href="cli/apiext.html">API Extensions</a> page.
+If the C++ parts are not installed, nothing will happen and no error will
+be printed.</p>
+<h2 id="c4ddev-symbols"><code>c4ddev symbols</code></h2>
+<pre class="codehilite"><code>Usage: c4ddev symbols [OPTIONS]
+
+Options:
+  -f, --format FORMAT      The output format, one of {class,file,json}.
+                           Defaults to class.
+  -o, --outfile FILENAME
+  -d, --res-dir DIRECTORY  One or more resource directories to parse for
+                           symbols. If the option is not specified, `res/`
+                           will be used.
+  --help                   Show this message and exit.</code></pre>
+
+
+<p>Extracts the resource symbols from all header files in <code>res/</code> directory or the
+directory/ies specified via <code>-d,--res-dir</code> and formats them as a Python class,
+Python file or JSON.</p>
+<pre class="codehilite"><code>$ pwd
+/Users/niklas/Applications/Cinema 4D R18/plugins/myplugin
+$ c4ddev symbols
+
+exec (&quot;&quot;&quot;class res(object):
+ # Automatically generated with c4ddev v1.3.
+ project_path = os.path.dirname(__file__)
+ def string(self, name, *subst):
+  result = __res__.LoadString(getattr(self, name))
+  for item in subst: result = result.replace('#', item, 1)
+  return result
+ def tup(self, name, *subst):
+  return (getattr(self, name), self.string(name, *subst))
+ def path(self, *parts):
+  path = os.path.join(*parts)
+  if not os.path.isabs(path):
+   path = os.path.join(self.project_path, path)
+  return path
+ file = path  # backwards compatibility
+ def bitmap(self, *parts):
+  b = c4d.bitmaps.BaseBitmap()
+  if b.InitWith(self.path(*parts))[0] != c4d.IMAGERESULT_OK: return None
+  return b
+ MYSYMBOL = 1000
+ MYOTHERSYMBOLS = 1001
+ res=res()&quot;&quot;&quot;)</code></pre>
+
+
+<p><strong>Available Formats</strong></p>
+<ul>
+<li>Python class (<code>class</code>) [default] &ndash; Can be copied into the Python plugin source</li>
+<li>Python file (<code>file</code>)  &ndash; Can be loaded as a module (make use of <a href="cli/localimport.html"><code>localimport</code></a>)</li>
+<li>JSON (<code>json</code>) &ndash; Can be loaded using the <code>json</code> module</li>
+</ul>
+      </div>
+    </div>
+  </body>
+</html>

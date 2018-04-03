@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf8">
+    <title>Py4D API Extensions</title>
+    <link href="../../static/style.css" rel="stylesheet">
+  </head>
+  <body>
+    
+    <div class="sidebar">
+      <div class="title">
+        <p><a href="../../index.html">C4DDev</a></p>
+      </div>
+      <hr/>
+      <div class="toc">
+        
+    <ul>
+      
+      <li><a class="" href="../../index.html">Home</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" href="../../getting-started.html">Getting Started</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" >C4DDev</a></li>
+      
+    <ul>
+      
+      <li><a class="" >API Documentation</a></li>
+      
+    <ul>
+      
+      <li><a class="active" href="py4d.html">Py4D API Extensions</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+    </ul>
+    
+      
+      <li><a class="" href="../cli.html">Command-line Tools</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" href="../plugins.html">Plugins</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" >Resources</a></li>
+      
+    <ul>
+      
+      <li><a class="" href="../resources/cpp.html">C++ Resources</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" href="../resources/py4d-imports-howto.html">Py4D Imports: How-To</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" href="../resources/python.html">Python Resources</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" href="../resources/resource-packages.html">Resource Packages</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" href="../resources/scripting.html">Scripting</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+    </ul>
+    
+      
+    </ul>
+    
+      
+      <li><a class="" href="../../build-instructions.html">Build Instructions</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" href="../../changelog.html">Changelog</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+    </ul>
+    
+      </div>
+      
+        <hr/>
+        <div class="author">
+          <p class="subtitle">About the author:</p>
+          
+          <a href="https://github.com/NiklasRosenstein">@NiklasRosenstein on GitHub</a>
+          
+          
+          <a href="mailto:rosensteinniklas@gmail.com">Contact via email</a>
+          
+        </div>
+      
+      <hr/>
+      <div class="statigen-notice">Built with <a href="https://github.com/NiklasRosenstein/statigen">statigen</a>.</div>
+    </div>
+    <div class="content">
+      <div class="content-inner">
+        
+          <h1>Py4D API Extensions</h1>
+        
+        <p align="right" style="float: right; margin-left: 1em; margin-bottom: 1em"><img src="py4d/apex.png"></p>
+
+<p>The C4DDev Py4D API Extensions are a C++ plugin that provide additional
+functions that can be used from Python.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The C++ component of <strong>C4DDev</strong> must be installed, otherwise the API
+extensions will not be available. Pre-compiled binaries are available in
+the <a href="https://github.com/NiklasRosenstein/c4ddev/releases">GitHub Releases</a>
+of C4DDev.</p>
+</div>
+<h2 id="members">Members</h2>
+<h3 id="c4ddev__version__"><code>c4ddev.__version__</code></h3>
+<p>The installed version of C4DDev.</p>
+<h3 id="c4ddevhas_cpp_extensions"><code>c4ddev.has_cpp_extensions</code></h3>
+<p><code>True</code> if the C4DDev C++ extensions are installed, otherwise <code>False</code>. Note
+that if the C++ extensions are <strong>not</strong> installed and you try to import
+<code>c4ddev</code> from a Cinema 4D plugin, importing <code>c4ddev</code> could fail if your plugin
+is executed before the C4DDev Python entrypoint.</p>
+<h2 id="functions">Functions</h2>
+<h3 id="c4ddevgelistnodefromaddresspycobject-c4dgelistnode"><code>c4ddev.GeListNodeFromAddress(pycobject) -&gt; c4d.GeListNode</code></h3>
+<p>Given a <code>PyCObject</code> from which you know it is a Cinema 4D <code>GeListNode</code> instance,
+you can use this function to get a real Python object out of it. <strong>Important</strong>:
+This will result in undefined behaviour (likely a crash) if you pass a wrong PyCObject!</p>
+<h3 id="c4ddevfileselectputpath"><code>c4ddev.FileSelectPut(path)</code></h3>
+<p>This extension allows you to prevent file selection dialogs from popping up
+and make them return a specific value. This is <em>very</em> useful if you want to
+streamline Cinema 4D commands that usually do open a file selection dialog.</p>
+<pre class="codehilite"><code class="language-python">import c4d
+import c4ddev
+
+c4ddev.FileSelectPut('/Users/me/Desktop')
+print(c4d.storage.LoadDialog())
+# Doesn't open a dialog and prints /Users/me/Desktop</code></pre>
+
+
+<h3 id="c4ddevfileselectpop"><code>c4ddev.FileSelectPop()</code></h3>
+<p>Pop an element from the elements added to the FileSelect Hook queue with
+<code>FileSelectPut()</code>.</p>
+<h3 id="c4ddevfileselectqueuesize"><code>c4ddev.FileSelectQueueSize()</code></h3>
+<p>Returns the number of elemenets in the queue added to the FileSelect Hook
+with <code>FileSelectPut()</code>.</p>
+<h3 id="c4ddevdocumentinfodatapycobject-dict"><code>c4ddev.DocumentInfoData(pycobject) -&gt; dict</code></h3>
+<p>Pass the <code>PyCObject</code> received on <code>MSG_DOCUMENTINFO</code> to this function to get a
+dictionary of the structures data. <strong>Important</strong>: This will result in undefined
+behaviour (likely a crash) if you pass a wrong PyCObject!</p>
+<h3 id="c4ddevrendernotificationdatapycobject-dict"><code>c4ddev.RenderNotificationData(pycobject) -&gt; dict</code></h3>
+<p>Pass the <code>PyCObject</code> received on <code>MSG_MULTI_RENDERNOTIFICATION</code> this this function
+to get a dictionary of the structures data. <strong>Important</strong>: This will result in
+undefined behaviour (likely a crash) if you pass a wrong PyCObject!</p>
+<h3 id="c4ddevgetuserareahandle-pycobject"><code>c4ddev.GetUserAreaHandle() -&gt; PyCObject</code></h3>
+<h3 id="c4ddevgetclipmaphandle-pycobject"><code>c4ddev.GetClipMapHandle() -&gt; PyCObject</code></h3>
+<h3 id="c4ddevblitclipmapdst-src-dx-dy-dw-dh-sx-sy-sw-sh-mode"><code>c4ddev.BlitClipMap(dst, src, dx, dy, dw, dh, sx, sy, sw, sh, mode)</code></h3>
+<p>This function implements the missing functionality of the <code>GeClipMap</code> to copy
+another bitmap into another, with the ability to copy only parts and in a
+different scale and aspect ratio (like <code>GeUserArea.DrawBitmap()</code>).</p>
+<table>
+<thead>
+<tr>
+<th>Parameters</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>dst</strong></td>
+<td>The destination <code>GeClipMap</code></td>
+</tr>
+<tr>
+<td><strong>src</strong></td>
+<td>The source <code>GeClipMap</code></td>
+</tr>
+<tr>
+<td><strong>dx</strong></td>
+<td>The destination X coordinate.</td>
+</tr>
+<tr>
+<td><strong>dy</strong></td>
+<td>The destination Y coordinate.</td>
+</tr>
+<tr>
+<td><strong>dw</strong></td>
+<td>The destination width.</td>
+</tr>
+<tr>
+<td><strong>dh</strong></td>
+<td>The destination height.</td>
+</tr>
+<tr>
+<td><strong>sx</strong></td>
+<td>The destination X coordinate.</td>
+</tr>
+<tr>
+<td><strong>sy</strong></td>
+<td>The destination X coordinate.</td>
+</tr>
+<tr>
+<td><strong>sw</strong></td>
+<td>The destination X coordinate.</td>
+</tr>
+<tr>
+<td><strong>sh</strong></td>
+<td>The destination X coordinate.</td>
+</tr>
+<tr>
+<td><strong>mode</strong></td>
+<td>One of <code>c4ddev.BLIT_NN</code>, <code>BLIT_BILINEAR</code> or <code>BLIT_BICUBIC</code></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Limitation</p>
+<p>Currently this function can only accept two <code>GeClipMap</code> objects as we
+haven&rsquo;t figured out how to retrieve the actual C pointer to a <code>BaseBitmap</code>
+from a Python <code>c4d.bitmaps.BaseBitmap</code> object. You can convert a bitmap
+to a <code>GeClipMap</code> using the following code:</p>
+<p><code>map = c4d.bitmaps.GeClipMap()
+map.InitWithBitmap(bmp, bmp.GetInternalChannel())</code></p>
+<p>However, keep in mind that this process is relatively slow as it creates
+a new copy of the image. It is thus recommended to do this operation only
+once after a bitmap is loaded and keep it as a <code>GeClipMap</code>.</p>
+</div>
+<h2 id="plugin-messages">Plugin Messages</h2>
+<p>The C4DDev C++ component installs a SceneHook that takes special messages
+which are usually only sent to nodes in a document and redirects them as a
+global plugin message. Currently, the following messages sent to that scene
+hook are supported:</p>
+<ul>
+<li><code>MSG_DOCUMENTINFO</code></li>
+<li><code>MSG_MULTI_RENDERNOTIFICATION</code></li>
+</ul>
+<p>There&rsquo;s a little bit of effort involved in receiving these in Python, though. The
+data sent will by a <code>PyCObject</code> and you have to use C4DDev to read the data from these
+objects.</p>
+<pre class="codehilite"><code class="language-python">import c4d
+import c4ddev
+
+def PluginMessage(msg, data):
+  if msg == c4d.MSG_MULTI_RENDERNOTIFICATION:
+    data = c4ddev.RenderNotificationData(data)
+    print data
+  elif msg == c4d.MSG_DOCUMENTINFO:
+    data = c4ddev.DocumentInfoData(data)
+    print data
+  return True</code></pre>
+
+
+<hr />
+<h3 id="c4ddevguihandlemousedragarea-msg-type-data-flags"><code>c4ddev.gui.HandleMouseDrag(area, msg, type, data, flags)</code></h3>
+<p>This function calls <code>GeUserArea::HandleMouseDrag()</code> on the <em>area</em> object,
+which is missing in the Py4D API. Currently supported values for <em>type</em>
+are:</p>
+<ul>
+<li><code>DRAGTYPE_FILES</code> (str)</li>
+<li><code>DRAGTYPE_FILENAME_IMAGE</code> (str)</li>
+<li><code>DRAGTYPE_FILENAME_SCENE</code> (str)</li>
+<li><code>DRAGTYPE_FILENAME_OTHER</code> (str)</li>
+<li><code>DRAGTYPE_ATOMARRAY</code> (list of c4d.GeListNode)</li>
+</ul>
+<p>The type of <em>data</em> is specified in the parentheses above. <em>msg</em> must be
+a <code>c4d.BaseContainer</code>, ideally the one passed from <code>GeUserArea.InputEvent()</code>.</p>
+<hr />
+<h3 id="c4ddevamregistermodeid-name-callback"><code>c4ddev.am.RegisterMode(id, name, callback)</code></h3>
+<p>Registers a new mode in the Attribute Manager. The <em>callback</em> parameter
+is currently not used. Raises a <code>RuntimeError</code> when the registration failed.</p>
+<h3 id="c4ddevamsetmodeid-open"><code>c4ddev.am.SetMode(id, open)</code></h3>
+<p>Sets the current attribute manager mode. Optionally opens the attribute
+manager window.</p>
+<h3 id="c4ddevamsetobjectid-op-flags-activepage"><code>c4ddev.am.SetObject(id, op, flags, activepage)</code></h3>
+<p>Sets the object <em>op</em> as the active object in the attribute manager specified
+by <em>id</em>. The <em>activepage</em> parameter is currently unused, but must be <code>None</code>
+or a <code>c4d.DescID</code> object.</p>
+<h3 id="c4ddevamopen"><code>c4ddev.am.Open()</code></h3>
+<p>Opens the attribute manager window.</p>
+<h3 id="c4ddevameditobjectmodalop-title"><code>c4ddev.am.EditObjectModal(op, title)</code></h3>
+<p>Opens a modal attribute manager to edit the object <em>op</em>. The window title will
+be set to <em>title</em>. Returns <code>True</code> on success, <code>False</code> on failure.</p>
+<h2 id="command-line">Command-line</h2>
+<h3 id="-c4ddev-protect-source-filename"><code>-c4ddev-protect-source &lt;filename&gt;</code></h3>
+<p>When the C4DDev C++ extensions are available in a Cinema 4D installation,
+this command-line argument can be used to protect the source code of a
+Cinema 4D Python Plugin (<code>.pyp</code>), creating a <code>.pype</code> (before R15) or <code>.pypv</code>
+file (R15 and later). The argument can be specified multiple times to protected
+multiple files with a single invocation.</p>
+<p>The <a href="py4d/cli.html#c4ddev-source-protector"><code>c4ddev source-protector</code></a> command can be
+used to protect source files from the Command-line conveniently.</p>
+<pre class="codehilite"><code>$ c4ddev source-protector myplugin.pyp
+...
+[c4ddev / INFO]:py4d/Calling Source Protector for 'myplugin.pyp'..html</code></pre>
+
+
+<p>Alternatively, you can run Cinema 4D directly via the command-line or use
+the <a href="py4d/cli.html#c4ddev-run"><code>c4ddev run</code></a> command.</p>
+<pre class="codehilite"><code>$ /Applications/Cinema 4D R16/plugins/myplugin $ &quot;..\..\CINEMA 4D.exe&quot; -nogui -c4ddev-protect-source myplugin.pyp</code></pre>
+      </div>
+    </div>
+  </body>
+</html>

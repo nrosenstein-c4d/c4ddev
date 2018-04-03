@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf8">
+    <title>Scripting</title>
+    <link href="../../static/style.css" rel="stylesheet">
+  </head>
+  <body>
+    
+    <div class="sidebar">
+      <div class="title">
+        <p><a href="../../index.html">C4DDev</a></p>
+      </div>
+      <hr/>
+      <div class="toc">
+        
+    <ul>
+      
+      <li><a class="" href="../../index.html">Home</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" href="../../getting-started.html">Getting Started</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" >C4DDev</a></li>
+      
+    <ul>
+      
+      <li><a class="" >API Documentation</a></li>
+      
+    <ul>
+      
+      <li><a class="" href="../api/py4d.html">Py4D API Extensions</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+    </ul>
+    
+      
+      <li><a class="" href="../cli.html">Command-line Tools</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" href="../plugins.html">Plugins</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" >Resources</a></li>
+      
+    <ul>
+      
+      <li><a class="" href="cpp.html">C++ Resources</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" href="py4d-imports-howto.html">Py4D Imports: How-To</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" href="python.html">Python Resources</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" href="resource-packages.html">Resource Packages</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="active" href="scripting.html">Scripting</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+    </ul>
+    
+      
+    </ul>
+    
+      
+      <li><a class="" href="../../build-instructions.html">Build Instructions</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" href="../../changelog.html">Changelog</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+    </ul>
+    
+      </div>
+      
+        <hr/>
+        <div class="author">
+          <p class="subtitle">About the author:</p>
+          
+          <a href="https://github.com/NiklasRosenstein">@NiklasRosenstein on GitHub</a>
+          
+          
+          <a href="mailto:rosensteinniklas@gmail.com">Contact via email</a>
+          
+        </div>
+      
+      <hr/>
+      <div class="statigen-notice">Built with <a href="https://github.com/NiklasRosenstein/statigen">statigen</a>.</div>
+    </div>
+    <div class="content">
+      <div class="content-inner">
+        
+          <h1>Scripting</h1>
+        
+        <p>The <strong>C4DDev</strong> API provides some utilities that are especially useful for
+scripting and prototyping in Cinema 4D.</p>
+<h2 id="per-project-libraries">Per-Project libraries</h2>
+<p>This is extremely useful when using third party libraries in scripts or
+Python Objects/Tags. You can keep the dependencies together with your
+Cinema 4D scene file and only make sure that <strong>C4DDev</strong> is installed if
+you move the scene around.</p>
+<pre class="codehilite"><code class="language-python"># This is a version of localimport that is tuned to work from inside any
+# scripting context in Cinema 4D (Tag, Object, XPresso Node).
+from c4ddev.scripting.localimport import localimport
+
+with localimport(doc):
+  import twitter
+
+def main():
+  # TODO: Some clever example
+  pass</code></pre>
+
+
+<h2 id="script-server">Script Server</h2>
+<p>Originally the <strong>SublimeScript</strong> plugin, this allows you to turn on a socket
+listening for scripts to be executed in Cinema 4D. In the <code>extras/</code> directory
+of C4DDev, you can find a plugin for Sublime Text that allows you to send a
+script to Cinema 4D.</p>
+<p>The default host and port is <code>localhost:2900</code> and the default password is
+<code>alpine</code>.</p>
+<p><img alt="" src="plugins/sublimescript.png" /></p>
+<div class="admonition warn">
+<p class="admonition-title">Caution</p>
+<p>Note that enabling the Script Server can make your computer vulnerable
+to <strong>targeted attacks</strong>. Use only for development purpose and do not use on
+production servers.</p>
+</div>
+      </div>
+    </div>
+  </body>
+</html>

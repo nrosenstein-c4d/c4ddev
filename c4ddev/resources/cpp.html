@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf8">
+    <title>C++ Resources</title>
+    <link href="../../static/style.css" rel="stylesheet">
+  </head>
+  <body>
+    
+    <div class="sidebar">
+      <div class="title">
+        <p><a href="../../index.html">C4DDev</a></p>
+      </div>
+      <hr/>
+      <div class="toc">
+        
+    <ul>
+      
+      <li><a class="" href="../../index.html">Home</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" href="../../getting-started.html">Getting Started</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" >C4DDev</a></li>
+      
+    <ul>
+      
+      <li><a class="" >API Documentation</a></li>
+      
+    <ul>
+      
+      <li><a class="" href="../api/py4d.html">Py4D API Extensions</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+    </ul>
+    
+      
+      <li><a class="" href="../cli.html">Command-line Tools</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" href="../plugins.html">Plugins</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" >Resources</a></li>
+      
+    <ul>
+      
+      <li><a class="active" href="cpp.html">C++ Resources</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" href="py4d-imports-howto.html">Py4D Imports: How-To</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" href="python.html">Python Resources</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" href="resource-packages.html">Resource Packages</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" href="scripting.html">Scripting</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+    </ul>
+    
+      
+    </ul>
+    
+      
+      <li><a class="" href="../../build-instructions.html">Build Instructions</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+      <li><a class="" href="../../changelog.html">Changelog</a></li>
+      
+    <ul>
+      
+    </ul>
+    
+      
+    </ul>
+    
+      </div>
+      
+        <hr/>
+        <div class="author">
+          <p class="subtitle">About the author:</p>
+          
+          <a href="https://github.com/NiklasRosenstein">@NiklasRosenstein on GitHub</a>
+          
+          
+          <a href="mailto:rosensteinniklas@gmail.com">Contact via email</a>
+          
+        </div>
+      
+      <hr/>
+      <div class="statigen-notice">Built with <a href="https://github.com/NiklasRosenstein/statigen">statigen</a>.</div>
+    </div>
+    <div class="content">
+      <div class="content-inner">
+        
+          <h1>C++ Resources</h1>
+        
+        <p>This page contains a list of resources about Cinema 4D C++ plugin development
+and useful links.</p>
+<h2 id="posts">Posts</h2>
+<ul>
+<li><a href="https://c4dprogramming.wordpress.com/2012/11/20/drawing-text-in-the-viewport/">Drawing Text in the Viewport</a></li>
+<li><a href="http://www.plugincafe.com/forum/forum_posts.asp?TID=12112">Saving EXR</a></li>
+<li><a href="http://www.plugincafe.com/forum/forum_posts.asp?TID=12865&amp;PID=50965#50965">Exposing C++ functionality to Python</a></li>
+<li><a href="http://www.plugincafe.com/forum/forum_posts.asp?TID=11764&amp;PID=46315#46315">Viewport HUD API</a></li>
+<li><a href="http://www.plugincafe.com/forum/forum_posts.asp?TID=12927">Saving Custom GUI layouts</a></li>
+</ul>
+<h2 id="tools">Tools</h2>
+<ul>
+<li><a href="https://github.com/craftr-build/NiklasRosenstein.maxon.c4d">craftr:NiklasRosenstein.maxon.c4d</a>
+  &ndash; Build Cinema 4D Plugins on Windows, macOS and Linux</li>
+</ul>
+<h2 id="snippets">Snippets</h2>
+<h3 id="hide-dialog-menubar">Hide Dialog Menubar</h3>
+<p>There is a non-member function available in the SDK that can be accessed
+through the <code>C4DOS</code> to add special gadgets to the dialog, and it appears
+that the state &ldquo;no menubar&rdquo; is also represented internally as a dialog
+gadgets.</p>
+<pre class="codehilite"><code class="language-cpp">inline Bool AddGadget(GeDialog* dlg, Int32 gadget_type) {
+  String const name;
+  BaseContainer const bc;
+  return C4DOS.Cd-&gt;AddGadget(dlg-&gt;Get(), gadget_type, 0, &amp;name, 0, 0, 0, 0, &amp;bc, nullptr);
+}</code></pre>
+
+
+<p>The gadget to remove the dialog menubar is <code>DIALOG_NOMENUBAR</code>. Be aware
+when adding this gadget: Adding it inside <code>CreateLayout()</code> won&rsquo;t work
+and calling it afterwards will crash C4D. You can call the function
+in the dialog&rsquo;s constructor though!</p>
+<pre class="codehilite"><code class="language-cpp">class MyDialog : public GeDialog() {
+public:
+  MyDialog() : GeDialog() { AddGadget(this, DIALOG_NOMENUBAR); }
+};</code></pre>
+      </div>
+    </div>
+  </body>
+</html>
