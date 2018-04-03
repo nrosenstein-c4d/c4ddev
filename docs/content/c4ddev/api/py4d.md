@@ -7,12 +7,11 @@ title = "Py4D API Extensions"
 The C4DDev Py4D API Extensions are a C++ plugin that provide additional
 functions that can be used from Python.
 
-{{< note title="Note" >}}
+!!! note "Note"
   The C++ component of **C4DDev** must be installed, otherwise the API
   extensions will not be available. Pre-compiled binaries are available in
   the [GitHub Releases](https://github.com/NiklasRosenstein/c4ddev/releases)
   of C4DDev.
-{{< /note >}}
 
 ## Members
 
@@ -96,7 +95,7 @@ __sw__ | The destination X coordinate.
 __sh__ | The destination X coordinate.
 __mode__ | One of `c4ddev.BLIT_NN`, `BLIT_BILINEAR` or `BLIT_BICUBIC`
 
-{{< note title="Limitation" >}}
+!!! note "Limitation"
   Currently this function can only accept two `GeClipMap` objects as we
   haven't figured out how to retrieve the actual C pointer to a `BaseBitmap`
   from a Python `c4d.bitmaps.BaseBitmap` object. You can convert a bitmap
@@ -110,7 +109,6 @@ __mode__ | One of `c4ddev.BLIT_NN`, `BLIT_BILINEAR` or `BLIT_BICUBIC`
   However, keep in mind that this process is relatively slow as it creates
   a new copy of the image. It is thus recommended to do this operation only
   once after a bitmap is loaded and keep it as a `GeClipMap`.
-{{< /note >}}
 
 ## Plugin Messages
 
@@ -194,14 +192,14 @@ Cinema 4D Python Plugin (`.pyp`), creating a `.pype` (before R15) or `.pypv`
 file (R15 and later). The argument can be specified multiple times to protected
 multiple files with a single invocation.
 
-The [`c4ddev source-protector`]({{< ref "cli.md#c4ddev-source-protector" >}})
-command can be used to protect source files from the Command-line conveniently.
+The [`c4ddev source-protector`](cli#c4ddev-source-protector) command can be
+used to protect source files from the Command-line conveniently.
 
     $ c4ddev source-protector myplugin.pyp
     ...
     [c4ddev / INFO]: Calling Source Protector for 'myplugin.pyp'.
 
 Alternatively, you can run Cinema 4D directly via the command-line or use
-the [`c4ddev run`]({{< ref "cli.md#c4ddev-run" >}}) command.
+the [`c4ddev run`](cli#c4ddev-run) command.
 
     $ /Applications/Cinema 4D R16/plugins/myplugin $ "..\..\CINEMA 4D.exe" -nogui -c4ddev-protect-source myplugin.pyp

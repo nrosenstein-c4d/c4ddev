@@ -1,6 +1,6 @@
 +++
 title = "Home"
-ordering-priority = 10
+ordering = 0
 +++
 
 The **C4DDev** project is a suite of tools and resources for Cinema 4D plugin
@@ -12,7 +12,7 @@ development, distribution and maintenance. These tools come in various forms:
 - [[c4ddev/api]]
 - [[c4ddev/resources]]
 
-Check out [Getting Started]({{< ref "getting-started.md" >}}) for how to get
+Check out [Getting Started](getting-started) for how to get
 started with **C4DDev** and Cinema 4D plugin development.
 
 ## License

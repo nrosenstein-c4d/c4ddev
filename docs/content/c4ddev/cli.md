@@ -216,7 +216,7 @@ This is a real-world example configuration file.
       --no-header TEXT
       --help              Show this message and exit.
 
-See also: [Resource Packages]({{< ref "resource-packages.md" >}})
+See also: [Resource Packages](resource-packages)
 
 ## `c4ddev run`
 
@@ -246,7 +246,7 @@ of Cinema 4D creating a separate terminal window.
       --help  Show this message and exit.
 
 Protects a Cinema 4D Python Plugin (`.pyp`). Requires the **C4DDev** C++
-parts installed. More information on the [API Extensions]({{< ref "apiext.md" >}}) page.
+parts installed. More information on the [API Extensions](apiext) page.
 If the C++ parts are not installed, nothing will happen and no error will
 be printed.
 

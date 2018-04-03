@@ -20,10 +20,9 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'lib'))
 import some_module  # The module will live on in sys.modules after the plugin finished loading
 ```
 
-{{< warning title="Warning" >}}
+!!! warn Warning
   Using the naive approach shown above is dangerous and can lead to
   incompatibilties between plugins.
-{{< /warning >}}
 
 ## Using the Node.Py Runtime
 
@@ -65,12 +64,11 @@ The Node.Py runtime will manage the full isolation of the module environment
 (using [localimport][]) and imported Python modules will not be visible to
 other plugins.
 
-{{< note title="Note" >}}
-C4DDev currently provides no mechanism to automatically compile Python sources
-and package them as it does with the `c4ddev pypkg` command. There is an
-outstanding task to bring this feature to C4DDev:
-[NiklasRosenstein/c4ddev#8](https://github.com/NiklasRosenstein/c4ddev/issues/8)
-{{< /note >}}
+!!! note Note
+  C4DDev currently provides no mechanism to automatically compile Python sources
+  and package them as it does with the `c4ddev pypkg` command. There is an
+  outstanding task to bring this feature to C4DDev:
+  [NiklasRosenstein/c4ddev#8](https://github.com/NiklasRosenstein/c4ddev/issues/8)
 
 ## Using localimport
 
@@ -187,7 +185,6 @@ we simply add the following line to the `devel.pth` file.
 
     requests/requests
 
-{{< note title="Note" >}}
+!!! note Note
   You don't need this file in release mode when your third-party modules
   are packaged with [`c4ddev pypkg`](cli#pypkg).
-{{< /note >}}

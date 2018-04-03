@@ -33,12 +33,11 @@ and you can convert it.
 
 ![Unicode Escape Tool Screenshot](uescapetool.png)
 
-{{< note title="Resource Packages" >}}
+!!! note Resource Packages
   You don't need this tool if you make use of [ResourcePackages](../cli/rpkg).
   Non-ascii characters will be escaped automatically when a stringtable
   is generated from the ResourcePackage.
-{{< /note >}}
 
 ## Scripting Server
 
-See [Scripting]({{< ref "scripting.md#scripting-server" >}})
+See [Scripting](scripting)

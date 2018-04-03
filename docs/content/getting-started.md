@@ -1,6 +1,6 @@
 +++
 title = "Getting Started"
-ordering-priority = 5
+ordering = 1
 +++
 
 ## Installing C4DDev
@@ -67,10 +67,8 @@ works.
 
 ## Beginner's Guide: Python
 
-{{< note title="Todo" >}}
-{{< /note >}}
+!!! note Todo
 
 ## Beginner's Guide: C++
 
-{{< note title="Todo" >}}
-{{< /note >}}
+!!! note Todo
