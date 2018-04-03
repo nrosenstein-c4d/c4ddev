@@ -3,46 +3,37 @@ title = "Getting Started"
 ordering = 1
 +++
 
-## Installing C4DDev
+C4DDev can be installed in two ways: Into your Cinema 4D plugins directory
+and as a command-line tool.
 
-There are multiple components of C4DDev can be installed separately. To
-install the Cinema 4D plugins, you should go to the [GitHub Releases] page
-and download the appropriate release for your Cinema 4D version and platform.
-This download will contain the full C4DDev Python and prebuilt binaries of
-the C++ components.
+## Installing the C4DDev Plugins
 
   [GitHub Releases]: https://github.com/NiklasRosenstein/c4ddev/releases
 
-
-You install the C4DDev plugin the same as you would do with any other plugin.
-Simply extract the archive into the Cinema 4D plugins directory. For
-development, I generally recommend working in the Cinema 4D's application
-plugin directory, **not** in the user preferences plugin directory.
+Head to the [GitHub Releases] page and download the latest release for your
+platform (Windows or macOS). Then unpack the directory into your Cinema 4D
+plugins directory.
 
     Cinema 4D R18/
       plugins/
         c4ddev/
           ...
 
-## Installing C4DDev CLI
+## Installing the C4DDev command-line tools
 
-You need [Python 2 or 3][python] installed on your system and the [Pip]
-package manager. If you don't have Pip installed in your Python installation,
-download [get-pip.py] and run it. Then install [Node.py]. If you are own macOS,
-you might need to prepend the work `sudo` before the command.
+You need either Python 2 or 3 installed on your system and the [Pip] package
+manager. Pip comes pre-installed with Python 3 on Windows, but with Python 2
+you will need to run the [get-pip.py] script first. You may need to start the
+terminal with admin privileges to install Pip.
 
-    $ pip install node.py
+    > python get-pip.py
 
-After this step is complete, you can install the C4DDev Command-line tools
-by running
+After this step, you can install the command-line tools by running the
+following command (again, you may need admin privileges).
 
-    $ nodepy-pm install --global c4ddev
+    $ pip install git+https://github.com/NiklasRosenstein/c4ddev.git
 
-Depending on your System and installation of Python, the Command-line Tools
-will have been installed to either `~/.local/bin` or somewhere in
-`~/AppData/Local/Programs/Python`. You should make sure that this path is
-in your `PATH` environment variable. Now run the following and see if it
-works.
+Now you should be able to use the `c4ddev` command-line program.
 
     $ c4ddev
     Usage: c4ddev [OPTIONS] COMMAND [ARGS]...
