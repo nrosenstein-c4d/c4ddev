@@ -37,7 +37,7 @@ The default host and port is `localhost:2900` and the default password is
 
 ![](../plugins/sublimescript.png)
 
-!!! warn Caution
-  Note that enabling the Script Server can make your computer vulnerable
-  to **targeted attacks**. Use only for development purpose and do not use on
-  production servers.
+!!! warn "Caution"
+    Note that enabling the Script Server can make your computer vulnerable
+    to **targeted attacks**. Use only for development purpose and do not use on
+    production servers.

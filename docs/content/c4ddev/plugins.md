@@ -33,10 +33,10 @@ and you can convert it.
 
 ![Unicode Escape Tool Screenshot](uescapetool.png)
 
-!!! note Resource Packages
-  You don't need this tool if you make use of [ResourcePackages](../cli/rpkg).
-  Non-ascii characters will be escaped automatically when a stringtable
-  is generated from the ResourcePackage.
+!!! note "Resource Packages"
+    You don't need this tool if you make use of [ResourcePackages](../cli#c4ddev-rpkg).
+    Non-ascii characters will be escaped automatically when a stringtable
+    is generated from the ResourcePackage.
 
 ## Scripting Server
 

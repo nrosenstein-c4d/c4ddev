@@ -58,8 +58,8 @@ Now you should be able to use the `c4ddev` command-line program.
 
 ## Beginner's Guide: Python
 
-!!! note Todo
+!!! todo
 
 ## Beginner's Guide: C++
 
-!!! note Todo
+!!! todo

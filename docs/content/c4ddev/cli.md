@@ -185,7 +185,7 @@ The **pypkg** command compiles Python modules and packages into `.pyc` files
 and merges them into a Python Egg archive or directory. This is useful to
 protect your Python code and to distribute your Python plugin.
 
-!!!note
+!!! note
     Keep in mind that you should always use [`localimport`](localimport)
     to import any third-party Python modules from a Cinema 4D plugin in
     order to keep the global importer state clean.

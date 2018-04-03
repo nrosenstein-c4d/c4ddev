@@ -8,10 +8,10 @@ The C4DDev Py4D API Extensions are a C++ plugin that provide additional
 functions that can be used from Python.
 
 !!! note "Note"
-  The C++ component of **C4DDev** must be installed, otherwise the API
-  extensions will not be available. Pre-compiled binaries are available in
-  the [GitHub Releases](https://github.com/NiklasRosenstein/c4ddev/releases)
-  of C4DDev.
+    The C++ component of **C4DDev** must be installed, otherwise the API
+    extensions will not be available. Pre-compiled binaries are available in
+    the [GitHub Releases](https://github.com/NiklasRosenstein/c4ddev/releases)
+    of C4DDev.
 
 ## Members
 
@@ -96,19 +96,19 @@ __sh__ | The destination X coordinate.
 __mode__ | One of `c4ddev.BLIT_NN`, `BLIT_BILINEAR` or `BLIT_BICUBIC`
 
 !!! note "Limitation"
-  Currently this function can only accept two `GeClipMap` objects as we
-  haven't figured out how to retrieve the actual C pointer to a `BaseBitmap`
-  from a Python `c4d.bitmaps.BaseBitmap` object. You can convert a bitmap
-  to a `GeClipMap` using the following code:
+    Currently this function can only accept two `GeClipMap` objects as we
+    haven't figured out how to retrieve the actual C pointer to a `BaseBitmap`
+    from a Python `c4d.bitmaps.BaseBitmap` object. You can convert a bitmap
+    to a `GeClipMap` using the following code:
 
-  ```
-  map = c4d.bitmaps.GeClipMap()
-  map.InitWithBitmap(bmp, bmp.GetInternalChannel())
-  ```
+    ```
+    map = c4d.bitmaps.GeClipMap()
+    map.InitWithBitmap(bmp, bmp.GetInternalChannel())
+    ```
 
-  However, keep in mind that this process is relatively slow as it creates
-  a new copy of the image. It is thus recommended to do this operation only
-  once after a bitmap is loaded and keep it as a `GeClipMap`.
+    However, keep in mind that this process is relatively slow as it creates
+    a new copy of the image. It is thus recommended to do this operation only
+    once after a bitmap is loaded and keep it as a `GeClipMap`.
 
 ## Plugin Messages
 

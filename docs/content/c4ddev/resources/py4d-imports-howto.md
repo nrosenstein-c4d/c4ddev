@@ -20,9 +20,9 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'lib'))
 import some_module  # The module will live on in sys.modules after the plugin finished loading
 ```
 
-!!! warn Warning
-  Using the naive approach shown above is dangerous and can lead to
-  incompatibilties between plugins.
+!!! warn "Warning"
+    Using the naive approach shown above is dangerous and can lead to
+    incompatibilties between plugins.
 
 ## Using the Node.Py Runtime
 
@@ -64,11 +64,11 @@ The Node.Py runtime will manage the full isolation of the module environment
 (using [localimport][]) and imported Python modules will not be visible to
 other plugins.
 
-!!! note Note
-  C4DDev currently provides no mechanism to automatically compile Python sources
-  and package them as it does with the `c4ddev pypkg` command. There is an
-  outstanding task to bring this feature to C4DDev:
-  [NiklasRosenstein/c4ddev#8](https://github.com/NiklasRosenstein/c4ddev/issues/8)
+!!! note "Note"
+    C4DDev currently provides no mechanism to automatically compile Python sources
+    and package them as it does with the `c4ddev pypkg` command. There is an
+    outstanding task to bring this feature to C4DDev:
+    [NiklasRosenstein/c4ddev#8](https://github.com/NiklasRosenstein/c4ddev/issues/8)
 
 ## Using localimport
 
@@ -138,7 +138,7 @@ del blob, b, t, z, m;
 
 ## Using localimport + pypkg
 
-If you're using [`c4ddev pypkg`](cli#pypkg) to package additional Python
+If you're using [`c4ddev pypkg`](../../cli#c4ddev-pypkg) to package additional Python
 modules, it is common to have a `devel/` directory with all the dependencies.
 In development mode, you can make `localimport` load the dependencies from
 that directory, and otherwise load it from the Python Egg generated with
@@ -185,6 +185,6 @@ we simply add the following line to the `devel.pth` file.
 
     requests/requests
 
-!!! note Note
-  You don't need this file in release mode when your third-party modules
-  are packaged with [`c4ddev pypkg`](cli#pypkg).
+!!! note "Note"
+    You don't need this file in release mode when your third-party modules
+    are packaged with [`c4ddev pypkg`](../../cli#c4ddev-pypkg).
