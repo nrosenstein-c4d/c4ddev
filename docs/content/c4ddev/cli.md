@@ -2,18 +2,7 @@
 title = "Command-line Tools"
 +++
 
-## Installation
-
-To install the command-line tools, you need [Node.Py][].
-
-    $ pip install node.py
-    $ nodepy-pm install --global c4ddev
-
-*(Note: You can also install the command-line tools locally for your project
-by omitting the `--global` option and adding `nodepy_modules/.bin` to your
-`PATH`)*
-
-  [Node.Py]: https://github.com/nodepy/nodepy
+Check out the [Getting Started](../../getting-started) guide for the install instructions.
 
 ## `c4ddev`
 
@@ -56,31 +45,6 @@ by omitting the `--global` option and adding `nodepy_modules/.bin` to your
 
     Options:
       --help  Show this message and exit.
-
-## `c4ddev build-loader`
-
-    Usage: c4ddev build-loader [OPTIONS]
-
-      Generate a Cinema 4D Python plugin that uses Node.py to load an
-      entrypoint.
-
-    Options:
-      -e, --entry-point ENTRYPOINT
-      -c, --compress
-      -m, --minify
-      -o, --output FILENAME
-      --help                        Show this message and exit.
-
-Generates a Cinema 4D plugin that contains a stand-alone version of
-[Node.Py][] and loads the entrypoint specified with `-e,--entry-point`.
-The file loaded by this "loader plugin" has full access to the [Node.Py][]
-runtime. Access to the underlying module objects can be retrieved using
-`require.contenx.binding()`.
-
-```python
-nodepy = require.context.binding('nodepy')
-localimport = require.context.binding('localimport')
-```
 
 ## `c4ddev init`
 
