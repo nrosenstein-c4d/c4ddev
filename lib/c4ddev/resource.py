@@ -23,8 +23,12 @@ Utilities for Cinema 4D resource symbols.
 """
 
 from __future__ import print_function
-from nr import strex
 from . import __version__
+
+try:
+  from nr import strex as parse
+except ImportError:
+  from nr import parse
 
 import collections
 import codecs
@@ -398,19 +402,19 @@ class ResourcePackage(object):
   Token_Popen = '('
   Token_Pclose = ')'
   Token_SetPrefix = 'SetPrefix'
-  Token_EOF = strex.eof
+  Token_EOF = parse.eof
 
   Rules = [
-    strex.Keyword(Token_Newline, Token_Newline),
-    strex.Keyword(Token_Def, Token_Def),
-    strex.Keyword(Token_Popen, Token_Popen),
-    strex.Keyword(Token_Pclose, Token_Pclose),
-    strex.Keyword(Token_SetPrefix, Token_SetPrefix),
-    strex.Charset(Token_Number, string.digits),
-    strex.Charset(Token_Symbol, string.ascii_letters + '_' + string.digits),
-    strex.Charset(Token_Indent, string.whitespace, at_column=0),
-    strex.Charset(Token_Whitespace, string.whitespace, skip=True),
-    strex.Regex(Token_Comment, '#.*$', re.M, skip=True)
+    parse.Keyword(Token_Newline, Token_Newline),
+    parse.Keyword(Token_Def, Token_Def),
+    parse.Keyword(Token_Popen, Token_Popen),
+    parse.Keyword(Token_Pclose, Token_Pclose),
+    parse.Keyword(Token_SetPrefix, Token_SetPrefix),
+    parse.Charset(Token_Number, string.digits),
+    parse.Charset(Token_Symbol, string.ascii_letters + '_' + string.digits),
+    parse.Charset(Token_Indent, string.whitespace, at_column=0),
+    parse.Charset(Token_Whitespace, string.whitespace, skip=True),
+    parse.Regex(Token_Comment, '#.*$', re.M, skip=True)
   ]
 
   # Seems like these are the only supported language codes for Cinema 4D.
