@@ -20,38 +20,28 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import os
-import sys
-from setuptools import setup, find_packages
+import setuptools
+import io
 
-def readme():
-  if os.path.isfile('README.md') and any('dist' in x for x in sys.argv[1:]):
-    if os.system('pandoc -s README.md -o README.rst') != 0:
-      print('-----------------------------------------------------------------')
-      print('WARNING: README.rst could not be generated, pandoc command failed')
-      print('-----------------------------------------------------------------')
-      if sys.stdout.isatty():
-        input("Enter to continue... ")
-    else:
-      print("Generated README.rst with Pandoc")
+with io.open('README.md', encoding='utf8') as fp:
+  readme = fp.read()
 
-  if os.path.isfile('README.rst'):
-    with open('README.rst') as fp:
-      return fp.read()
-  return ''
+with io.open('requirements.txt', encoding='utf8') as fp:
+  requirements = fp.readlines()
 
-setup(
+setuptools.setup(
   name='c4ddev',
   version='0.1.7',
   license='MIT',
   description='Cinema 4D Development Command-line Tools and Plugins.',
-  long_description=readme(),
+  long_description=readme,
+  long_description_content_type='text/markdown',
   url='https://github.com/NiklasRosenstein/c4ddev',
   author='Niklas Rosenstein',
   author_email='rosensteinniklas@gmail.com',
   package_dir={'': 'lib'},
-  packages=find_packages('lib'),
-  install_requires=['nr', 'click', 'bs4', 'six', 'requests'],
+  packages=setuptools.find_packages('lib'),
+  install_requires=requirements,
   entry_points = {
     'console_scripts': [
       'c4ddev = c4ddev.__main__:main'
