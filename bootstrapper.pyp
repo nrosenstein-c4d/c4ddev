@@ -40,23 +40,18 @@ import pkgutil
 import sys
 
 plugin_modules = []
+importer = localimport('lib')
 
-with localimport('lib') as importer:
-  # Load all plugins.
-  import c4ddev.res
-  import c4ddev.plugins
-  for mod in pkgutil.iter_modules(c4ddev.plugins.__path__, 'c4ddev.plugins.'):
-    plugin = __import__(mod[1], fromlist=[None])
-    plugin_modules.append(plugin)
+# We want to keep the importer state in the case of C4DDev. Its libraries
+# should be useful for prototyping inside C4D.
+importer.__enter__()
 
-  for mod in importer.discover():
-    if mod[1] == 'setup': continue
-    __import__(mod[1])
-
-# Note: Usually, plugins should not leave any trace of modules they include
-# in their distribution in the global importer state, but c4ddev is an
-# exception as it is meant to be used as a utility library.
-sys.modules.update(importer.modules)
+# Load all plugins.
+import c4ddev.res
+import c4ddev.plugins
+for mod in pkgutil.iter_modules(c4ddev.plugins.__path__, 'c4ddev.plugins.'):
+  plugin = __import__(mod[1], fromlist=[None])
+  plugin_modules.append(plugin)
 
 def PluginMessage(msg_id, data):
   for plugin in plugin_modules:

@@ -1,3 +1,5 @@
+nr.c4d/src
+nr.parse/src
+nr.types/src
 py-localimport
-py-nr
-py-nr.c4d
+six
