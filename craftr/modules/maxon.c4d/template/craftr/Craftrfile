@@ -1,0 +1,15 @@
+# myplugin
+
+cxx = load('craftr.lang.cxx')
+c4d = load('NiklasRosenstein.maxon.c4d')
+
+plugin_dir = local('plugin')
+
+plugin = cxx.shared_library(
+  output = path.join(plugin_dir, 'myplugin'),
+  inputs = cxx.compile_cpp(
+    sources = glob('src/**/*.cpp'),
+    include = [plugin_dir],
+    frameworks = [c4d.sdk]
+  )
+)

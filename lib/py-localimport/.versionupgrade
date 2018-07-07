@@ -1,0 +1,4 @@
+# https://github.com/NiklasRosenstein/versionupgrade
+tag v{VERSION}
+upgrade localimport.py:__version__ = '{VERSION}'
+upgrade setup.py:  version="{VERSION}",

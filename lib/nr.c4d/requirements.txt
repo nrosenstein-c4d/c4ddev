@@ -1,0 +1,2 @@
+nr.parse>=1.0.0
+nr.types>=1.0.5

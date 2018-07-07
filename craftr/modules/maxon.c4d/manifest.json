@@ -1,0 +1,37 @@
+{
+  "name": "NiklasRosenstein.maxon.c4d",
+  "version": "1.0.1",
+  "author": "Niklas Rosenstein <rosensteinniklas@gmail.com>",
+  "url": "https://github.com/craftr-build/NiklasRosenstein.maxon.c4d",
+  "dependencies": {
+    "craftr.lang.cxx": "*"
+  },
+  "options": {
+    "debug": "bool",
+    "rtti": {
+      "type": "bool",
+      "help": "Whether to use RTTI, disabled by default. This option is automatically propagated globally when the Craftr module is loaded.",
+      "default": false
+    },
+    "directory": {
+      "type": "path",
+      "help": "Path to the Cinema 4D installation to compile with. If this is not specified, it is determined automatically from the location of the main Craftr package currently being executed.",
+      "inherit": false
+    },
+    "release": {
+      "type": "string",
+      "help": "The release number of the Cinema 4D installation to compile with. If not specified, it will be automatically determined from the \"directory\" option. If the release number can not be determined from that path, a fatal error is raised.",
+      "inherit": false
+    },
+    "url": {
+      "type": "string",
+      "help": "If this option or the \"version\" option are specified, the Cinema 4D SDK will instead be downloaded from the specified URL. The default URL is hardcoded into the Craftrfile. The variable \"${VERSION}\" will be replaced by the \"version\" option value.",
+      "inherit": false
+    },
+    "version": {
+      "type": "string",
+      "help": "If this option or the \"url\" option are specified, the Cinema 4D SDK will instead be downloaded from the specified URL. The URL may contain a \"${VERSION}\" variable which will be replaced by the value of this option.",
+      "inherit": false
+    }
+  }
+}

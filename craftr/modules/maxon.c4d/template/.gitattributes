@@ -1,0 +1,23 @@
+*.h text=auto
+*.hpp text=auto
+*.c text=auto
+*.cpp text=auto
+*.cxx text=auto
+*.py text=auto
+*.pyp text=auto
+
+# Text and Markup files
+*.htm text=auto
+*.html text=auto
+*.txt text=auto
+*.md text=auto
+*.rst text=auto
+
+# Visual Studio Project Files
+*.sln text eol=crlf
+*.vcxproj text eol=crlf
+*.vcxproj.user text eol=crlf
+*.vcxproj.filter text eol=crlf
+
+# XCode Project Files
+*.pbxproj text eol=lf

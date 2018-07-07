@@ -1,0 +1,9 @@
+name: "myplugin"
+version: "1.0.0"
+project_dir: ".."
+author: ""
+url: ""
+dependencies:
+  "craftr.lang.cxx": "*"
+  "NiklasRosenstein.maxon.c4d": "*"
+options: {}

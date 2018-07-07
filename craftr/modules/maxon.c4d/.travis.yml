@@ -1,0 +1,73 @@
+language: cpp
+os:
+- osx
+- linux
+
+osx_image: xcode7.3
+addons:
+  apt:
+    sources:
+      - deadsnakes
+      - ubuntu-toolchain-r-test
+    packages:
+      - python3.4
+      - gcc-5
+      - g++-5
+
+env:
+  # These versions require a version of XCode that is no longer
+  # supported by Travis CI.
+  - C4DVERSION=12.032 XCODE_VERSION=5.0-10.08-2013.09.18
+  - C4DVERSION=13.051 XCODE_VERSION=5.0-10.08-2013.09.18
+  - C4DVERSION=14.041 XCODE_VERSION=5.0-10.08-2013.09.18
+  # These fixed versions compile with LLVM 6+ (so, including 7.3).
+  - C4DVERSION=12.032-llvm6fix
+  - C4DVERSION=13.051-llvm6fix
+  - C4DVERSION=14.041-llvm6fix
+  # These we can compile with XCode 7.3.
+  - C4DVERSION=15.064
+  - C4DVERSION=16.021
+  - C4DVERSION=16.050
+  - C4DVERSION=17.048
+  - C4DVERSION=18.030
+
+install:
+  - mkdir .tmp
+  - export PATH=$PATH:$PWD/.tmp
+  - .ci/tools/get-ninja v1.7.2 .tmp
+
+  # Apparently we need this on OSX because otherwise we can run into the error:
+  #     /Users/travis/build.sh: line 109: shell_session_update: command not found
+  # See travis-ci#6307
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then rvm get stable; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ] && [ ! -z "$XCODE_VERSION" ]; then
+      set -e;
+      .ci/tools/get-xcode-cltools $XCODE_VERSION xcode5;
+      export CC=$PWD/xcode5/usr/bin/clang;
+      export CXX=$PWD/xcode5/usr/bin/clang++;
+    fi
+
+  # OSX: Install Python 3 with Homebrew.
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew update; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install python3; fi
+
+  # Choose the Python version differently on Linux and OSX.
+  - if [ "$TRAVIS_OS_NAME" == "osx" ];
+    then PYTHON=python3; PIP=pip3;
+    else PYTHON=python3.4; PIP=pip3.4; fi
+
+  # Install Pip into that Python version.
+  - curl -s https://bootstrap.pypa.io/get-pip.py | sudo $PYTHON
+
+  # Install the latest version of Craftr 2.x.
+  - sudo $PIP install git+https://github.com/craftr-build/craftr.git@development
+
+  # Linux: Use the newer version of GCC that we installed with addons:apt:packages
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+      export CC=gcc-5;
+      export CXX=g++-5;
+    fi
+
+script:
+  - craftr export -d .version=$C4DVERSION
+  - craftr build

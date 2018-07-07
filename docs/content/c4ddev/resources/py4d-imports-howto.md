@@ -153,7 +153,6 @@ else:
 with _importer:
     import res
     import requests
-    import nr.concurrency
     from nr.c4d.utils import load_bitmap
 ```
 

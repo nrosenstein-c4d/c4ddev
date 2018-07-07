@@ -1,0 +1,26 @@
+{
+  "craftr/modules/maxon.c4d": {
+    "ref": "1a0649c66c177a3946e9c1b5fa16a8029a871c4f",
+    "url": "https://github.com/craftr-build/NiklasRosenstein.maxon.c4d.git"
+  },
+  "lib/nr.c4d": {
+    "ref": "615b01ab13315dad67072c7d64a69ed4c940c218",
+    "url": "https://gitlab.niklasrosenstein.com/NiklasRosenstein/python/nr.c4d.git"
+  },
+  "lib/nr.parse": {
+    "ref": "ce14e7998bce1bba040878abd681a68c5d2d2ed1",
+    "url": "https://gitlab.niklasrosenstein.com/NiklasRosenstein/python/nr.parse.git"
+  },
+  "lib/nr.types": {
+    "ref": "fd152fe7af0cde0374ccc90e2093be679f9b893d",
+    "url": "https://gitlab.niklasrosenstein.com/NiklasRosenstein/python/nr.types.git"
+  },
+  "lib/py-localimport": {
+    "ref": "69af71c37f8bd3b2121ec39083dff18a9a2d04a1",
+    "url": "https://github.com/NiklasRosenstein/py-localimport.git"
+  },
+  "lib/six": {
+    "ref": "8f26110f6c394672855430f9f57bb3ebd2da07cc",
+    "url": "https://github.com/benjaminp/six.git"
+  }
+}

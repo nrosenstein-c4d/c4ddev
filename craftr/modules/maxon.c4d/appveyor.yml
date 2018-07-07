@@ -1,0 +1,134 @@
+install:
+  - mkdir C:\Bin
+  - set PATH=C:\Bin;%PATH%
+  - git submodule update --init
+
+  # Install wget (the Python version).
+  - C:\Python35\Scripts\pip install wget
+
+  # Download Ninja, unpack it and add it to PATH.
+  - .ci\tools\get-ninja.cmd v1.7.2 C:\bin
+
+  # Install latest development version of Craftr.
+  - C:\Python35\Scripts\pip install git+https://github.com/craftr-build/craftr.git@development
+
+  # Go back to repository directory and build.
+  - cd C:\projects\niklasrosenstein-maxon-c4d
+  - C:\Python35\Scripts\craftr export -d .version=%C4DVERSION% -d toolkit=msvc-%VSVERSION% -d target=%VSTARGET%
+  - C:\Python35\Scripts\craftr build
+
+build: off
+
+matrix:
+  allow_failures:
+  # We add this environment variable to all combinations which we know to fail.
+  - ALLOW_FAILURE: yes
+
+environment:
+  matrix:
+  # Cinema 4D R12.032
+  # =================
+  - C4DVERSION: 12.032
+    VSVERSION: 120
+    VSTARGET: x86
+
+  - C4DVERSION: 12.032
+    VSVERSION: 120
+    VSTARGET: amd64
+
+  - C4DVERSION: 12.032
+    VSVERSION: 140
+    VSTARGET: x86
+
+  - C4DVERSION: 12.032
+    VSVERSION: 140
+    VSTARGET: amd64
+
+  # Cinema 4D R13.051
+  # =================
+  - C4DVERSION: 13.051
+    VSVERSION: 120
+    VSTARGET: x86
+
+  - C4DVERSION: 13.051
+    VSVERSION: 120
+    VSTARGET: amd64
+
+  - C4DVERSION: 13.051
+    VSVERSION: 140
+    VSTARGET: x86
+
+  - C4DVERSION: 13.051
+    VSVERSION: 140
+    VSTARGET: amd64
+
+  # Cinema 4D R14.041
+  # =================
+  - C4DVERSION: 14.041
+    VSVERSION: 120
+    VSTARGET: x86
+
+  - C4DVERSION: 14.041
+    VSVERSION: 120
+    VSTARGET: amd64
+
+  - C4DVERSION: 14.041
+    VSVERSION: 140
+    VSTARGET: x86
+
+  - C4DVERSION: 14.041
+    VSVERSION: 140
+    VSTARGET: amd64
+
+  # Cinema 4D R15.064
+  # =================
+  - C4DVERSION: 15.064
+    VSVERSION: 120
+    VSTARGET: amd64
+
+  - C4DVERSION: 15.064
+    VSVERSION: 140
+    VSTARGET: amd64
+    ALLOW_FAILURE: yes
+
+  # Cinema 4D R16.021
+  # =================
+  - C4DVERSION: 16.021
+    VSVERSION: 120
+    VSTARGET: amd64
+
+  - C4DVERSION: 16.021
+    VSVERSION: 140
+    VSTARGET: amd64
+    ALLOW_FAILURE: yes
+
+  # Cinema 4D R16.050
+  # =================
+  - C4DVERSION: 16.050
+    VSVERSION: 120
+    VSTARGET: amd64
+
+  - C4DVERSION: 16.050
+    VSVERSION: 140
+    VSTARGET: amd64
+    ALLOW_FAILURE: yes
+
+  # Cinema 4D R17.048
+  # =================
+  - C4DVERSION: 17.048
+    VSVERSION: 120
+    VSTARGET: amd64
+
+  - C4DVERSION: 17.048
+    VSVERSION: 140
+    VSTARGET: amd64
+
+  # Cinema 4D R18.030
+  # =================
+  - C4DVERSION: 18.030
+    VSVERSION: 120
+    VSTARGET: amd64
+
+  - C4DVERSION: 18.030
+    VSVERSION: 140
+    VSTARGET: amd64
