@@ -20,7 +20,7 @@
 
 from __future__ import print_function
 from six.moves import input
-from six.moves.configparser import SafeConfigParser
+from six.moves.configparser import SafeConfigParser, NoSectionError
 from getpass import getpass
 from c4ddev import resource, pypkg as _pypkg
 from c4ddev import __version__ as version
@@ -92,6 +92,12 @@ def save_cfg(cfg):
   with open(cfg_filename, 'w') as fp:
     cfg.write(fp)
   os.chmod(cfg_filename, int('600', 8))
+
+
+def oscall(cmd):
+  if os.name == 'nt':
+    cmd = 'start /b /wait "parentconsole" ' + ' '.join(quote(x) for x in cmd)
+  return subprocess.call(cmd, shell=isinstance(cmd, str))
 
 
 @click.group()
@@ -346,7 +352,6 @@ def run(ctx, args, trs, client, bodypaint, cinebench, license_server, lite,
     if not exe.endswith('.exe'):
       exe += '.exe'
     cmd = [exe] + list(args)
-    cmd = 'start /b /wait "parentconsole" ' + ' '.join(quote(x) for x in cmd)
   elif sys.platform.startswith('darwin'):
     exe = os.path.join(c4d, exe + '.app', 'Contents', 'MacOS', exe)
     cmd = [exe] + list(args)
@@ -357,8 +362,39 @@ def run(ctx, args, trs, client, bodypaint, cinebench, license_server, lite,
   if lldb:
     cmd = ['lldb', '--'] + cmd
 
-  res = subprocess.call(cmd, shell=isinstance(cmd, str))
-  sys.exit(res)
+  sys.exit(oscall(cmd))
+
+
+@main.command(context_settings={'ignore_unknown_options': True})
+@click.argument('args', nargs=-1, type=click.UNPROCESSED)
+@click.option('--get-path', is_flag=True, help='Show the path to the project tool.')
+@click.option('--set-path', help='Configure the path to the project tool.')
+def projecttool(args, get_path, set_path):
+  """
+  Run the MAXON API Project Tool. The path to the project tool must be
+  configured once.
+  """
+
+  cfg = load_cfg()
+  if set_path:
+    if not os.path.isfile(set_path):
+      print('fatal: "{}" is not a file'.format(set_path), file=sys.stderr)
+      sys.exit(2)
+    if not cfg.has_section('projecttool'):
+      cfg.add_section('projecttool')
+    cfg.set('projecttool', 'path', set_path)
+    save_cfg(cfg)
+    return
+  try:
+    path = cfg.get('projecttool', 'path')
+  except NoSectionError:
+    print('fatal: path to projecttool is not configured', file=sys.stderr)
+    sys.exit(1)
+  if get_path:
+    print(path)
+    return
+
+  sys.exit(oscall([path] + list(args)))
 
 
 @main.command('source-protector')
