@@ -28,7 +28,10 @@ from . import __version__
 try:
   from nr import strex as parse
 except ImportError:
-  from nr import parse
+  try:
+    from nr import parse
+  except ImportError:
+    import nr.parsing.core as parse
 
 import collections
 import codecs

@@ -12,7 +12,7 @@ with io.open('lib/c4ddev/__init__.py', encoding='utf8') as fp:
 with io.open('README.md', encoding='utf8') as fp:
   long_description = fp.read()
 
-requirements = ['bs4 >=4.6.0,<5.0.0', 'click >=6.7', 'requests >=2.19.1,<3.0.0', 'six >=1.11.0,<2.0.0']
+requirements = ['beautifulsoup4 >=4.6.0,<5.0.0', 'click >=6.7', 'nr.parsing.core >=0.0.1,<0.1.0', 'requests >=2.19.1,<3.0.0', 'six >=1.11.0,<2.0.0']
 
 setuptools.setup(
   name = 'c4ddev',
@@ -32,7 +32,11 @@ setuptools.setup(
   tests_require = [],
   python_requires = None, # TODO: '>=2.7,<3.0.0 | >=3.4,<4.0.0',
   data_files = [],
-  entry_points = {},
+  entry_points = {
+    'console_scripts': [
+      'c4ddev = c4ddev.__main__:main',
+    ]
+  },
   cmdclass = {},
   keywords = [],
   classifiers = [],
