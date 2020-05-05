@@ -1,5 +1,0 @@
-beautifulsoup4>=4.6.0
-click>=6.7
-nr.parse>=1.0.0
-requests>=2.19.1
-six>=1.11.0
