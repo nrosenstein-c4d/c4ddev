@@ -27,7 +27,7 @@ requirements = [
 
 setuptools.setup(
   name = 'c4ddev',
-  version = '1.7.1',
+  version = '1.7.2',
   author = 'Niklas Rosenstein',
   author_email = 'rosensteinniklas@gmail.com',
   description = 'C4DDev is a set of command-line tools and Cinema 4D plugins to make development plugins easier.',

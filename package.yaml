@@ -1,6 +1,6 @@
 name: "c4ddev"
 source-directory: "lib"
-version: "1.7.1"
+version: "1.7.2"
 author: "Niklas Rosenstein <rosensteinniklas@gmail.com>"
 license: "MIT"
 description: "C4DDev is a set of command-line tools and Cinema 4D plugins to make development plugins easier."

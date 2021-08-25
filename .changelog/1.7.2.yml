@@ -3,3 +3,4 @@ changes:
   component: general
   description: fix `NameError` in `c4ddev rpkg` command
   fixes: []
+release_date: '2021-08-25'
