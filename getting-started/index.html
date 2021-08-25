@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Getting Started - c4ddev</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Getting Started";
+    var mkdocs_page_input_path = "getting-started.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> c4ddev</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Welcome to C4DDev!</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../build-instructions/">Build Instructions</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../changelog/">Changelog</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Getting Started</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#installing-the-c4ddev-plugins">Installing the C4DDev Plugins</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#installing-the-c4ddev-command-line-tools">Installing the C4DDev command-line tools</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#beginners-guide-python">Beginner's Guide: Python</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#beginners-guide-c">Beginner's Guide: C++</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Api</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../api/py4d/">Py4D API Extensions</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">C4ddev</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../c4ddev/cli/">Command-line Tools</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../c4ddev/plugins/">Plugins</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Resources</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../resources/cpp/">C++ Resources</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../resources/py4d-imports-howto/">Py4D Imports: How-To</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../resources/python/">Python Resources</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../resources/resource-packages/">Resource Packages</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../resources/scripting/">Scripting</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">c4ddev</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Getting Started</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/nrosenstein-c4d/c4ddev/edit/master/docs/getting-started.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="getting-started">Getting Started</h1>
+<p>C4DDev can be installed in two ways: Into your Cinema 4D plugins directory
+and as a command-line tool.</p>
+<h2 id="installing-the-c4ddev-plugins">Installing the C4DDev Plugins</h2>
+<p>Head to the <a href="https://github.com/NiklasRosenstein/c4ddev/releases">GitHub Releases</a> page and download the latest release for your
+platform (Windows or macOS). Then unpack the directory into your Cinema 4D
+plugins directory.</p>
+<pre><code>Cinema 4D R18/
+  plugins/
+    c4ddev/
+      ...
+</code></pre>
+<h2 id="installing-the-c4ddev-command-line-tools">Installing the C4DDev command-line tools</h2>
+<p>You need either Python 2 or 3 installed on your system and the <a href="https://pypi.python.org/pypi/pip">Pip</a> package
+manager. Pip comes pre-installed with Python 3 on Windows, but with Python 2
+you will need to run the <a href="https://bootstrap.pypa.io/get-pip.py">get-pip.py</a> script first. You may need to start the
+terminal with admin privileges to install Pip.</p>
+<pre><code>&gt; python get-pip.py
+</code></pre>
+<p>After this step, you can install the command-line tools by running the
+following command (again, you may need admin privileges).</p>
+<pre><code>$ pip install git+https://github.com/NiklasRosenstein/c4ddev.git
+</code></pre>
+<p>Now you should be able to use the <code>c4ddev</code> command-line program.</p>
+<pre><code>$ c4ddev
+Usage: c4ddev [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  build-loader      Generate a Cinema 4D Python plugin that uses...
+  get-pip           Installs Pip into the Cinema 4D Python...
+  pip               Invokes Pip in the current Cinema 4D Python...
+  pypkg             Reads a JSON configuration file, by default...
+  rpkg              Converts a resource package file to...
+  run               Starts C4D.
+  source-protector  Protect .pyp files (requires APEX).
+  symbols           Extracts resource symbols.
+</code></pre>
+<h2 id="beginners-guide-python">Beginner's Guide: Python</h2>
+<div class="admonition todo">
+<p class="admonition-title">Todo</p>
+</div>
+<h2 id="beginners-guide-c">Beginner's Guide: C++</h2>
+<div class="admonition todo">
+<p class="admonition-title">Todo</p>
+</div>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../api/py4d/" class="btn btn-neutral float-right" title="Py4D API Extensions">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../changelog/" class="btn btn-neutral" title="Changelog"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/nrosenstein-c4d/c4ddev/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../changelog/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../api/py4d/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

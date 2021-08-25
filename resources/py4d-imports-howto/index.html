@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Py4D Imports: How-To - c4ddev</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Py4D Imports: How-To";
+    var mkdocs_page_input_path = "resources/py4d-imports-howto.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> c4ddev</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../..">Welcome to C4DDev!</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../build-instructions/">Build Instructions</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../changelog/">Changelog</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../getting-started/">Getting Started</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Api</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../api/py4d/">Py4D API Extensions</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">C4ddev</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../c4ddev/cli/">Command-line Tools</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../c4ddev/plugins/">Plugins</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Resources</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../cpp/">C++ Resources</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Py4D Imports: How-To</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#using-the-nodepy-runtime">Using the Node.Py Runtime</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#using-localimport">Using localimport</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#using-localimport-pypkg">Using localimport + pypkg</a>
+    </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../python/">Python Resources</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../resource-packages/">Resource Packages</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../scripting/">Scripting</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">c4ddev</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Resources &raquo;</li>
+        
+      
+    
+    <li>Py4D Imports: How-To</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/nrosenstein-c4d/c4ddev/edit/master/docs/resources/py4d-imports-howto.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="py4d-imports-how-to">Py4D Imports: How-To</h1>
+<p>When using and distributing third-party modules in a Cinema 4D Python plugin,
+many problems can arise when used incorrectly. Some users have hundreds of
+Cinema 4D plugins, and many of them use third-party modules. Some plugins will
+stop working when another plugin delivers the same third-party module in a
+different version or even one with the same name but completely different
+functionality!</p>
+<p>When you import modules from your Python Plugin's directory, you should
+<strong>never</strong> do it the naive way, unless you EXPLICITLY WANT these third-party
+modules to be accessible from the outside (eg. when exposing a Python API
+for your plugin).</p>
+<pre><code class="language-python">import os, sys
+sys.path.append(os.path.join(os.path.dirname(__file__), 'lib'))
+import some_module  # The module will live on in sys.modules after the plugin finished loading
+</code></pre>
+<div class="admonition warn">
+<p class="admonition-title">Warning</p>
+<p>Using the naive approach shown above is dangerous and can lead to
+incompatibilties between plugins.</p>
+</div>
+<h2 id="using-the-nodepy-runtime">Using the Node.Py Runtime</h2>
+<p>It is generally recommended to make use of the <a href="https://github.com/nodepy/nodepy">Node.Py</a> runtime. This can
+be achieved by generating a stand-alone version using the <code>c4ddev build-loader</code>
+command.</p>
+<pre><code>$ c4ddev build-loader -cmo loader.pyp -e myentrypoint
+</code></pre>
+<p>The generated <code>loader.pyp</code> contains the <a href="https://github.com/nodepy/nodepy">Node.Py</a> runtime and its dependencies
+and will load <code>myentrypoint.py</code> when the plugin is loaded. This file will then
+have full access to the Node.Py runtime and can make use of the <strong>nodepy-pm</strong>
+package manager.</p>
+<pre><code>$ nodepy-pm install py/numpy
+$ tree
+| loader.pyp
+| myentrypoint.py
+| utils.py
+| nodepy_modules/
+\-| .pip/
+  \-| Lib/
+    \-| site-packages/
+      \-| numpy/ ...
+        | numpy-1.9.2.dist-info/ ...
+$ cat myentrypoint
+</code></pre>
+<pre><code class="language-python"># myentrypoint.py
+import numpy  # loaded from nodepy_modules/.pip/Lib/site-packages
+utils = require('./utils')
+
+# Register your C4D Python plugins ...
+</code></pre>
+<p>The Node.Py runtime will manage the full isolation of the module environment
+(using <a href="https://github.com/NiklasRosenstein/py-localimport">localimport</a>) and imported Python modules will not be visible to
+other plugins.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>C4DDev currently provides no mechanism to automatically compile Python sources
+and package them as it does with the <code>c4ddev pypkg</code> command. There is an
+outstanding task to bring this feature to C4DDev:
+<a href="https://github.com/NiklasRosenstein/c4ddev/issues/8">NiklasRosenstein/c4ddev#8</a></p>
+</div>
+<h2 id="using-localimport">Using localimport</h2>
+<p>Using the <code>localimport</code> module allows you to import Python modules in an
+isolated environment and will ensure that other plugins will not see the
+modules that another plugin has imported.</p>
+<pre><code class="language-python">with localimport(['lib']) as _importer:
+  # This line would not be necessary if everyone would use localimport,
+  # but since we can not garuantee that...
+  _importer.disable(['some_module'])
+  import some_module
+  assert 'some_module' in sys.modules
+assert 'some_module' not in sys.modules
+</code></pre>
+<p>But how do you use <code>localimport</code> when it is a module, too?</p>
+<p>The answer is a minified version that you can copy&amp;paste directly into your
+plugins source code. Below is a minified version of <code>localimport-v1.5</code>. Other
+(and eventually newer) versions are available <a href="https://gist.github.com/NiklasRosenstein/f5690d8f36bbdc8e5556"><strong>here</strong></a>.</p>
+<pre><code class="language-python"># localimport-v1.7.3-blob-mcw99
+import base64 as b, types as t, zlib as z; m=t.ModuleType('localimport');
+m.__file__ = __file__; blob=b'\
+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'
+exec(z.decompress(b.b64decode(blob)), vars(m)); _localimport=m;localimport=getattr(m,&quot;localimport&quot;)
+del blob, b, t, z, m;
+</code></pre>
+<h2 id="using-localimport-pypkg">Using localimport + pypkg</h2>
+<p>If you're using <a href="../../cli#c4ddev-pypkg"><code>c4ddev pypkg</code></a> to package additional Python
+modules, it is common to have a <code>devel/</code> directory with all the dependencies.
+In development mode, you can make <code>localimport</code> load the dependencies from
+that directory, and otherwise load it from the Python Egg generated with
+<code>c4ddev pypkg</code>.</p>
+<pre><code class="language-python">if _debug:
+  _importer = localimport(['devel'])
+else:
+  _importer = localimport('res/lib-{0}.egg'.format(sys.version[:3].replace('.', '-')))
+
+with _importer:
+    import res
+    import requests
+    from nr.c4d.utils import load_bitmap
+</code></pre>
+<p>Note that in most cases, the <code>devel/</code> directory will not contain just the
+source code of the modules that you want to use, but the complete repository
+(eg. when you're using Git submodules, which I highly recommend).</p>
+<pre><code>devel/
+  requests/
+    requests/
+    README.md
+    setup.py
+    ...
+</code></pre>
+<p>In order to have the correct <code>sys.path</code> setup when loading modules from the
+<code>devel/</code> directory, you can place a <code>.pth</code> file into that directory.</p>
+<pre><code>devel/
+  devel.pth       &lt;&lt;
+  requests/
+    requests/
+    README.md
+    setup.py
+  ...
+</code></pre>
+<p>This file can list an additional include directory per line. So for the above
+example, in order to be able to import the <code>requests</code> module in development mode,
+we simply add the following line to the <code>devel.pth</code> file.</p>
+<pre><code>requests/requests
+</code></pre>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You don't need this file in release mode when your third-party modules
+are packaged with <a href="../../cli#c4ddev-pypkg"><code>c4ddev pypkg</code></a>.</p>
+</div>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../python/" class="btn btn-neutral float-right" title="Python Resources">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../cpp/" class="btn btn-neutral" title="C++ Resources"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/nrosenstein-c4d/c4ddev/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../cpp/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../python/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

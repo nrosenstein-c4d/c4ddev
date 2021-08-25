@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Py4D API Extensions - c4ddev</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Py4D API Extensions";
+    var mkdocs_page_input_path = "api/py4d.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> c4ddev</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../..">Welcome to C4DDev!</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../build-instructions/">Build Instructions</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../changelog/">Changelog</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../getting-started/">Getting Started</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Api</span></p>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Py4D API Extensions</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#members">Members</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#c4ddev__version__">c4ddev.__version__</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#c4ddevhas_cpp_extensions">c4ddev.has_cpp_extensions</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#functions">Functions</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#c4ddevgelistnodefromaddresspycobject-c4dgelistnode">c4ddev.GeListNodeFromAddress(pycobject) -&gt; c4d.GeListNode</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#c4ddevfileselectputpath">c4ddev.FileSelectPut(path)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#c4ddevfileselectpop">c4ddev.FileSelectPop()</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#c4ddevfileselectqueuesize">c4ddev.FileSelectQueueSize()</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#c4ddevdocumentinfodatapycobject-dict">c4ddev.DocumentInfoData(pycobject) -&gt; dict</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#c4ddevrendernotificationdatapycobject-dict">c4ddev.RenderNotificationData(pycobject) -&gt; dict</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#c4ddevgetuserareahandle-pycobject">c4ddev.GetUserAreaHandle() -&gt; PyCObject</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#c4ddevgetclipmaphandle-pycobject">c4ddev.GetClipMapHandle() -&gt; PyCObject</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#c4ddevblitclipmapdst-src-dx-dy-dw-dh-sx-sy-sw-sh-mode">c4ddev.BlitClipMap(dst, src, dx, dy, dw, dh, sx, sy, sw, sh, mode)</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#plugin-messages">Plugin Messages</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#c4ddevguihandlemousedragarea-msg-type-data-flags">c4ddev.gui.HandleMouseDrag(area, msg, type, data, flags)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#c4ddevamregistermodeid-name-callback">c4ddev.am.RegisterMode(id, name, callback)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#c4ddevamsetmodeid-open">c4ddev.am.SetMode(id, open)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#c4ddevamsetobjectid-op-flags-activepage">c4ddev.am.SetObject(id, op, flags, activepage)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#c4ddevamopen">c4ddev.am.Open()</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#c4ddevameditobjectmodalop-title">c4ddev.am.EditObjectModal(op, title)</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#command-line">Command-line</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#-c4ddev-protect-source-filename">-c4ddev-protect-source &lt;filename&gt;</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">C4ddev</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../c4ddev/cli/">Command-line Tools</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../c4ddev/plugins/">Plugins</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Resources</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../resources/cpp/">C++ Resources</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../resources/py4d-imports-howto/">Py4D Imports: How-To</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../resources/python/">Python Resources</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../resources/resource-packages/">Resource Packages</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../resources/scripting/">Scripting</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">c4ddev</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Api &raquo;</li>
+        
+      
+    
+    <li>Py4D API Extensions</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/nrosenstein-c4d/c4ddev/edit/master/docs/api/py4d.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="py4d-api-extensions">Py4D API Extensions</h1>
+<p align="right" style="float: right; margin-left: 1em; margin-bottom: 1em"><img src="https://raw.githubusercontent.com/nrosenstein-c4d/c4ddev/master/docs/content/c4ddev/api/py4d/apex.png"></p>
+
+<p>The C4DDev Py4D API Extensions are a C++ plugin that provide additional
+functions that can be used from Python.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The C++ component of <strong>C4DDev</strong> must be installed, otherwise the API
+extensions will not be available. Pre-compiled binaries are available in
+the <a href="https://github.com/NiklasRosenstein/c4ddev/releases">GitHub Releases</a>
+of C4DDev.</p>
+</div>
+<h2 id="members">Members</h2>
+<h3 id="c4ddev__version__"><code>c4ddev.__version__</code></h3>
+<p>The installed version of C4DDev.</p>
+<h3 id="c4ddevhas_cpp_extensions"><code>c4ddev.has_cpp_extensions</code></h3>
+<p><code>True</code> if the C4DDev C++ extensions are installed, otherwise <code>False</code>. Note
+that if the C++ extensions are <strong>not</strong> installed and you try to import
+<code>c4ddev</code> from a Cinema 4D plugin, importing <code>c4ddev</code> could fail if your plugin
+is executed before the C4DDev Python entrypoint.</p>
+<h2 id="functions">Functions</h2>
+<h3 id="c4ddevgelistnodefromaddresspycobject-c4dgelistnode"><code>c4ddev.GeListNodeFromAddress(pycobject) -&gt; c4d.GeListNode</code></h3>
+<p>Given a <code>PyCObject</code> from which you know it is a Cinema 4D <code>GeListNode</code> instance,
+you can use this function to get a real Python object out of it. <strong>Important</strong>:
+This will result in undefined behaviour (likely a crash) if you pass a wrong PyCObject!</p>
+<h3 id="c4ddevfileselectputpath"><code>c4ddev.FileSelectPut(path)</code></h3>
+<p>This extension allows you to prevent file selection dialogs from popping up
+and make them return a specific value. This is <em>very</em> useful if you want to
+streamline Cinema 4D commands that usually do open a file selection dialog.</p>
+<pre><code class="language-python">import c4d
+import c4ddev
+
+c4ddev.FileSelectPut('/Users/me/Desktop')
+print(c4d.storage.LoadDialog())
+# Doesn't open a dialog and prints /Users/me/Desktop
+</code></pre>
+<h3 id="c4ddevfileselectpop"><code>c4ddev.FileSelectPop()</code></h3>
+<p>Pop an element from the elements added to the FileSelect Hook queue with
+<code>FileSelectPut()</code>.</p>
+<h3 id="c4ddevfileselectqueuesize"><code>c4ddev.FileSelectQueueSize()</code></h3>
+<p>Returns the number of elemenets in the queue added to the FileSelect Hook
+with <code>FileSelectPut()</code>.</p>
+<h3 id="c4ddevdocumentinfodatapycobject-dict"><code>c4ddev.DocumentInfoData(pycobject) -&gt; dict</code></h3>
+<p>Pass the <code>PyCObject</code> received on <code>MSG_DOCUMENTINFO</code> to this function to get a
+dictionary of the structures data. <strong>Important</strong>: This will result in undefined
+behaviour (likely a crash) if you pass a wrong PyCObject!</p>
+<h3 id="c4ddevrendernotificationdatapycobject-dict"><code>c4ddev.RenderNotificationData(pycobject) -&gt; dict</code></h3>
+<p>Pass the <code>PyCObject</code> received on <code>MSG_MULTI_RENDERNOTIFICATION</code> this this function
+to get a dictionary of the structures data. <strong>Important</strong>: This will result in
+undefined behaviour (likely a crash) if you pass a wrong PyCObject!</p>
+<h3 id="c4ddevgetuserareahandle-pycobject"><code>c4ddev.GetUserAreaHandle() -&gt; PyCObject</code></h3>
+<h3 id="c4ddevgetclipmaphandle-pycobject"><code>c4ddev.GetClipMapHandle() -&gt; PyCObject</code></h3>
+<h3 id="c4ddevblitclipmapdst-src-dx-dy-dw-dh-sx-sy-sw-sh-mode"><code>c4ddev.BlitClipMap(dst, src, dx, dy, dw, dh, sx, sy, sw, sh, mode)</code></h3>
+<p>This function implements the missing functionality of the <code>GeClipMap</code> to copy
+another bitmap into another, with the ability to copy only parts and in a
+different scale and aspect ratio (like <code>GeUserArea.DrawBitmap()</code>).</p>
+<table>
+<thead>
+<tr>
+<th>Parameters</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>dst</strong></td>
+<td>The destination <code>GeClipMap</code></td>
+</tr>
+<tr>
+<td><strong>src</strong></td>
+<td>The source <code>GeClipMap</code></td>
+</tr>
+<tr>
+<td><strong>dx</strong></td>
+<td>The destination X coordinate.</td>
+</tr>
+<tr>
+<td><strong>dy</strong></td>
+<td>The destination Y coordinate.</td>
+</tr>
+<tr>
+<td><strong>dw</strong></td>
+<td>The destination width.</td>
+</tr>
+<tr>
+<td><strong>dh</strong></td>
+<td>The destination height.</td>
+</tr>
+<tr>
+<td><strong>sx</strong></td>
+<td>The destination X coordinate.</td>
+</tr>
+<tr>
+<td><strong>sy</strong></td>
+<td>The destination X coordinate.</td>
+</tr>
+<tr>
+<td><strong>sw</strong></td>
+<td>The destination X coordinate.</td>
+</tr>
+<tr>
+<td><strong>sh</strong></td>
+<td>The destination X coordinate.</td>
+</tr>
+<tr>
+<td><strong>mode</strong></td>
+<td>One of <code>c4ddev.BLIT_NN</code>, <code>BLIT_BILINEAR</code> or <code>BLIT_BICUBIC</code></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Limitation</p>
+<p>Currently this function can only accept two <code>GeClipMap</code> objects as we
+haven't figured out how to retrieve the actual C pointer to a <code>BaseBitmap</code>
+from a Python <code>c4d.bitmaps.BaseBitmap</code> object. You can convert a bitmap
+to a <code>GeClipMap</code> using the following code:</p>
+<p><code>map = c4d.bitmaps.GeClipMap()
+map.InitWithBitmap(bmp, bmp.GetInternalChannel())</code></p>
+<p>However, keep in mind that this process is relatively slow as it creates
+a new copy of the image. It is thus recommended to do this operation only
+once after a bitmap is loaded and keep it as a <code>GeClipMap</code>.</p>
+</div>
+<h2 id="plugin-messages">Plugin Messages</h2>
+<p>The C4DDev C++ component installs a SceneHook that takes special messages
+which are usually only sent to nodes in a document and redirects them as a
+global plugin message. Currently, the following messages sent to that scene
+hook are supported:</p>
+<ul>
+<li><code>MSG_DOCUMENTINFO</code></li>
+<li><code>MSG_MULTI_RENDERNOTIFICATION</code></li>
+</ul>
+<p>There's a little bit of effort involved in receiving these in Python, though. The
+data sent will by a <code>PyCObject</code> and you have to use C4DDev to read the data from these
+objects.</p>
+<pre><code class="language-python">import c4d
+import c4ddev
+
+def PluginMessage(msg, data):
+  if msg == c4d.MSG_MULTI_RENDERNOTIFICATION:
+    data = c4ddev.RenderNotificationData(data)
+    print data
+  elif msg == c4d.MSG_DOCUMENTINFO:
+    data = c4ddev.DocumentInfoData(data)
+    print data
+  return True
+</code></pre>
+<hr />
+<h3 id="c4ddevguihandlemousedragarea-msg-type-data-flags"><code>c4ddev.gui.HandleMouseDrag(area, msg, type, data, flags)</code></h3>
+<p>This function calls <code>GeUserArea::HandleMouseDrag()</code> on the <em>area</em> object,
+which is missing in the Py4D API. Currently supported values for <em>type</em>
+are:</p>
+<ul>
+<li><code>DRAGTYPE_FILES</code> (str)</li>
+<li><code>DRAGTYPE_FILENAME_IMAGE</code> (str)</li>
+<li><code>DRAGTYPE_FILENAME_SCENE</code> (str)</li>
+<li><code>DRAGTYPE_FILENAME_OTHER</code> (str)</li>
+<li><code>DRAGTYPE_ATOMARRAY</code> (list of c4d.GeListNode)</li>
+</ul>
+<p>The type of <em>data</em> is specified in the parentheses above. <em>msg</em> must be
+a <code>c4d.BaseContainer</code>, ideally the one passed from <code>GeUserArea.InputEvent()</code>.</p>
+<hr />
+<h3 id="c4ddevamregistermodeid-name-callback"><code>c4ddev.am.RegisterMode(id, name, callback)</code></h3>
+<p>Registers a new mode in the Attribute Manager. The <em>callback</em> parameter
+is currently not used. Raises a <code>RuntimeError</code> when the registration failed.</p>
+<h3 id="c4ddevamsetmodeid-open"><code>c4ddev.am.SetMode(id, open)</code></h3>
+<p>Sets the current attribute manager mode. Optionally opens the attribute
+manager window.</p>
+<h3 id="c4ddevamsetobjectid-op-flags-activepage"><code>c4ddev.am.SetObject(id, op, flags, activepage)</code></h3>
+<p>Sets the object <em>op</em> as the active object in the attribute manager specified
+by <em>id</em>. The <em>activepage</em> parameter is currently unused, but must be <code>None</code>
+or a <code>c4d.DescID</code> object.</p>
+<h3 id="c4ddevamopen"><code>c4ddev.am.Open()</code></h3>
+<p>Opens the attribute manager window.</p>
+<h3 id="c4ddevameditobjectmodalop-title"><code>c4ddev.am.EditObjectModal(op, title)</code></h3>
+<p>Opens a modal attribute manager to edit the object <em>op</em>. The window title will
+be set to <em>title</em>. Returns <code>True</code> on success, <code>False</code> on failure.</p>
+<h2 id="command-line">Command-line</h2>
+<h3 id="-c4ddev-protect-source-filename"><code>-c4ddev-protect-source &lt;filename&gt;</code></h3>
+<p>When the C4DDev C++ extensions are available in a Cinema 4D installation,
+this command-line argument can be used to protect the source code of a
+Cinema 4D Python Plugin (<code>.pyp</code>), creating a <code>.pype</code> (before R15) or <code>.pypv</code>
+file (R15 and later). The argument can be specified multiple times to protected
+multiple files with a single invocation.</p>
+<p>The <a href="cli#c4ddev-source-protector"><code>c4ddev source-protector</code></a> command can be
+used to protect source files from the Command-line conveniently.</p>
+<pre><code>$ c4ddev source-protector myplugin.pyp
+...
+[c4ddev / INFO]: Calling Source Protector for 'myplugin.pyp'.
+</code></pre>
+<p>Alternatively, you can run Cinema 4D directly via the command-line or use
+the <a href="cli#c4ddev-run"><code>c4ddev run</code></a> command.</p>
+<pre><code>$ /Applications/Cinema 4D R16/plugins/myplugin $ "..\..\CINEMA 4D.exe" -nogui -c4ddev-protect-source myplugin.pyp
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../c4ddev/cli/" class="btn btn-neutral float-right" title="Command-line Tools">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../../getting-started/" class="btn btn-neutral" title="Getting Started"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/nrosenstein-c4d/c4ddev/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../../getting-started/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../../c4ddev/cli/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
