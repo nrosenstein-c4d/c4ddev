@@ -1,6 +1,4 @@
-+++
-title = "C++ Resources"
-+++
+# C++ Resources
 
 This page contains a list of resources about Cinema 4D C++ plugin development
 and useful links.

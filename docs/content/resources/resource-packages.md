@@ -1,6 +1,4 @@
-+++
-title = "Resource Packages"
-+++
+# Resource Packages
 
 Resource packages allow you to more efficiently manage plugin resource files
 and translations by merging all information into a single file. Resource

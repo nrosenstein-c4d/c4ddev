@@ -1,7 +1,4 @@
-+++
-title = "Getting Started"
-ordering = 1
-+++
+# Getting Started
 
 C4DDev can be installed in two ways: Into your Cinema 4D plugins directory
 and as a command-line tool.

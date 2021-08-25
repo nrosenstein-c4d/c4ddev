@@ -1,7 +1,4 @@
-+++
-title = "Changelog"
-ordering-priority = 9
-+++
+# Changelog
 
   [Node.py]: https://github.com/nodepy/nodepy
 

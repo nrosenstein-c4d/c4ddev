@@ -1,7 +1,4 @@
-+++
-title = "Build Instructions"
-ordering = 4
-+++
+# Build Instructions
 
   [Craftr]: https://github.com/craftr-build/craftr
 

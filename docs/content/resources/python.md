@@ -1,6 +1,4 @@
-+++
-title = "Python Resources"
-+++
+# Python Resources
 
 ## Snippets
 

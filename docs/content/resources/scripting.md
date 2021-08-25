@@ -1,6 +1,4 @@
-+++
-title = "Scripting"
-+++
+# Scripting
 
 The **C4DDev** API provides some utilities that are especially useful for
 scripting and prototyping in Cinema 4D.

@@ -1,6 +1,4 @@
-+++
-title = "Command-line Tools"
-+++
+# Command-line Tools
 
 Check out the [Getting Started](../../getting-started) guide for the install instructions.
 

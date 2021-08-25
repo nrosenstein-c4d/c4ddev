@@ -1,6 +1,4 @@
-+++
-title = "Plugins"
-+++
+# Plugins
 
 ## C4D IDE
 

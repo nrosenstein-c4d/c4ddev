@@ -1,7 +1,4 @@
-+++
-title = "Home"
-ordering = 0
-+++
+# Welcome to C4DDev!
 
 The C4DDev project aims to make the development of Cinema 4D plugins easier.
 It comes with a bunch of utilities in the form of C4D Plugins and command-line

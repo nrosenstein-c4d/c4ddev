@@ -1,0 +1,6 @@
+site_name: c4ddev
+theme: readthedocs
+docs_dir: content
+repo_url: https://github.com/nrosenstein-c4d/c4ddev
+markdown_extensions:
+- admonition

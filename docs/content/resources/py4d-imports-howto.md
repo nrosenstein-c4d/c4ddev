@@ -1,6 +1,4 @@
-+++
-title = "Py4D Imports: How-To"
-+++
+# Py4D Imports: How-To
 
 When using and distributing third-party modules in a Cinema 4D Python plugin,
 many problems can arise when used incorrectly. Some users have hundreds of

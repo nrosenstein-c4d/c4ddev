@@ -1,13 +1,12 @@
-+++
-title = "Py4D API Extensions"
-+++
+# Py4D API Extensions
 
-<p align="right" style="float: right; margin-left: 1em; margin-bottom: 1em"><img src="apex.png"></p>
+<p align="right" style="float: right; margin-left: 1em; margin-bottom: 1em"><img src="https://raw.githubusercontent.com/nrosenstein-c4d/c4ddev/master/docs/content/c4ddev/api/py4d/apex.png"></p>
 
 The C4DDev Py4D API Extensions are a C++ plugin that provide additional
 functions that can be used from Python.
 
 !!! note "Note"
+
     The C++ component of **C4DDev** must be installed, otherwise the API
     extensions will not be available. Pre-compiled binaries are available in
     the [GitHub Releases](https://github.com/NiklasRosenstein/c4ddev/releases)
