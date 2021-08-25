@@ -3,7 +3,7 @@
 C4DDev is a set of command-line tools and Cinema 4D plugins to make development
 plugins easier.
 
-[View the full documentation ▸](https://niklasrosenstein.github.io/c4ddev)
+[View the full documentation ▸](https://nrosenstein-c4d.github.io/c4ddev)
 
 ---
 
