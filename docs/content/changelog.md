@@ -2,6 +2,8 @@
 
   [Node.py]: https://github.com/nodepy/nodepy
 
+{{SHUT_CHANGELOG_HERE}}
+
 ## v0.1.7 (devtip)
 
 - `c4ddev run` now has options to start a specific C4D version

@@ -1,0 +1,50 @@
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Python package
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+
+  documentation:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
+    - name: Install dependencies
+      run: python -m pip install shut==0.17.4 mkdocs -q
+    - name: Inject changelog
+      run: |
+        python -c '
+        import sys
+        FN = "docs/content/changelog.md"
+        with open(FN) as fp:
+          text = fp.read()
+        text = text.replace("{{SHUT_CHANGELOG_HERE}}", sys.argv[1])
+        with open(FN, "w") as fp:
+          fp.write(text)
+        ' "$(shut changelog -a --markdown)"
+    - name: Generate docs
+      run: cd docs && mkdocs build
+    - name: Store Html
+      uses: actions/upload-artifact@v2
+      with:
+        name: docs
+        path: docs/site
+    - name: Publish docs
+      uses: JamesIves/github-pages-deploy-action@4.1.4
+      if: github.ref == 'refs/heads/develop'
+      with:
+        branch: gh-pages
+        folder: docs/site
+        ssh-key: ${{ secrets.DEPLOY_KEY }}
