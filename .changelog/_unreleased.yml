@@ -1,0 +1,5 @@
+changes:
+- type: fix
+  component: general
+  description: fix `NameError` in `c4ddev rpkg` command
+  fixes: []

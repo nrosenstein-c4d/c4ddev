@@ -437,7 +437,7 @@ class ResourcePackage(object):
 
   @classmethod
   def parse(cls, content, filename):
-    lexer = strex.Lexer(strex.Scanner(content), cls.Rules)
+    lexer = parse.Lexer(parse.Scanner(content), cls.Rules)
     error = cls._error(lexer, filename)
 
     basename = os.path.basename(filename).rpartition('.')[0]
