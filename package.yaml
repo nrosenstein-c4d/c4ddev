@@ -6,12 +6,12 @@ license: "MIT"
 description: "C4DDev is a set of command-line tools and Cinema 4D plugins to make development plugins easier."
 url: "https://github.com/NiklasRosenstein/c4ddev"
 requirements:
-  - python ^2.7 | ^3.4
-  - beautifulsoup4 ^4.6.0
-  - click >=6.7
-  - nr.parsing.core ~0.0.1
-  - requests ^2.19.1
-  - six ^1.11.0
+- python ^2.7 | ^3.4
+- beautifulsoup4 ^4.6.0
+- click >=6.7
+- nr.parsing.core ~0.0.1
+- requests ^2.19.1
+- six ^1.11.0
 entrypoints:
   console_scripts:
-    - c4ddev = c4ddev.__main__:main
+  - c4ddev = c4ddev.__main__:main
